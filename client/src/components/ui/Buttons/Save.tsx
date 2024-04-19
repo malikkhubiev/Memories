@@ -20,6 +20,17 @@ export const Save: FC<SavePropsType> = ({ isSaveMode, saveToggleCallback }) => {
           
           
           
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
           />
         </div>
       ) : (
