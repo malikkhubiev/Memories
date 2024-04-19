@@ -12,6 +12,6 @@ const { Sequelize } = require("sequelize");
 );*/
 
 module.exports = new Sequelize({
-    dialect: "sqlite",
-    storage: "./surata.sqlite"
-})
+  dialect: "sqlite",
+  storage: "./surata.sqlite",
+});

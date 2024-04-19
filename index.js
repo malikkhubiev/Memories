@@ -21,7 +21,7 @@ app.use(fileUpload({}));
 app.use(express.static(__dirname));
 
 app.ws("/", (ws, req) => {
-    ws.on("message", (message) => messagesHandler(message, ws, aWss));
+  ws.on("message", (message) => messagesHandler(message, ws, aWss));
 });
 app.use("/api", router);
 app.use(errorHandler);
@@ -30,17 +30,17 @@ app.use(express.static(path.resolve(__dirname, "static")));
 app.use(express.static(path.resolve(__dirname, "dist")));
 
 app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "dist", "index.html"));
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
 const startApp = async () => {
-    try {
-        await sequelize.authenticate();
-        await sequelize.sync();
-        app.listen(PORT, () => console.log(`Server is working on port ${PORT}`));
-    } catch (e) {
-        console.log(e);
-    };
+  try {
+    await sequelize.authenticate();
+    await sequelize.sync();
+    app.listen(PORT, () => console.log(`Server is working on port ${PORT}`));
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 startApp();

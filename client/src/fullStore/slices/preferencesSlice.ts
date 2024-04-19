@@ -1,15 +1,15 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../rootStore';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "../rootStore";
 
 export interface AuthState {
-  isAuth: boolean
-  encryptedEmail: string | null
-};
+  isAuth: boolean;
+  encryptedEmail: string | null;
+}
 
 const initialState: any = {};
 
 export const preferencesSlice = createSlice({
-  name: 'preferences',
+  name: "preferences",
   initialState,
   reducers: {
     /*getPreferences: async (state, action: PayloadAction<any>) => {
@@ -32,7 +32,7 @@ export const preferencesSlice = createSlice({
       };
       await preferencesAPI.sendPreferences(preferencesInServerStyle);
     }*/
-  }
+  },
 });
 
 // actions

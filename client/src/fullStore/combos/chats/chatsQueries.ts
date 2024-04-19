@@ -3,74 +3,59 @@ import { chatType, imageType } from "../../../types/storeTypes";
 
 // queries
 export const chatsApi = createApi({
-    reducerPath: 'chatsApi',
-    baseQuery: fetchBaseQuery({
-        baseUrl: process.env.REACT_APP_API_URL + "api/chat",
-        prepareHeaders: (headers) => {
-            const token = localStorage.getItem("token"); 
-            if (token) {
-                headers.set('authorization', `Bearer ${token}`);
-            }
-            return headers;
+  reducerPath: "chatsApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: process.env.REACT_APP_API_URL + "api/chat",
+    prepareHeaders: (headers) => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        headers.set("authorization", `Bearer ${token}`);
+      }
+      return headers;
+    },
+  }),
+  endpoints: (builder) => ({
+    getChats: builder.mutation<chatType[], null>({
+      query: () => ({
+        url: "/get",
+        method: "GET",
+      }),
+    }),
+    clearOneChat: builder.mutation<{ chatId: number }, { chatId: number }>({
+      query: ({ chatId }) => ({
+        url: "/clearOne",
+        method: "DELETE",
+        body: {
+          data: {
+            chatId,
+          },
         },
+      }),
     }),
-    endpoints: (builder) => ({
-        getChats: builder.mutation<
-            chatType[],
-            null
-        >({
-            query: () => ({
-                url: "/get",
-                method: 'GET',
-            }),
-        }),
-        clearOneChat: builder.mutation<
-            {chatId: number},
-            {chatId: number}
-        >({
-            query: ({chatId}) => ({
-                url: "/clearOne",
-                method: 'DELETE',
-                body: {
-                    data: {
-                        chatId
-                    }
-                }
-            }),
-        }),
-        deleteOneChat: builder.mutation<
-            {chatId: number},
-            {chatId: number}
-        >({
-            query: ({chatId}) => ({
-                url: "/deleteOne",
-                method: 'DELETE',
-                body: {
-                    data: {
-                        chatId
-                    }
-                }
-            }),
-        }),
-        clearAllChats: builder.mutation<
-            {message: string},
-            null
-        >({
-            query: () => ({
-                url: "/clearAll",
-                method: 'DELETE',
-            }),
-        }),
-        deleteAllChats: builder.mutation<
-            {message: string},
-            null
-        >({
-            query: () => ({
-                url: "/deleteAll",
-                method: 'DELETE',
-            }),
-        }),
+    deleteOneChat: builder.mutation<{ chatId: number }, { chatId: number }>({
+      query: ({ chatId }) => ({
+        url: "/deleteOne",
+        method: "DELETE",
+        body: {
+          data: {
+            chatId,
+          },
+        },
+      }),
     }),
+    clearAllChats: builder.mutation<{ message: string }, null>({
+      query: () => ({
+        url: "/clearAll",
+        method: "DELETE",
+      }),
+    }),
+    deleteAllChats: builder.mutation<{ message: string }, null>({
+      query: () => ({
+        url: "/deleteAll",
+        method: "DELETE",
+      }),
+    }),
+  }),
 });
 
 export const useGetChats = chatsApi.endpoints.getChats.useMutation;

@@ -1,0 +1,7 @@
+node_modules
+static
+dist
+surata.sqlite
+client/node_modules
+client/public
+client/assets

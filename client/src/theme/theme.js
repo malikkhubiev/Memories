@@ -3,29 +3,29 @@ import { createTheme } from "@mui/material";
 let theme = createTheme({
   palette: {
     primary: {
-      main: '#4285f4',
-      light: '#679df6',
-      dark: '#2e5daa',
-      contrastText: "#fff"
+      main: "#4285f4",
+      light: "#679df6",
+      dark: "#2e5daa",
+      contrastText: "#fff",
     },
     secondary: {
-      light: '#5cb975',
-      main: '#34a853',
-      dark: '#24753a',
-      contrastText: '#000',
+      light: "#5cb975",
+      main: "#34a853",
+      dark: "#24753a",
+      contrastText: "#000",
     },
     black: {
-      main: "#f8ffb7"
+      main: "#f8ffb7",
     },
     grey: {
-      main: "grey"
-    }
+      main: "grey",
+    },
   },
   typography: {
     fontFamily: "Century Gothic",
     h1: {
       fontSize: 40,
-      fontWeight: "bold"
+      fontWeight: "bold",
     },
     body1: {
       fontSize: 30,
@@ -37,16 +37,16 @@ let theme = createTheme({
   components: {
     MuiTextField: {
       defaultProps: {
-        margin: 'dense'
-      }
+        margin: "dense",
+      },
     },
     MuiButton: {
       styleOverrides: {
         root: {
           fontSize: "30px",
-          textTransform: "lowercase"
-        }
-      }
+          textTransform: "lowercase",
+        },
+      },
     },
   },
 });
@@ -54,7 +54,7 @@ let theme = createTheme({
 theme = createTheme(theme, {
   typography: {
     h3: {
-      color: theme.palette.grey.main
+      color: theme.palette.grey.main,
     },
   },
 });

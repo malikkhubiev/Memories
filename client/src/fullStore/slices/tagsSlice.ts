@@ -1,19 +1,19 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { imageType } from '../../types/storeTypes';
-import { RootState } from '../rootStore';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { imageType } from "../../types/storeTypes";
+import { RootState } from "../rootStore";
 
 export interface AuthState {
-  tagpageImages: imageType[]
-  numberOfImages: number
-};
+  tagpageImages: imageType[];
+  numberOfImages: number;
+}
 
 const initialState: any = {
   tagpageImages: [],
-  numberOfImages: null
+  numberOfImages: null,
 };
 
 export const tagsSlice = createSlice({
-  name: 'tags',
+  name: "tags",
   initialState,
   reducers: {
     /*getTagPageImages: async (state, action: PayloadAction<any>) => {
@@ -23,7 +23,7 @@ export const tagsSlice = createSlice({
       state.numberOfImages = images.count;
     },*/
     // Для findTags сделать ртк квери
-  }
+  },
 });
 
 // actions

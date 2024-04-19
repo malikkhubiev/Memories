@@ -7,20 +7,21 @@ import { RootState } from "../fullStore/rootStore";
 import useCustomDispatch from "./useCustomDispatch";
 
 const useUser = (userId?: number) => {
+  if (userId === null) return null;
 
-    if (userId === null) return null;
+  const id = useAppSelector((state: RootState) => selectId(state));
+  const user = useAppSelector((state: RootState) =>
+    selectProfile(state, userId ? userId : id),
+  );
+  const dispatch = useCustomDispatch();
 
-    const id = useAppSelector((state: RootState) => selectId(state));
-    const user = useAppSelector((state: RootState) => selectProfile(state, userId ? userId : id));
-    const dispatch = useCustomDispatch();
+  useEffect(() => {
+    if (!user) {
+      dispatch(addProfileThunk(userId ? userId : id));
+    }
+  }, [user]);
 
-    useEffect(() => {
-        if (!user) {
-            dispatch(addProfileThunk(userId ? userId : id));
-        };
-    }, [user]);
-
-    return user;
+  return user;
 };
 
 export default useUser;

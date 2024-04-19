@@ -1,22 +1,23 @@
-import { Box, Button } from '@mui/material';
-import React, { FC, useState } from 'react';
-import Cropper, { Area } from 'react-easy-crop';
-import { useNavigate } from 'react-router-dom';
-import { imageProcessedCallbackType } from '../../../types/callbacks';
-import getCroppedImg from '../../../utils/imageProcessing/cropImage';
-import { dataURLtoFile } from '../../../utils/imageProcessing/dataUrlToFile';
-import { CustomArrowBackIcon } from '../../ui/CustomIcons/CustomIcons';
-import styles from './ImageProcessing.module.less';
+import { Box, Button } from "@mui/material";
+import React, { FC, useState } from "react";
+import Cropper, { Area } from "react-easy-crop";
+import { useNavigate } from "react-router-dom";
+import { imageProcessedCallbackType } from "../../../types/callbacks";
+import getCroppedImg from "../../../utils/imageProcessing/cropImage";
+import { dataURLtoFile } from "../../../utils/imageProcessing/dataUrlToFile";
+import { CustomArrowBackIcon } from "../../ui/CustomIcons/CustomIcons";
+import styles from "./ImageProcessing.module.less";
 
-export const ImageProcessing: FC<ImageProcessingType> = (
-  { uploadedImage, imageProcessedCallback }) => {
-
+export const ImageProcessing: FC<ImageProcessingType> = ({
+  uploadedImage,
+  imageProcessedCallback,
+}) => {
   const [cropedArea, setCropedArea] = useState<Area | null>(null);
   const [crop, setCrop] = useState<cropType>({ x: 0, y: 0 });
   const [zoom, setZoom] = useState<number>(1);
 
   const onCropComplete = (croppedArea: Area, croppedAreaPixels: Area) => {
-    setCropedArea(prev => prev = croppedAreaPixels);
+    setCropedArea((prev) => (prev = croppedAreaPixels));
   };
 
   const uploadHandler = async () => {
@@ -45,7 +46,7 @@ export const ImageProcessing: FC<ImageProcessingType> = (
       <div className={styles.controls}>
         <Box
           sx={{
-            cursor: "pointer"
+            cursor: "pointer",
           }}
           onClick={arrowBackClickHandler}
         >
@@ -63,18 +64,20 @@ export const ImageProcessing: FC<ImageProcessingType> = (
           }}
           className={styles.zoomRange}
         />
-        <Button onClick={uploadHandler} variant="contained" >Upload</Button>
+        <Button onClick={uploadHandler} variant="contained">
+          Upload
+        </Button>
       </div>
     </div>
-  )
+  );
 };
 
 type cropType = {
-  x: number
-  y: number
+  x: number;
+  y: number;
 };
 
 type ImageProcessingType = {
-  imageProcessedCallback: imageProcessedCallbackType
-  uploadedImage: string
+  imageProcessedCallback: imageProcessedCallbackType;
+  uploadedImage: string;
 };
