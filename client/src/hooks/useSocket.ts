@@ -10,7 +10,8 @@ const useSocket = (type: socketType, imageId?: number) => {
 
     useEffect(() => {
         if (!isPaused) {
-            ws.current = new WebSocket("wss://juli333.herokuapp.com/");
+            //ws.current = new WebSocket("wss://juli333.herokuapp.com/");
+            ws.current = new WebSocket("ws://localhost:5000/");
             ws.current.onopen = () => {
                 ws.current.send(JSON.stringify({
                     token: localStorage.getItem("token"),

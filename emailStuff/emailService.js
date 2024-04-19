@@ -28,7 +28,7 @@ const emailTemplate = (secretCode) => {
 module.exports = async (email) => {
     const secretCode = codeMaking();
     const info = await transporter.sendMail({
-        from: "Juli <malik.hubiev@mail.ru>",
+        from: "Memories <malik.hubiev@mail.ru>",
         to: email,
         subject: "Hey",
         text: "Sup",

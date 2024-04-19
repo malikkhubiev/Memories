@@ -25,7 +25,6 @@ import { LikedPage } from "../pages/authorized/Users/LikedPage";
 import { ForgotPasswordPage } from "../pages/nonAuthorized/ForgotPasswordPage/ForgotPasswordPage";
 import { SignInPage } from "../pages/nonAuthorized/SignInPage/SignInPage";
 import { SignUpPage } from "../pages/nonAuthorized/SignUpPage/SignUpPage";
-import {getUrl} from "../utils/getUrl";
 import styles from './App.module.less';
 
 export const App: FC<{}> = () => {

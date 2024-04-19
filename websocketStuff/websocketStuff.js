@@ -4,14 +4,14 @@ const SECRET_KEY = process.env.SECRET_KEY;
 
 const broadcastConnection = async(aWss, ws, message) => {
     let recievers = [];
-    if (message.data.type === "chats") {
+    if (message.data.type === "chats") { // direct message
         recievers.push(message.data.body.from);
         recievers.push(message.data.body.to);
-    }else if (message.data.type === "images") {
+    }else if (message.data.type === "images") { // somebody uploaded an image
         const result = await getHomepageRecievers(message.data.body.ownId);
         recievers = result;
         delete message.data.body.ownId;
-    }else{
+    }else{ // comments
         return aWss.clients.forEach(client => {
             if (client.imageId === message.data.body.imageId &&
                 client.type === message.data.type) {
