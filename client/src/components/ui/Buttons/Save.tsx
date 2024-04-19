@@ -16,7 +16,7 @@ export const Save: FC<SavePropsType> = ({ isSaveMode, saveToggleCallback }) => {
         <div title="Usual images">
           <CustomBookmarkIcon
             width={`${35}`} // 35px
-                                              />
+          />
         </div>
       ) : (
         <div title="Saved images">
