@@ -1,0 +1,9 @@
+{
+  "header": "Sign in",
+  "passwordFieldLabel": "Password",
+  "rememberMe": "remember me",
+  "submit": "Submit",
+  "forgotPassword": "Forgot password?",
+  "haveAccount": "Don't have an account?",
+  "signUp": "Sign up"
+}

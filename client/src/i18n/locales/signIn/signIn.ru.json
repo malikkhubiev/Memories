@@ -1,0 +1,9 @@
+{
+  "header": "Вход",
+  "passwordFieldLabel": "Пароль",
+  "rememberMe": "запомнить меня",
+  "submit": "Вход",
+  "forgotPassword": "Забыли пароль?",
+  "haveAccount": "Ещё не зарегистрированы?",
+  "signUp": "Регистрация"
+}

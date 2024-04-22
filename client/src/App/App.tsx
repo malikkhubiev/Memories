@@ -38,8 +38,13 @@ import { ForgotPasswordPage } from "../pages/nonAuthorized/ForgotPasswordPage/Fo
 import { SignInPage } from "../pages/nonAuthorized/SignInPage/SignInPage";
 import { SignUpPage } from "../pages/nonAuthorized/SignUpPage/SignUpPage";
 import styles from "./App.module.less";
+import i18n from "../i18n/i18n";
+import { I18nextProvider } from "react-i18next";
 
 export const App: FC<{}> = () => {
+  useEffect(() => {
+    i18n.changeLanguage('ru');
+  }, [])
   // selectors about errors and loading
   let isLoading = useAppSelector((state: RootState) => selectIsLoading(state));
   let errorMessage = useAppSelector((state: RootState) =>
@@ -117,52 +122,53 @@ export const App: FC<{}> = () => {
           {errorMessage}
         </Alert>
       </Snackbar>
-
-      {/* routes */}
-      <Routes>
-        {isAuth ? (
-          <Route path="/">
-            <Route
-              index={true}
-              key={"home"}
-              element={
-                <FullNavigation>
-                  <HomePage />
-                </FullNavigation>
-              }
-            />
-            <Route path="" element={<OrdinaryRoute />}>
-              <Route path="preferences" element={<PreferencesPage />} />
+      <I18nextProvider i18n={i18n}>
+        {/* routes */}
+        <Routes>
+          {isAuth ? (
+            <Route path="/">
               <Route
-                path="post/:imageId/:isCommentSectionOpened"
-                element={<PostPage />}
+                index={true}
+                key={"home"}
+                element={
+                  <FullNavigation>
+                    <HomePage />
+                  </FullNavigation>
+                }
               />
-              <Route path="chats" element={<ChatsPage />} />
-              <Route path="settings" element={<SettingsPage />} />
+              <Route path="" element={<OrdinaryRoute />}>
+                <Route path="preferences" element={<PreferencesPage />} />
+                <Route
+                  path="post/:imageId/:isCommentSectionOpened"
+                  element={<PostPage />}
+                />
+                <Route path="chats" element={<ChatsPage />} />
+                <Route path="settings" element={<SettingsPage />} />
+              </Route>
+              <Route element={<BottomNavigationRoute />}>
+                <Route path="search" element={<SearchPage />} />
+                <Route path="blocked" element={<BlockedPage />} />
+                <Route path="requests" element={<RequestsPage />} />
+                <Route path="follow/:type/:id" element={<FollowersPage />} />
+                <Route path="liked:imageId" element={<LikedPage />} />
+                <Route path="profile:id" element={<ProfilePage />} />
+                <Route path="posting" element={<PostingPage />} />
+                <Route path="tags/:id/:name" element={<TagPage />} />
+              </Route>
+              <Route path="*" element={<HomePage />} />
             </Route>
-            <Route element={<BottomNavigationRoute />}>
-              <Route path="search" element={<SearchPage />} />
-              <Route path="blocked" element={<BlockedPage />} />
-              <Route path="requests" element={<RequestsPage />} />
-              <Route path="follow/:type/:id" element={<FollowersPage />} />
-              <Route path="liked:imageId" element={<LikedPage />} />
-              <Route path="profile:id" element={<ProfilePage />} />
-              <Route path="posting" element={<PostingPage />} />
-              <Route path="tags/:id/:name" element={<TagPage />} />
+          ) : (
+            <Route path="/">
+              <Route index={true} key={"signIn"} element={<SignInPage />} />
+              <Route path="" element={<OrdinaryRoute />}>
+                <Route path="signUp" element={<SignUpPage />} />
+                <Route path="forgotPassword" element={<ForgotPasswordPage />} />
+              </Route>
+              <Route path="*" element={<SignInPage />} />
             </Route>
-            <Route path="*" element={<HomePage />} />
-          </Route>
-        ) : (
-          <Route path="/">
-            <Route index={true} key={"signIn"} element={<SignInPage />} />
-            <Route path="" element={<OrdinaryRoute />}>
-              <Route path="signUp" element={<SignUpPage />} />
-              <Route path="forgotPassword" element={<ForgotPasswordPage />} />
-            </Route>
-            <Route path="*" element={<SignInPage />} />
-          </Route>
-        )}
-      </Routes>
+          )}
+        </Routes>
+      </I18nextProvider>
     </div>
   );
 };

@@ -1,16 +1,13 @@
 import {
   Box,
-  FormControl,
   Link as MaterialLink,
   Typography,
   useMediaQuery,
-  useTheme,
+  useTheme
 } from "@mui/material";
 import { useFormik } from "formik";
-import React, { useCallback, useEffect } from "react";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
-import { ColumnWrap } from "../../../components/layout/ColumnWrap/ColumnWrap";
-import { Header } from "../../../components/layout/Headers/Header/Header";
+import React, { useEffect } from "react";
+import { Link as RouterLink } from "react-router-dom";
 import { PageHeader } from "../../../components/layout/Headers/PageHeader/PageHeader";
 import { Plug } from "../../../components/layout/Plug/Plug";
 import {
@@ -27,14 +24,11 @@ import {
   getIsAuthThunk,
   signInThunk,
 } from "../../../fullStore/combos/user/userQueries";
-import {
-  setErrorMessage,
-  setIsLoading,
-} from "../../../fullStore/combos/user/userSlice";
-import { useAppDispatch } from "../../../fullStore/hooks";
 import useCustomDispatch from "../../../hooks/useCustomDispatch";
-import { signInvalidationSchema } from "./signInValidation";
 import styles from "./SignInPage.less";
+import { signInvalidationSchema } from "./signInValidation";
+
+import { useTranslation } from 'react-i18next';
 
 const initialValues: initialValuesType = {
   email: "",
@@ -43,6 +37,9 @@ const initialValues: initialValuesType = {
 };
 
 export const SignInPage = () => {
+
+  const { t } = useTranslation("signIn");
+
   const thunkDispatch = useCustomDispatch();
 
   const submitHandler = (values: initialValuesType) => {
@@ -73,7 +70,7 @@ export const SignInPage = () => {
       }}
     >
       <PageHeader isShowing={false}>
-        <Typography variant="h1">{"Sign in"}</Typography>
+        <Typography variant="h1">{t('header')}</Typography>
         <Plug />
       </PageHeader>
       <SmallGoldenRatioBox
@@ -95,18 +92,18 @@ export const SignInPage = () => {
               }}
               formik={formik}
               name="password"
-              label="Password"
+              label={t('passwordFieldLabel')}
             />
             <CustomCheckboxField
               formik={formik}
               name="rememberMe"
-              label="remember me"
+              label={t('rememberMe')}
             />
             <CustomButton
               sx={{
                 marginTop: "50px",
               }}
-              text="Submit"
+              text={t('submit')}
             />
           </form>
           <Box
@@ -120,7 +117,7 @@ export const SignInPage = () => {
               component={RouterLink}
               to="/forgotPassword"
             >
-              Forgot password?
+              {t('forgotPassword')}
             </MaterialLink>
           </Box>
           <Box
@@ -133,9 +130,9 @@ export const SignInPage = () => {
               flexDirection: () => (isSmallSize ? "column" : "row"),
             }}
           >
-            <Typography variant="body2">Don't have an account?</Typography>
+            <Typography variant="body2">{t('haveAccount')}</Typography>
             <MaterialLink variant="body2" component={RouterLink} to="/signUp">
-              Sign up
+              {t('signUp')}
             </MaterialLink>
           </Box>
         </CustomStack>
