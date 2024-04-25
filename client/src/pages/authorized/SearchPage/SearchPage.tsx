@@ -17,7 +17,7 @@ import {
 } from "../../../fullStore/combos/user/userSlice";
 import { useAppDispatch } from "../../../fullStore/hooks";
 import { CustomStack } from "../../../components/ui/customStyledComponents";
-import styles from "./SearchPageStyle"
+import styles from "./SearchPageStyle";
 
 const SearchPage: FC<{}> = () => {
   const usualDispatch = useAppDispatch();
@@ -86,9 +86,7 @@ const SearchPage: FC<{}> = () => {
   }, [isGetImByPrefLoading]);
 
   return (
-    <CustomStack
-      sx={styles.stack}
-    >
+    <CustomStack sx={styles.stack}>
       {images?.rows && (
         <Images images={images.rows}>
           <PageHeader>

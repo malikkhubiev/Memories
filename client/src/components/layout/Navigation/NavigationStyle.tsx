@@ -9,8 +9,9 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    boxShadow: "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
-    borderRadius: "50px"
+    boxShadow:
+      "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
+    borderRadius: "50px",
   },
   stack: {
     justifyContent: "center",
@@ -20,8 +21,8 @@ const styles = {
     },
   },
   link: {
-    margin: "0 25px"
-  }
-}
+    margin: "0 25px",
+  },
+};
 
 export default styles;

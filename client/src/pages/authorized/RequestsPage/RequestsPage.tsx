@@ -21,11 +21,10 @@ import { useTranslation } from "react-i18next";
 import { addDynamicResources } from "../../../i18n/i18n";
 
 export const RequestsPage: FC<{}> = () => {
-
-  const {t} = useTranslation("authorized");
+  const { t } = useTranslation("authorized");
   useEffect(() => {
     addDynamicResources("authorized");
-  }, [])
+  }, []);
 
   const [confirmRequest] = useConfirmSubRequest();
   const [denyRequest] = useConfirmSubRequest();

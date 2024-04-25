@@ -29,7 +29,6 @@ const initialValues: initialValuesType = {
 };
 
 const ForgotPasswordPage: FC<{}> = () => {
-
   const { t } = useTranslation("forgotPassword");
 
   useEffect(() => {
@@ -77,7 +76,7 @@ const ForgotPasswordPage: FC<{}> = () => {
       setDynamicResourcesLoaded(true);
     });
   }, []);
-  
+
   useEffect(() => {
     if (dynamicResourcesLoaded) {
       formik.resetForm();

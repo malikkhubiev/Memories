@@ -12,11 +12,11 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
   },
-  center: {textAlign: "center"},
+  center: { textAlign: "center" },
   stack: {
     flexDirection: "column",
     padding: "0 15px",
   },
-  verifyInput: {marginTop: "20px"},
+  verifyInput: { marginTop: "20px" },
 };
 export default styles;

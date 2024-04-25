@@ -39,11 +39,10 @@ export const transformNumber = (number: number) => {
 }; // потом убрать куда-нибудь
 
 const PostPage: FC<{}> = () => {
-
-  const {t} = useTranslation("authorized");
+  const { t } = useTranslation("authorized");
   useEffect(() => {
     addDynamicResources("authorized");
-  }, [])
+  }, []);
 
   const imageId = +useParams().imageId.slice(1);
   const isCommentSectionOpenedByParams =
@@ -198,10 +197,7 @@ const PostPage: FC<{}> = () => {
         )}
         {isCurrentCommentSectionOpened ? (
           <>
-            <Box
-              ref={ref}
-              sx={styles.comments}
-            >
+            <Box ref={ref} sx={styles.comments}>
               {comments && comments.length
                 ? comments.map((comment: any) => (
                     <Comment

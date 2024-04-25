@@ -19,7 +19,7 @@ const styles = {
   smallGoldenRatioBox: {
     alignItems: "center",
   },
-  insideStack:{
+  insideStack: {
     flexDirection: "column",
     padding: "0 15px",
   },

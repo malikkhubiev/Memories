@@ -23,16 +23,15 @@ import {
   CustomStack,
   SmallGoldenRatioBox,
 } from "../../../components/ui/customStyledComponents";
-import styles from "./PostingPageStyle"
+import styles from "./PostingPageStyle";
 import { useTranslation } from "react-i18next";
 import { addDynamicResources } from "../../../i18n/i18n";
 
 const PostingPage: FC<{}> = () => {
-
-  const {t} = useTranslation("authorized");
+  const { t } = useTranslation("authorized");
   useEffect(() => {
     addDynamicResources("authorized");
-  }, [])
+  }, []);
 
   let [currentIsLoading, setCurrentIsLoading] = useState<boolean>(false);
   const [model, setModel] = useState<any>(null);
@@ -160,28 +159,20 @@ const PostingPage: FC<{}> = () => {
   return (
     <>
       {currentIsLoading ? (
-        <Box
-          sx={styles.above}
-        >
+        <Box sx={styles.above}>
           <CircularProgress size={100} />
         </Box>
       ) : (
         ""
       )}
-      <CustomStack
-        sx={styles.stack}
-      >
+      <CustomStack sx={styles.stack}>
         <PageHeader isShowing={false}>
           <Header text="Post" />
           <Plug />
         </PageHeader>
-        <SmallGoldenRatioBox
-          sx={styles.smallGoldenRatioBox}
-        >
+        <SmallGoldenRatioBox sx={styles.smallGoldenRatioBox}>
           <ImageUpload readyImageCallback={readyImageCallback} />
-          <CustomStack
-            sx={styles.insideStack}
-          >
+          <CustomStack sx={styles.insideStack}>
             <ChangeInput
               text={description}
               isMultiline={true}

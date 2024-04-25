@@ -33,11 +33,10 @@ const preferences = [
 ];
 
 const PreferencesPage: FC<{}> = () => {
-
-  const {t} = useTranslation("authorized");
+  const { t } = useTranslation("authorized");
   useEffect(() => {
     addDynamicResources("authorized");
-  }, [])
+  }, []);
 
   const id = useAppSelector((state: RootState) => selectId(state));
   const dispatch = useCustomDispatch();
@@ -174,13 +173,9 @@ const PreferencesPage: FC<{}> = () => {
   };
 
   return (
-    <Box
-      sx={styles.container}
-    >
+    <Box sx={styles.container}>
       <SmallGoldenRatioBox>
-        <CustomStack
-          sx={styles.stack}
-        >
+        <CustomStack sx={styles.stack}>
           <Header text={t("preferences_title")} />
           <Box sx={styles.preferences}>
             {customPreferences.map((preference) => (

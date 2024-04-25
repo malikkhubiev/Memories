@@ -17,6 +17,6 @@ const styles = {
     alignItems: "flex-start",
     flexWrap: "wrap",
     marginTop: "20px",
-  }
+  },
 };
 export default styles;

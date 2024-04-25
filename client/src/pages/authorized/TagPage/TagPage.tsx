@@ -98,10 +98,7 @@ const TagPage: FC<{}> = () => {
             isSortingByPopularity={isSortingByPopularity}
             sortByToggleCallback={sortByToggleCallback}
           >
-            <Typography
-              sx={styles.tag}
-              variant="body2"
-            >
+            <Typography sx={styles.tag} variant="body2">
               #{tagName}
             </Typography>
           </HeaderCenter>

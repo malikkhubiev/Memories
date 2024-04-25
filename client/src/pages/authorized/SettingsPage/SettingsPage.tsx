@@ -41,11 +41,10 @@ import { useTranslation } from "react-i18next";
 import { addDynamicResources } from "../../../i18n/i18n";
 
 const SettingsPage: FC<{}> = () => {
-
-  const {t} = useTranslation("authorized");
+  const { t } = useTranslation("authorized");
   useEffect(() => {
     addDynamicResources("authorized");
-  }, [])
+  }, []);
 
   const usualDispatch = useAppDispatch();
 
@@ -124,9 +123,7 @@ const SettingsPage: FC<{}> = () => {
               {t("settings_blockedUsers")}
               <CustomArrowOutwardIcon />
             </MaterialLink>
-            <SmallGoldenRatioBox
-              sx={styles.goldenRatioBox}
-            >
+            <SmallGoldenRatioBox sx={styles.goldenRatioBox}>
               <ImageUpload
                 readyImageCallback={readyImageCallback}
                 src={(image as string) || null}
@@ -155,10 +152,7 @@ const SettingsPage: FC<{}> = () => {
                 Apply
               </Button>
             </SmallGoldenRatioBox>
-            <Button
-              sx={styles.buttonLogOut}
-              onClick={logoutHandler}
-            >
+            <Button sx={styles.buttonLogOut} onClick={logoutHandler}>
               Log out
             </Button>
             <DeleteAccountButton />

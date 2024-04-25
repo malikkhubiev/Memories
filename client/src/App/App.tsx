@@ -127,15 +127,13 @@ export const App: FC<{}> = () => {
         <Routes>
           {isAuth ? (
             <Route path="/" element={<Navigation />}>
-              {authorizedRoutes.map((route: any) => (
-                customRoutes(route, styles)
-              ))}
+              {authorizedRoutes.map((route: any) =>
+                customRoutes(route, styles),
+              )}
             </Route>
           ) : (
             <Route path="/">
-              {nonAuthorizedRoutes.map((route) => (
-                customRoutes(route, styles)
-              ))}
+              {nonAuthorizedRoutes.map((route) => customRoutes(route, styles))}
             </Route>
           )}
         </Routes>

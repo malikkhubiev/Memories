@@ -14,16 +14,15 @@ import {
 import { useAppDispatch } from "../../../../fullStore/hooks";
 import { useGetImageLikersBySubstr } from "../../../../fullStore/queries/searchQueries";
 import { imageLikerType } from "../../../../types/storeTypes";
-import styles from "./LikedPageStyle"
+import styles from "./LikedPageStyle";
 import { useTranslation } from "react-i18next";
 import { addDynamicResources } from "../../../../i18n/i18n";
 
 const LikedPage: FC<{}> = () => {
-
-  const {t} = useTranslation("authorized");
+  const { t } = useTranslation("authorized");
   useEffect(() => {
     addDynamicResources("authorized");
-  }, [])
+  }, []);
 
   const imageId = +useParams().imageId.slice(1);
   const [getLikers] = useGetImageLikersBySubstr();
@@ -60,9 +59,7 @@ const LikedPage: FC<{}> = () => {
   };
 
   return (
-    <Box
-      sx={styles.container}
-    >
+    <Box sx={styles.container}>
       <PageHeader>
         <Header text={t("liked_title")} />
         <Plug />

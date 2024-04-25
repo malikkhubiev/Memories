@@ -26,11 +26,10 @@ import { useTranslation } from "react-i18next";
 import { addDynamicResources } from "../../../../i18n/i18n";
 
 const FollowersPage: FC<{}> = () => {
-
-  const {t} = useTranslation("authorized");
+  const { t } = useTranslation("authorized");
   useEffect(() => {
     addDynamicResources("authorized");
-  }, [])
+  }, []);
 
   const ownId = useAppSelector((state) => selectId(state));
   const userId = +useParams().id.slice(1);

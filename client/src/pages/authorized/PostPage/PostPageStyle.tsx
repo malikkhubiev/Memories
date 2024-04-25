@@ -9,6 +9,6 @@ const styles = {
     justifyContent: "flex-start",
     alignItems: "center",
     flexDirection: "column",
-  }
+  },
 };
 export default styles;

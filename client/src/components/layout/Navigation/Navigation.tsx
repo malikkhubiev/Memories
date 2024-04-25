@@ -18,7 +18,7 @@ import {
 import { CustomStack } from "../../ui/customStyledComponents";
 import styles from "./NavigationStyle";
 
-export const Navigation: FC<{}> = ({ }) => {
+export const Navigation: FC<{}> = ({}) => {
   const id = useAppSelector((state: RootState) => selectId(state));
   const avatar = useAppSelector((state: RootState) => selectAvatar(state));
 
@@ -26,21 +26,13 @@ export const Navigation: FC<{}> = ({ }) => {
     <>
       <Box sx={styles.container}>
         <CustomStack sx={styles.stack}>
-          <MaterialLink
-            component={RouterLink}
-            sx={styles.link}
-            to="search"
-          >
+          <MaterialLink component={RouterLink} sx={styles.link} to="search">
             <CustomSearchIcon />
           </MaterialLink>
           <MaterialLink component={RouterLink} sx={styles.link} to="">
             <CustomHomeIcon />
           </MaterialLink>
-          <MaterialLink
-            component={RouterLink}
-            sx={styles.link}
-            to="posting"
-          >
+          <MaterialLink component={RouterLink} sx={styles.link} to="posting">
             <CustomAddIcon />
           </MaterialLink>
           {/* <MaterialLink
@@ -57,11 +49,7 @@ export const Navigation: FC<{}> = ({ }) => {
           >
             <CustomAvatar width={25} src={avatar} />
           </MaterialLink>
-          <MaterialLink
-            component={RouterLink}
-            sx={styles.link}
-            to="chats"
-          >
+          <MaterialLink component={RouterLink} sx={styles.link} to="chats">
             <CustomSendIcon />
           </MaterialLink>
         </CustomStack>

@@ -129,7 +129,7 @@ export const nonAuthorizedRoutes = [
   },
 ];
 
-export const customRoutes = (route: any, styles:any) => {
+export const customRoutes = (route: any, styles: any) => {
   return (
     <React.Fragment key={route.path}>
       <Route

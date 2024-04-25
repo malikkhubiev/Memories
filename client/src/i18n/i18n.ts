@@ -30,12 +30,12 @@ const takeOrLoad = async (page: string) => {
 };
 
 export const addDynamicResources = async (page: string) => {
-  console.log(page)
+  console.log(page);
   let resources = await takeOrLoad(page);
   if (page === "signUp" || page === "forgotPassword") {
-    resources = {...resources, ...await takeOrLoad("emailVerifying")}
+    resources = { ...resources, ...(await takeOrLoad("emailVerifying")) };
   }
-  console.log(resources)
+  console.log(resources);
   i18n.addResources(i18n.language, page, resources);
 };
 

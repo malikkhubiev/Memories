@@ -32,11 +32,10 @@ import { useTranslation } from "react-i18next";
 import { addDynamicResources } from "../../../i18n/i18n";
 
 const ChatsPage: FC<{}> = () => {
-
-  const {t} = useTranslation("authorized");
+  const { t } = useTranslation("authorized");
   useEffect(() => {
     addDynamicResources("authorized");
-  }, [])
+  }, []);
 
   let [chats, setChats] = useState<chatType[] | [] | null>(null);
   let [currentChat, setCurrentChat] = useState<chatType | null>(null);

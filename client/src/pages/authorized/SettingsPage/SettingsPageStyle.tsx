@@ -7,13 +7,13 @@ const styles = {
     alignItems: "center",
     flexDirection: "column",
   },
-  blocked:{
+  blocked: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     textDecoration: "none",
     color: "#000",
-  }, 
+  },
   goldenRatioBox: {
     alignItems: "center",
   },
@@ -23,6 +23,6 @@ const styles = {
   },
   buttonLogOut: {
     marginTop: "50px",
-  }
+  },
 };
 export default styles;

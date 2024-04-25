@@ -100,17 +100,13 @@ export const SignUpPage: FC<{}> = () => {
   }, [dynamicResourcesLoaded]);
 
   return (
-    <Box
-      sx={styles.container}
-    >
+    <Box sx={styles.container}>
       <PageHeader isShowing={false}>
         <Header text={t("signUpHeader")} />
         <Plug />
       </PageHeader>
 
-      <SmallGoldenRatioBox
-        sx={styles.goldenRatBox}
-      >
+      <SmallGoldenRatioBox sx={styles.goldenRatBox}>
         {!isEmailVerified ? (
           <EmailVerifying
             setIsEmailVerifiedCallback={setIsEmailVerifiedCallback}
@@ -118,9 +114,7 @@ export const SignUpPage: FC<{}> = () => {
             t={t}
           />
         ) : (
-          <CustomStack
-            sx={styles.stack}
-          >
+          <CustomStack sx={styles.stack}>
             <form onSubmit={formik.handleSubmit}>
               <CustomNameField formik={formik} />
               <CustomPasswordField
@@ -134,14 +128,9 @@ export const SignUpPage: FC<{}> = () => {
                 name="passwordConfirm"
                 label={t("confirmPassword")}
               />
-              <CustomButton
-                sx={styles.button}
-                text={t("next")}
-              />
+              <CustomButton sx={styles.button} text={t("next")} />
             </form>
-            <Box
-              sx={styles.terms}
-            >
+            <Box sx={styles.terms}>
               <Typography variant="body2">
                 {t("terms1")}
                 <MaterialLink component={RouterLink} to="/signIn">
@@ -155,9 +144,7 @@ export const SignUpPage: FC<{}> = () => {
             </Box>
           </CustomStack>
         )}
-        <Box
-          sx={styles.redirect(isSmallSize)}
-        >
+        <Box sx={styles.redirect(isSmallSize)}>
           <Typography variant="body2">{t("alreadyAccount")}</Typography>
           <MaterialLink variant="body2" component={RouterLink} to="/signIn">
             {t("signIn")}
