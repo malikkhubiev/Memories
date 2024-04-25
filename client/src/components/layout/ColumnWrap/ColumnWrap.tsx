@@ -3,7 +3,6 @@ import styles from "./ColumnWrap.module.less";
 export const ColumnWrap: FC<ColumnWrap> = ({ children, removePadding }) => (
   <div
     className={`
-
     ${styles.page}
     ${removePadding ? styles.removedPadding : null}`}
   >

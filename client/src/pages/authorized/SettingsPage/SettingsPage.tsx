@@ -1,5 +1,6 @@
 import {
   Button,
+  Box,
   Dialog,
   DialogActions,
   DialogContent,
@@ -35,9 +36,17 @@ import {
   changeInputCallbackType,
   readyImageCallbackType,
 } from "../../../types/callbacks";
-import styles from "./SettingsPage.module.less";
+import styles from "./SettingsPageStyle";
+import { useTranslation } from "react-i18next";
+import { addDynamicResources } from "../../../i18n/i18n";
 
-export const SettingsPage: FC<{}> = () => {
+const SettingsPage: FC<{}> = () => {
+
+  const {t} = useTranslation("authorized");
+  useEffect(() => {
+    addDynamicResources("authorized");
+  }, [])
+
   const usualDispatch = useAppDispatch();
 
   const user = useUser();
@@ -102,36 +111,28 @@ export const SettingsPage: FC<{}> = () => {
       {user && (
         <>
           <PageHeader isShowing={false}>
-            <Header text="Settings" />
+            <Header text={t("settings_title")} />
             <Plug />
           </PageHeader>
-          <div className={styles.settingsPage}>
+          <Box sx={styles.container}>
             <MaterialLink
               to="/blocked"
               variant="body2"
               component={RouterLink}
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                textDecoration: "none",
-                color: "#000",
-              }}
+              sx={styles.blocked}
             >
-              blocked users
+              {t("settings_blockedUsers")}
               <CustomArrowOutwardIcon />
             </MaterialLink>
             <SmallGoldenRatioBox
-              sx={{
-                alignItems: "center",
-              }}
+              sx={styles.goldenRatioBox}
             >
               <ImageUpload
                 readyImageCallback={readyImageCallback}
                 src={(image as string) || null}
               />
               <ChangeInput
-                sx={{ margin: "20px 0" }}
+                sx={styles.changeInput}
                 text={username}
                 changeInputCallback={usernameCallback}
               />
@@ -143,31 +144,29 @@ export const SettingsPage: FC<{}> = () => {
                       onChange={isAccauntOpenedCallback}
                     />
                   }
-                  label={`my account is ${isAccountOpened ? "public" : "private"}`}
+                  label={`${t("settings_acc1")} ${isAccountOpened ? t("settings_acc2") : t("settings_acc3")}`}
                 />
               </FormGroup>
               <Button
                 onClick={applyChanges}
                 variant="contained"
-                sx={{
-                  marginTop: "20px",
-                }}
+                sx={styles.buttonApply}
               >
                 Apply
               </Button>
             </SmallGoldenRatioBox>
             <Button
-              sx={{
-                marginTop: "50px",
-              }}
+              sx={styles.buttonLogOut}
               onClick={logoutHandler}
             >
               Log out
             </Button>
             <DeleteAccountButton />
-          </div>
+          </Box>
         </>
       )}
     </ColumnWrap>
   );
 };
+
+export default SettingsPage;

@@ -17,8 +17,9 @@ import {
 } from "../../../fullStore/combos/user/userSlice";
 import { useAppDispatch } from "../../../fullStore/hooks";
 import { CustomStack } from "../../../components/ui/customStyledComponents";
+import styles from "./SearchPageStyle"
 
-export const SearchPage: FC<{}> = () => {
+const SearchPage: FC<{}> = () => {
   const usualDispatch = useAppDispatch();
 
   const [searchResults, setSearchResults] = useState<searchResultsType>({
@@ -86,9 +87,7 @@ export const SearchPage: FC<{}> = () => {
 
   return (
     <CustomStack
-      sx={{
-        flexDirection: "column",
-      }}
+      sx={styles.stack}
     >
       {images?.rows && (
         <Images images={images.rows}>
@@ -105,3 +104,5 @@ export const SearchPage: FC<{}> = () => {
     </CustomStack>
   );
 };
+
+export default SearchPage;

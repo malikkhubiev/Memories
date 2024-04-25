@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { ColumnWrap } from "../../../components/layout/ColumnWrap/ColumnWrap";
@@ -18,15 +18,24 @@ import {
 } from "../../../fullStore/combos/user/userSlice";
 import { useAppDispatch } from "../../../fullStore/hooks";
 import { setIsEmailVerifiedCallbackType } from "../../../types/callbacks";
-import { EmailVerifyingPage } from "../EmailVerifyingPage/EmailVerifyingPage";
+import { EmailVerifying } from "../../../components/logic/EmailVerifying/EmailVerifying";
 import { forgotPasswordValidationSchema } from "./forgotPasswordValidationSchema";
+import { useTranslation } from "react-i18next";
+import { addDynamicResources } from "../../../i18n/i18n";
 
 const initialValues: initialValuesType = {
   password: "",
   passwordConfirm: "",
 };
 
-export const ForgotPasswordPage: FC<{}> = () => {
+const ForgotPasswordPage: FC<{}> = () => {
+
+  const { t } = useTranslation("forgotPassword");
+
+  useEffect(() => {
+    addDynamicResources("forgotPassword");
+  }, []);
+
   const [isEmailVerified, setIsEmailVerified] = useState(false);
   let encryptedEmail = useSelector(selectEncryptedEmail);
   const [changePassword] = useChangePasswordMutationQuery();
@@ -61,30 +70,45 @@ export const ForgotPasswordPage: FC<{}> = () => {
     onSubmit: submitHandler,
   });
 
+  const [dynamicResourcesLoaded, setDynamicResourcesLoaded] = useState(false);
+
+  useEffect(() => {
+    addDynamicResources("signUp").then(() => {
+      setDynamicResourcesLoaded(true);
+    });
+  }, []);
+  
+  useEffect(() => {
+    if (dynamicResourcesLoaded) {
+      formik.resetForm();
+    }
+  }, [dynamicResourcesLoaded]);
+
   return (
     <>
       {!isEmailVerified ? (
-        <EmailVerifyingPage
+        <EmailVerifying
           setIsEmailVerifiedCallback={setIsEmailVerifiedCallback}
+          t={t}
         />
       ) : (
         <ColumnWrap>
           <PageHeader isShowing={false}>
-            <Header text="Forgot password" />
+            <Header text={t("forgotPasHeader")} />
             <Plug />
           </PageHeader>
           <form onSubmit={formik.handleSubmit}>
             <CustomPasswordField
               formik={formik}
               name="password"
-              label="New password"
+              label={t("newPasswordLabel")}
             />
             <CustomPasswordField
               formik={formik}
               name="passwordConfirm"
-              label="Confirm Password"
+              label={t("confirmPasswordLabel")}
             />
-            <CustomButton text="Change password" />
+            <CustomButton text={t("button")} />
           </form>
         </ColumnWrap>
       )}
@@ -96,3 +120,5 @@ type initialValuesType = {
   password: string;
   passwordConfirm: string;
 };
+
+export default ForgotPasswordPage;

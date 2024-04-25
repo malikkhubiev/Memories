@@ -19,3 +19,5 @@ export const ProfilePage: FC<{}> = () => {
 
   return user && <Profile {...user} />;
 };
+
+export default ProfilePage;

@@ -88,3 +88,5 @@ export const HomePage: FC<{}> = () => {
     </ColumnWrap>
   );
 };
+
+export default HomePage;

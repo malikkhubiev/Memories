@@ -6,7 +6,7 @@ import {
   Box,
 } from "@mui/material";
 import { useFormik } from "formik";
-import React, { FC, memo, useCallback, useState } from "react";
+import React, { FC, memo, useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { ColumnWrap } from "../../../components/layout/ColumnWrap/ColumnWrap";
@@ -26,12 +26,15 @@ import {
 } from "../../../fullStore/combos/user/userSlice";
 import { useAppDispatch } from "../../../fullStore/hooks";
 import { setIsEmailVerifiedCallbackType } from "../../../types/callbacks";
-import { EmailVerifyingPage } from "../EmailVerifyingPage/EmailVerifyingPage";
+import { EmailVerifying } from "../../../components/logic/EmailVerifying/EmailVerifying";
 import { signUpvalidationSchema } from "./signUpValidation";
 import {
   CustomStack,
   SmallGoldenRatioBox,
 } from "../../../components/ui/customStyledComponents";
+import { useTranslation } from "react-i18next";
+import { addDynamicResources } from "../../../i18n/i18n";
+import styles from "./SignUpPageStyle";
 
 const initialValues: initialValuesType = {
   name: "",
@@ -44,6 +47,15 @@ export const SignUpPage: FC<{}> = () => {
   const [signUp] = useSignUpMutationQuery();
   let encryptedEmail = useSelector(selectEncryptedEmail);
   const navigate = useNavigate();
+
+  const { t } = useTranslation("signUp");
+  const [dynamicResourcesLoaded, setDynamicResourcesLoaded] = useState(false);
+
+  useEffect(() => {
+    addDynamicResources("signUp").then(() => {
+      setDynamicResourcesLoaded(true);
+    });
+  }, []);
 
   const usualDispatch = useAppDispatch();
 
@@ -81,92 +93,74 @@ export const SignUpPage: FC<{}> = () => {
   const theme = useTheme();
   const isSmallSize = useMediaQuery(theme.breakpoints.down("sm"));
 
+  useEffect(() => {
+    if (dynamicResourcesLoaded) {
+      formik.resetForm();
+    }
+  }, [dynamicResourcesLoaded]);
+
   return (
     <Box
-      sx={{
-        width: "100%",
-        display: "flex",
-        justifyContent: "flex-start",
-        alignItems: "center",
-        flexDirection: "column",
-      }}
+      sx={styles.container}
     >
       <PageHeader isShowing={false}>
-        <Header text="Sign up" />
+        <Header text={t("signUpHeader")} />
         <Plug />
       </PageHeader>
 
       <SmallGoldenRatioBox
-        sx={{
-          alignItems: "center",
-        }}
+        sx={styles.goldenRatBox}
       >
         {!isEmailVerified ? (
-          <EmailVerifyingPage
+          <EmailVerifying
             setIsEmailVerifiedCallback={setIsEmailVerifiedCallback}
             removeBackArrow={true}
+            t={t}
           />
         ) : (
           <CustomStack
-            sx={{
-              flexDirection: "column",
-              padding: "0 15px",
-            }}
+            sx={styles.stack}
           >
             <form onSubmit={formik.handleSubmit}>
               <CustomNameField formik={formik} />
               <CustomPasswordField
                 formik={formik}
                 name="password"
-                label="Password"
-                sx={{
-                  margin: "50px 0",
-                }}
+                label={t("password")}
+                sx={styles.password}
               />
               <CustomPasswordField
                 formik={formik}
                 name="passwordConfirm"
-                label="Confirm Password"
+                label={t("confirmPassword")}
               />
               <CustomButton
-                sx={{
-                  marginTop: "50px",
-                }}
-                text="Submit"
+                sx={styles.button}
+                text={t("next")}
               />
             </form>
             <Box
-              sx={{
-                marginTop: "20px",
-                textAlign: "center",
-              }}
+              sx={styles.terms}
             >
               <Typography variant="body2">
-                By pressing Submit, you agree to the
+                {t("terms1")}
                 <MaterialLink component={RouterLink} to="/signIn">
-                  Terms of Service
+                  {t("terms2")}
                 </MaterialLink>
-                and
+                {t("terms3")}
                 <MaterialLink component={RouterLink} to="/signIn">
-                  Privacy Policy
+                  {t("terms4")}
                 </MaterialLink>
               </Typography>
             </Box>
           </CustomStack>
         )}
         <Box
-          sx={{
-            margin: "20px 0",
-            textAlign: "center",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            flexDirection: () => (isSmallSize ? "column" : "row"),
-          }}
+          sx={styles.redirect(isSmallSize)}
         >
-          <Typography variant="body2">Already have an account?</Typography>
+          <Typography variant="body2">{t("alreadyAccount")}</Typography>
           <MaterialLink variant="body2" component={RouterLink} to="/signIn">
-            Sign in
+            {t("signIn")}
           </MaterialLink>
         </Box>
       </SmallGoldenRatioBox>
@@ -179,3 +173,5 @@ type initialValuesType = {
   password: string;
   passwordConfirm: string;
 };
+
+export default SignUpPage;

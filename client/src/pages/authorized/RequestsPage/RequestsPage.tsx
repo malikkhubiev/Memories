@@ -17,8 +17,16 @@ import { useAppDispatch } from "../../../fullStore/hooks";
 import useCustomDispatch from "../../../hooks/useCustomDispatch";
 import { setSelectedUserIdCallbackType } from "../../../types/callbacks";
 import { requestersType } from "../../../types/storeTypes";
+import { useTranslation } from "react-i18next";
+import { addDynamicResources } from "../../../i18n/i18n";
 
 export const RequestsPage: FC<{}> = () => {
+
+  const {t} = useTranslation("authorized");
+  useEffect(() => {
+    addDynamicResources("authorized");
+  }, [])
+
   const [confirmRequest] = useConfirmSubRequest();
   const [denyRequest] = useConfirmSubRequest();
 
@@ -85,7 +93,7 @@ export const RequestsPage: FC<{}> = () => {
   return (
     <ColumnWrap>
       <PageHeader>
-        <Typography variant="h1">Requests</Typography>
+        <Typography variant="h1">{t("requests_title")}</Typography>
         <Plug />
       </PageHeader>
       <>
@@ -98,8 +106,14 @@ export const RequestsPage: FC<{}> = () => {
               name={request.name}
               buttonsData={buttonsData}
             />
-          ))) || <Typography variant="body2">No subscribe requests</Typography>}
+          ))) || (
+          <Typography variant="body2">
+            {t("requests_noRequestsMessage")}
+          </Typography>
+        )}
       </>
     </ColumnWrap>
   );
 };
+
+export default RequestsPage;

@@ -1,4 +1,4 @@
-import { Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import React, { FC, useEffect, useState } from "react";
 import { Chats } from "../../../components/logic/Chats/Chats";
 import { Messages } from "../../../components/logic/Messages/Messages";
@@ -27,9 +27,17 @@ import {
   setNewChatCallbackType,
 } from "../../../types/callbacks";
 import { chatType, messageType } from "../../../types/storeTypes";
-import styles from "./ChatsPage.module.less";
+import styles from "./ChatsPageStyle";
+import { useTranslation } from "react-i18next";
+import { addDynamicResources } from "../../../i18n/i18n";
 
-export const ChatsPage: FC<{}> = () => {
+const ChatsPage: FC<{}> = () => {
+
+  const {t} = useTranslation("authorized");
+  useEffect(() => {
+    addDynamicResources("authorized");
+  }, [])
+
   let [chats, setChats] = useState<chatType[] | [] | null>(null);
   let [currentChat, setCurrentChat] = useState<chatType | null>(null);
 
@@ -329,7 +337,7 @@ export const ChatsPage: FC<{}> = () => {
   const isSmallSize = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
-    <div className={styles.page}>
+    <Box sx={styles.page}>
       {isSmallSize ? (
         !currentChat ? (
           <Chats
@@ -359,12 +367,16 @@ export const ChatsPage: FC<{}> = () => {
               {...messagesProps}
             />
           ) : (
-            <div className={styles.plug}>
-              <Typography variant="body1">Be happy!</Typography>
-            </div>
+            <Box sx={styles.plug}>
+              <Typography variant="body1">
+                {t("chats_noChatsMessage")}
+              </Typography>
+            </Box>
           )}
         </>
       )}
-    </div>
+    </Box>
   );
 };
+
+export default ChatsPage;

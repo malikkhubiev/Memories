@@ -1,10 +1,7 @@
 import { Alert, CircularProgress, Snackbar } from "@mui/material";
-import React, { FC, useEffect } from "react";
+import React, { FC, Suspense, useEffect } from "react";
 import { Outlet, Route, Routes } from "react-router-dom";
-import {
-  BottomNavigation,
-  FullNavigation,
-} from "../components/layout/Navigation/Navigation";
+import { Navigation } from "../components/layout/Navigation/Navigation";
 import { selectOwnImagesErrorMessage } from "../fullStore/combos/images/imagesSlice";
 import { addProfileThunk } from "../fullStore/combos/profile/profileQueries";
 import {
@@ -21,30 +18,33 @@ import {
 import { useAppDispatch, useAppSelector } from "../fullStore/hooks";
 import { RootState } from "../fullStore/rootStore";
 import useCustomDispatch from "../hooks/useCustomDispatch";
-import { ChatsPage } from "../pages/authorized/ChatsPage/ChatsPage";
-import { HomePage } from "../pages/authorized/HomePage/HomePage";
-import { PostingPage } from "../pages/authorized/PostingPage/PostingPage";
-import { PostPage } from "../pages/authorized/PostPage/PostPage";
-import { PreferencesPage } from "../pages/authorized/PreferencesPage/PreferencesPage";
-import { ProfilePage } from "../pages/authorized/ProfilePage/ProfilePage";
-import { RequestsPage } from "../pages/authorized/RequestsPage/RequestsPage";
-import { SearchPage } from "../pages/authorized/SearchPage/SearchPage";
-import { SettingsPage } from "../pages/authorized/SettingsPage/SettingsPage";
-import { TagPage } from "../pages/authorized/TagPage/TagPage";
-import { BlockedPage } from "../pages/authorized/Users/BlockedPage";
-import { FollowersPage } from "../pages/authorized/Users/FollowersPage";
-import { LikedPage } from "../pages/authorized/Users/LikedPage";
-import { ForgotPasswordPage } from "../pages/nonAuthorized/ForgotPasswordPage/ForgotPasswordPage";
-import { SignInPage } from "../pages/nonAuthorized/SignInPage/SignInPage";
-import { SignUpPage } from "../pages/nonAuthorized/SignUpPage/SignUpPage";
+// import { ChatsPage } from "../pages/authorized/ChatsPage/ChatsPage";
+// import { HomePage } from "../pages/authorized/HomePage/HomePage";
+// import { PostingPage } from "../pages/authorized/PostingPage/PostingPage";
+// import { PostPage } from "../pages/authorized/PostPage/PostPage";
+// import { PreferencesPage } from "../pages/authorized/PreferencesPage/PreferencesPage";
+// import { ProfilePage } from "../pages/authorized/ProfilePage/ProfilePage";
+// import { RequestsPage } from "../pages/authorized/RequestsPage/RequestsPage";
+// import { SearchPage } from "../pages/authorized/SearchPage/SearchPage";
+// import { SettingsPage } from "../pages/authorized/SettingsPage/SettingsPage";
+// import { TagPage } from "../pages/authorized/TagPage/TagPage";
+// import { BlockedPage } from "../pages/authorized/Users/BlockedPage/BlockedPage";
+// import { FollowersPage } from "../pages/authorized/Users/FollowersPage/FollowersPage";
+// import { LikedPage } from "../pages/authorized/Users/LikedPage/LikedPage";
+// import { ForgotPasswordPage } from "../pages/nonAuthorized/ForgotPasswordPage/ForgotPasswordPage";
+// import { SignInPage } from "../pages/nonAuthorized/SignInPage/SignInPage";
+// import { SignUpPage } from "../pages/nonAuthorized/SignUpPage/SignUpPage";
 import styles from "./App.module.less";
-import i18n from "../i18n/i18n";
-import { I18nextProvider } from "react-i18next";
+import i18n, { addDynamicResources } from "../i18n/i18n";
+import { I18nextProvider, useTranslation } from "react-i18next";
+import { authorizedRoutes, customRoutes, nonAuthorizedRoutes } from "./routes";
 
 export const App: FC<{}> = () => {
+  const { t } = useTranslation("authorized");
   useEffect(() => {
-    i18n.changeLanguage('ru');
-  }, [])
+    addDynamicResources("authorized");
+  }, []);
+
   // selectors about errors and loading
   let isLoading = useAppSelector((state: RootState) => selectIsLoading(state));
   let errorMessage = useAppSelector((state: RootState) =>
@@ -126,59 +126,20 @@ export const App: FC<{}> = () => {
         {/* routes */}
         <Routes>
           {isAuth ? (
-            <Route path="/">
-              <Route
-                index={true}
-                key={"home"}
-                element={
-                  <FullNavigation>
-                    <HomePage />
-                  </FullNavigation>
-                }
-              />
-              <Route path="" element={<OrdinaryRoute />}>
-                <Route path="preferences" element={<PreferencesPage />} />
-                <Route
-                  path="post/:imageId/:isCommentSectionOpened"
-                  element={<PostPage />}
-                />
-                <Route path="chats" element={<ChatsPage />} />
-                <Route path="settings" element={<SettingsPage />} />
-              </Route>
-              <Route element={<BottomNavigationRoute />}>
-                <Route path="search" element={<SearchPage />} />
-                <Route path="blocked" element={<BlockedPage />} />
-                <Route path="requests" element={<RequestsPage />} />
-                <Route path="follow/:type/:id" element={<FollowersPage />} />
-                <Route path="liked:imageId" element={<LikedPage />} />
-                <Route path="profile:id" element={<ProfilePage />} />
-                <Route path="posting" element={<PostingPage />} />
-                <Route path="tags/:id/:name" element={<TagPage />} />
-              </Route>
-              <Route path="*" element={<HomePage />} />
+            <Route path="/" element={<Navigation />}>
+              {authorizedRoutes.map((route: any) => (
+                customRoutes(route, styles)
+              ))}
             </Route>
           ) : (
             <Route path="/">
-              <Route index={true} key={"signIn"} element={<SignInPage />} />
-              <Route path="" element={<OrdinaryRoute />}>
-                <Route path="signUp" element={<SignUpPage />} />
-                <Route path="forgotPassword" element={<ForgotPasswordPage />} />
-              </Route>
-              <Route path="*" element={<SignInPage />} />
+              {nonAuthorizedRoutes.map((route) => (
+                customRoutes(route, styles)
+              ))}
             </Route>
           )}
         </Routes>
       </I18nextProvider>
     </div>
-  );
-};
-
-export const OrdinaryRoute: FC<{}> = () => <Outlet />;
-
-export const BottomNavigationRoute: FC<{}> = () => {
-  return (
-    <BottomNavigation>
-      <Outlet />
-    </BottomNavigation>
   );
 };

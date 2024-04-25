@@ -1,33 +1,37 @@
 import { Box } from "@mui/material";
 import React, { FC, useEffect, useState } from "react";
-import { Header } from "../../../components/layout/Headers/Header/Header";
-import { PageHeader } from "../../../components/layout/Headers/PageHeader/PageHeader";
-import { Plug } from "../../../components/layout/Plug/Plug";
-import { RowUser } from "../../../components/logic/RowUser/RowUser";
-import { UsersList } from "../../../components/logic/UsersList/UsersList";
-import { SmallGoldenRatioBox } from "../../../components/ui/customStyledComponents";
+import { Header } from "../../../../components/layout/Headers/Header/Header";
+import { PageHeader } from "../../../../components/layout/Headers/PageHeader/PageHeader";
+import { Plug } from "../../../../components/layout/Plug/Plug";
+import { RowUser } from "../../../../components/logic/RowUser/RowUser";
+import { UsersList } from "../../../../components/logic/UsersList/UsersList";
+import { SmallGoldenRatioBox } from "../../../../components/ui/customStyledComponents";
 import {
   blockThunk,
   unBlockThunk,
-} from "../../../fullStore/combos/profile/profileQueries";
-import { updateBlockedUsers } from "../../../fullStore/combos/profile/profilesSlice";
+} from "../../../../fullStore/combos/profile/profileQueries";
+import { updateBlockedUsers } from "../../../../fullStore/combos/profile/profilesSlice";
 import {
   selectId,
   setErrorMessage,
   setIsLoading,
-} from "../../../fullStore/combos/user/userSlice";
-import { useAppDispatch, useAppSelector } from "../../../fullStore/hooks";
-import { useGetBlockedUsersBySubstr } from "../../../fullStore/queries/searchQueries";
-import { RootState } from "../../../fullStore/rootStore";
-import useCustomDispatch from "../../../hooks/useCustomDispatch";
-import useUser from "../../../hooks/useUser";
-import { setSelectedUserIdCallbackType } from "../../../types/callbacks";
-import { blockedUserType } from "../../../types/storeTypes";
-import { transformNumber } from "../PostPage/PostPage";
+} from "../../../../fullStore/combos/user/userSlice";
+import { useAppDispatch, useAppSelector } from "../../../../fullStore/hooks";
+import { useGetBlockedUsersBySubstr } from "../../../../fullStore/queries/searchQueries";
+import { RootState } from "../../../../fullStore/rootStore";
+import useCustomDispatch from "../../../../hooks/useCustomDispatch";
+import useUser from "../../../../hooks/useUser";
+import { setSelectedUserIdCallbackType } from "../../../../types/callbacks";
+import { blockedUserType } from "../../../../types/storeTypes";
+import { transformNumber } from "../../PostPage/PostPage";
+import styles from "./BlockedPageStyle";
+import { useTranslation } from "react-i18next";
 
 let customBlockedUsers: blockedUserType[] | [] = [];
 
-export const BlockedPage: FC<{}> = () => {
+const BlockedPage: FC<{}> = () => {
+  const { t } = useTranslation("authorized");
+
   const id = useAppSelector((state: RootState) => selectId(state));
   const user = useUser();
 
@@ -131,23 +135,15 @@ export const BlockedPage: FC<{}> = () => {
   }, [user]);
 
   return (
-    <Box
-      sx={{
-        width: "100%",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "column",
-      }}
-    >
+    <Box sx={styles.container}>
       <PageHeader>
-        <Header text="Blocked" />
+        <Header text={t("blocked_title")} />
         <Plug />
       </PageHeader>
       <SmallGoldenRatioBox>
         {user ? (
           <UsersList
-            numberOf={blockedNumber + " blocked users"}
+            numberOf={blockedNumber + " " + t("blocked_users")}
             searchHandler={searchHandler}
           >
             {blockedUsers.map((user: any) => (
@@ -159,7 +155,7 @@ export const BlockedPage: FC<{}> = () => {
                 }
                 avatar={user.avatar}
                 name={user.name}
-                buttonText={user.isBlocked ? "unblock" : "block"}
+                buttonText={user.isBlocked ? t("blocked_unblock") : t("block")}
               />
             ))}
           </UsersList>
@@ -170,3 +166,5 @@ export const BlockedPage: FC<{}> = () => {
     </Box>
   );
 };
+
+export default BlockedPage;

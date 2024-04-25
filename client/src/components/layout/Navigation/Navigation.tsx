@@ -1,14 +1,12 @@
-import { Box } from "@mui/material";
+import { Box, Link as MaterialLink } from "@mui/material";
 import React, { FC } from "react";
-import { Link } from "react-router-dom";
+import { Outlet, Link as RouterLink } from "react-router-dom";
 import {
   selectAvatar,
   selectId,
 } from "../../../fullStore/combos/user/userSlice";
 import { useAppSelector } from "../../../fullStore/hooks";
 import { RootState } from "../../../fullStore/rootStore";
-import useUser from "../../../hooks/useUser";
-import { Avatar } from "../../ui/Buttons/Avatar/Avatar";
 import { CustomAvatar } from "../../ui/CustomAvatar/CustomAvatar";
 import {
   CustomAddIcon,
@@ -18,62 +16,57 @@ import {
   CustomSendIcon,
 } from "../../ui/CustomIcons/CustomIcons";
 import { CustomStack } from "../../ui/customStyledComponents";
-import styles from "./Navigation.module.less";
+import styles from "./NavigationStyle";
 
-export const FullNavigation: FC<{ children: any }> = ({ children }) => {
-  return (
-    <div className={styles.fullNavigation}>
-      <CustomStack
-        sx={{
-          padding: {
-            md: "25px 45px",
-            xs: "25px",
-          },
-        }}
-      >
-        <Link to="search">
-          <CustomSearchIcon />
-        </Link>
-        <Link to="chats">
-          <CustomSendIcon />
-        </Link>
-      </CustomStack>
-      <BottomNavigation />
-      {children}
-    </div>
-  );
-};
-
-export const BottomNavigation: FC<{ children?: any }> = ({ children }) => {
+export const Navigation: FC<{}> = ({ }) => {
   const id = useAppSelector((state: RootState) => selectId(state));
   const avatar = useAppSelector((state: RootState) => selectAvatar(state));
 
   return (
     <>
-      <div className={styles.bottomNavigation}>
-        <CustomStack
-          sx={{
-            padding: {
-              md: "25px 45px",
-              xs: "15px 25px",
-            },
-          }}
-        >
-          <Link to="">
+      <Box sx={styles.container}>
+        <CustomStack sx={styles.stack}>
+          <MaterialLink
+            component={RouterLink}
+            sx={styles.link}
+            to="search"
+          >
+            <CustomSearchIcon />
+          </MaterialLink>
+          <MaterialLink component={RouterLink} sx={styles.link} to="">
             <CustomHomeIcon />
-          </Link>
-          <Link to="posting">
+          </MaterialLink>
+          <MaterialLink
+            component={RouterLink}
+            sx={styles.link}
+            to="posting"
+          >
             <CustomAddIcon />
-          </Link>
-          <Link to="requests">
+          </MaterialLink>
+          {/* <MaterialLink
+            component={RouterLink}
+            sx={styles.link}
+            to="requests"
+          >
             <CustomListIcon />
-          </Link>
-          <Link to={`profile:${id}`}>
-            <CustomAvatar width={50} src={avatar} />
-          </Link>
+          </MaterialLink> */}
+          <MaterialLink
+            component={RouterLink}
+            sx={styles.link}
+            to={`profile:${id}`}
+          >
+            <CustomAvatar width={25} src={avatar} />
+          </MaterialLink>
+          <MaterialLink
+            component={RouterLink}
+            sx={styles.link}
+            to="chats"
+          >
+            <CustomSendIcon />
+          </MaterialLink>
         </CustomStack>
-      </div>
-      {children}
+      </Box>
+      <Outlet></Outlet>
     </>
   );
 };

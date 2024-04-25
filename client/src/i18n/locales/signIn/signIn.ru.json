@@ -1,5 +1,6 @@
 {
   "header": "Вход",
+  "email": "Электронная почта",
   "passwordFieldLabel": "Пароль",
   "rememberMe": "запомнить меня",
   "submit": "Вход",

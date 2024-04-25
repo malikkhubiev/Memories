@@ -1,28 +1,37 @@
 import { Box } from "@mui/material";
 import React, { FC, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Header } from "../../../components/layout/Headers/Header/Header";
-import { PageHeader } from "../../../components/layout/Headers/PageHeader/PageHeader";
-import { Plug } from "../../../components/layout/Plug/Plug";
-import { RowUser } from "../../../components/logic/RowUser/RowUser";
-import { UsersList } from "../../../components/logic/UsersList/UsersList";
-import { SmallGoldenRatioBox } from "../../../components/ui/customStyledComponents";
+import { Header } from "../../../../components/layout/Headers/Header/Header";
+import { PageHeader } from "../../../../components/layout/Headers/PageHeader/PageHeader";
+import { Plug } from "../../../../components/layout/Plug/Plug";
+import { RowUser } from "../../../../components/logic/RowUser/RowUser";
+import { UsersList } from "../../../../components/logic/UsersList/UsersList";
+import { SmallGoldenRatioBox } from "../../../../components/ui/customStyledComponents";
 import {
   useFollow,
   useUnfollow,
-} from "../../../fullStore/combos/profile/profileQueries";
+} from "../../../../fullStore/combos/profile/profileQueries";
 import {
   selectId,
   setErrorMessage,
   setIsLoading,
-} from "../../../fullStore/combos/user/userSlice";
-import { useAppDispatch, useAppSelector } from "../../../fullStore/hooks";
-import { useGetFollowersOrFollowingsBySubstr } from "../../../fullStore/queries/searchQueries";
-import useUser from "../../../hooks/useUser";
-import { setSelectedUserIdCallbackType } from "../../../types/callbacks";
-import { followersAndFollowingListType } from "../../../types/storeTypes";
+} from "../../../../fullStore/combos/user/userSlice";
+import { useAppDispatch, useAppSelector } from "../../../../fullStore/hooks";
+import { useGetFollowersOrFollowingsBySubstr } from "../../../../fullStore/queries/searchQueries";
+import useUser from "../../../../hooks/useUser";
+import { setSelectedUserIdCallbackType } from "../../../../types/callbacks";
+import { followersAndFollowingListType } from "../../../../types/storeTypes";
+import styles from "./FollowersPageStyle";
+import { useTranslation } from "react-i18next";
+import { addDynamicResources } from "../../../../i18n/i18n";
 
-export const FollowersPage: FC<{}> = () => {
+const FollowersPage: FC<{}> = () => {
+
+  const {t} = useTranslation("authorized");
+  useEffect(() => {
+    addDynamicResources("authorized");
+  }, [])
+
   const ownId = useAppSelector((state) => selectId(state));
   const userId = +useParams().id.slice(1);
   const user = useUser(userId);
@@ -130,17 +139,11 @@ export const FollowersPage: FC<{}> = () => {
   };
 
   return (
-    <Box
-      sx={{
-        width: "100%",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "column",
-      }}
-    >
+    <Box sx={styles.container}>
       <PageHeader>
-        <Header text={isFollowers ? "Followers" : "Following"} />
+        <Header
+          text={isFollowers ? t("followers_title1") : t("followers_title2")}
+        />
         <Plug />
       </PageHeader>
       <SmallGoldenRatioBox>
@@ -165,7 +168,11 @@ export const FollowersPage: FC<{}> = () => {
                       }
                       avatar={user.avatar}
                       name={user.name}
-                      buttonText={user.amIFollowed ? "unfollow" : "follow"}
+                      buttonText={
+                        user.amIFollowed
+                          ? t("followers_buttonUnfollow")
+                          : t("followers_buttonFollow")
+                      }
                     />
                   );
               })
@@ -175,3 +182,5 @@ export const FollowersPage: FC<{}> = () => {
     </Box>
   );
 };
+
+export default FollowersPage;

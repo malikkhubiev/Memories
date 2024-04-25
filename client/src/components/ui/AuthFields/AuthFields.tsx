@@ -19,7 +19,7 @@ export const CustomNameField: FC<any> = ({ formik, sx }) => {
   );
 };
 
-export const CustomEmailField: FC<any> = ({ formik, sx }) => {
+export const CustomEmailField: FC<any> = ({ formik, sx, label }) => {
   return (
     <TextField
       sx={sx || {}}
@@ -27,7 +27,7 @@ export const CustomEmailField: FC<any> = ({ formik, sx }) => {
       fullWidth
       id="email"
       name="email"
-      label="Email"
+      label={label}
       variant="outlined"
       value={formik.values.email}
       onChange={formik.handleChange}

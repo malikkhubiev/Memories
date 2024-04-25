@@ -1,5 +1,6 @@
 {
   "header": "Sign in",
+  "email": "Email",
   "passwordFieldLabel": "Password",
   "rememberMe": "remember me",
   "submit": "Submit",

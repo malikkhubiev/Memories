@@ -1,10 +1,6 @@
+import { Box } from "@mui/material";
 import React, { FC, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { ColumnWrap } from "../../../components/layout/ColumnWrap/ColumnWrap";
-import { Header } from "../../../components/layout/Headers/Header/Header";
-import { PageHeader } from "../../../components/layout/Headers/PageHeader/PageHeader";
-import { Plug } from "../../../components/layout/Plug/Plug";
-import { AddInput } from "../../../components/ui/Inputs/AddInput/AddInput";
 import {
   compareCodeThunk,
   useCheckingEmail,
@@ -16,16 +12,22 @@ import {
 import { useAppDispatch } from "../../../fullStore/hooks";
 import useCustomDispatch from "../../../hooks/useCustomDispatch";
 import { setIsEmailVerifiedCallbackType } from "../../../types/callbacks";
+import { Header } from "../../layout/Headers/Header/Header";
+import { PageHeader } from "../../layout/Headers/PageHeader/PageHeader";
+import { Plug } from "../../layout/Plug/Plug";
+import { AddInput } from "../../ui/Inputs/AddInput/AddInput";
 import {
   CustomStack,
   SmallGoldenRatioBox,
-} from "../../../components/ui/customStyledComponents";
-import { Box } from "@mui/material";
+} from "../../ui/customStyledComponents";
+import styles from "./EmailVerifyingStyle";
 
-export const EmailVerifyingPage: FC<EmailVerifyingPagePropsType> = ({
+export const EmailVerifying: FC<EmailVerifyingPropsType> = ({
   setIsEmailVerifiedCallback,
   removeBackArrow,
+  t,
 }) => {
+  console.log(t("emailValheader"));
   let [hasEmailBeenSent, setHasEmailBeenSent] = useState<boolean>(false);
   let [email, setEmail] = useState<string>("");
   const process =
@@ -59,67 +61,31 @@ export const EmailVerifyingPage: FC<EmailVerifyingPagePropsType> = ({
   };
 
   return (
-    <Box
-      sx={{
-        width: "100%",
-        display: "flex",
-        justifyContent: "flex-start",
-        alignItems: "center",
-        flexDirection: "column",
-      }}
-    >
+    <Box sx={styles.container}>
       {removeBackArrow ? (
-        <Box
-          sx={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Header
-            sx={{
-              textAlign: "center",
-            }}
-            text="Email validation"
-          />
+        <Box sx={styles.header}>
+          <Header sx={styles.center} text={t("emailValheader")} />
         </Box>
       ) : (
         <PageHeader isShowing={false}>
-          <Header
-            sx={{
-              textAlign: "center",
-            }}
-            text="Email validation"
-          />
+          <Header sx={styles.center} text={t("emailValheader")} />
           <Plug />
         </PageHeader>
       )}
-      <SmallGoldenRatioBox
-        sx={{
-          alignItems: "center",
-        }}
-      >
-        <CustomStack
-          sx={{
-            flexDirection: "column",
-            padding: "0 15px",
-          }}
-        >
+      <SmallGoldenRatioBox sx={styles.center}>
+        <CustomStack sx={styles.stack}>
           <AddInput
             text=""
-            buttonText="Send"
-            label="Email"
+            buttonText={t("sendButtonText")}
+            label={t("emailLabel")}
             addInputCallback={sendButtonHandler}
           />
           {hasEmailBeenSent ? (
             <AddInput
-              sx={{
-                marginTop: "20px",
-              }}
+              sx={styles.verifyInput}
               text=""
               buttonText="Verify"
-              label="Verification code"
+              label={t("verificationCode")}
               addInputCallback={verifyButtonHandler}
             />
           ) : (
@@ -131,7 +97,8 @@ export const EmailVerifyingPage: FC<EmailVerifyingPagePropsType> = ({
   );
 };
 
-type EmailVerifyingPagePropsType = {
+type EmailVerifyingPropsType = {
   setIsEmailVerifiedCallback: setIsEmailVerifiedCallbackType;
   removeBackArrow?: true;
+  t: any;
 };

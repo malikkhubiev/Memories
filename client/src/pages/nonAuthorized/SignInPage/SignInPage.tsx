@@ -3,10 +3,10 @@ import {
   Link as MaterialLink,
   Typography,
   useMediaQuery,
-  useTheme
+  useTheme,
 } from "@mui/material";
 import { useFormik } from "formik";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { PageHeader } from "../../../components/layout/Headers/PageHeader/PageHeader";
 import { Plug } from "../../../components/layout/Plug/Plug";
@@ -25,10 +25,11 @@ import {
   signInThunk,
 } from "../../../fullStore/combos/user/userQueries";
 import useCustomDispatch from "../../../hooks/useCustomDispatch";
-import styles from "./SignInPage.less";
 import { signInvalidationSchema } from "./signInValidation";
 
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
+import { addDynamicResources } from "../../../i18n/i18n";
+import styles from "./SignInPageStyle";
 
 const initialValues: initialValuesType = {
   email: "",
@@ -36,13 +37,13 @@ const initialValues: initialValuesType = {
   rememberMe: false,
 };
 
-export const SignInPage = () => {
-
+const SignInPage = () => {
   const { t } = useTranslation("signIn");
-
   const thunkDispatch = useCustomDispatch();
+  const [dynamicResourcesLoaded, setDynamicResourcesLoaded] = useState(false);
 
-  const submitHandler = (values: initialValuesType) => {
+  // @ts-ignore
+  const submitHandler = (values) => {
     thunkDispatch(signInThunk(values));
   };
 
@@ -54,85 +55,56 @@ export const SignInPage = () => {
 
   useEffect(() => {
     thunkDispatch(getIsAuthThunk());
+    addDynamicResources("signIn").then(() => {
+      setDynamicResourcesLoaded(true);
+    });
   }, []);
 
   const theme = useTheme();
   const isSmallSize = useMediaQuery(theme.breakpoints.down("sm"));
 
+  useEffect(() => {
+    if (dynamicResourcesLoaded) {
+      formik.resetForm();
+    }
+  }, [dynamicResourcesLoaded]);
+
   return (
-    <Box
-      sx={{
-        width: "100%",
-        display: "flex",
-        justifyContent: "flex-start",
-        alignItems: "center",
-        flexDirection: "column",
-      }}
-    >
+    <Box sx={styles.container}>
       <PageHeader isShowing={false}>
-        <Typography variant="h1">{t('header')}</Typography>
+        <Typography variant="h1">{t("header")}</Typography>
         <Plug />
       </PageHeader>
-      <SmallGoldenRatioBox
-        sx={{
-          alignItems: "center",
-        }}
-      >
-        <CustomStack
-          sx={{
-            flexDirection: "column",
-            padding: "0 15px",
-          }}
-        >
-          <form className={styles.form} onSubmit={formik.handleSubmit}>
-            <CustomEmailField formik={formik} />
+      <SmallGoldenRatioBox sx={styles.goldenRatBox}>
+        <CustomStack sx={styles.column}>
+          <form style={{ width: "100%" }} onSubmit={formik.handleSubmit}>
+            <CustomEmailField formik={formik} label={t("email")} />
             <CustomPasswordField
-              sx={{
-                margin: "50px 0",
-              }}
+              sx={styles.password}
               formik={formik}
               name="password"
-              label={t('passwordFieldLabel')}
+              label={t("passwordFieldLabel")}
             />
             <CustomCheckboxField
               formik={formik}
               name="rememberMe"
-              label={t('rememberMe')}
+              label={t("rememberMe")}
             />
-            <CustomButton
-              sx={{
-                marginTop: "50px",
-              }}
-              text={t('submit')}
-            />
+            <CustomButton sx={styles.button} text={t("submit")} />
           </form>
-          <Box
-            sx={{
-              textAlign: "center",
-              marginTop: "20px",
-            }}
-          >
+          <Box sx={styles.box}>
             <MaterialLink
               variant="body2"
               component={RouterLink}
               to="/forgotPassword"
             >
-              {t('forgotPassword')}
+              {t("forgotPassword")}
             </MaterialLink>
           </Box>
-          <Box
-            sx={{
-              margin: "20px 0",
-              textAlign: "center",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              flexDirection: () => (isSmallSize ? "column" : "row"),
-            }}
-          >
-            <Typography variant="body2">{t('haveAccount')}</Typography>
+          <Box sx={styles.redirect(isSmallSize)}>
+            <Typography variant="body2">{t("haveAccount")}</Typography>
             <MaterialLink variant="body2" component={RouterLink} to="/signUp">
-              {t('signUp')}
+              {t("signUp")}
             </MaterialLink>
           </Box>
         </CustomStack>
@@ -146,3 +118,5 @@ type initialValuesType = {
   password: string;
   rememberMe: boolean;
 };
+
+export default SignInPage;

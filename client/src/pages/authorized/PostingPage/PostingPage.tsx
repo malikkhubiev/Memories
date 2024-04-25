@@ -8,7 +8,6 @@ import { ChangeInput } from "../../../components/ui/Inputs/ChangeInput/ChangeInp
 import { ColumnWrap } from "../../../components/layout/ColumnWrap/ColumnWrap";
 import { Plug } from "../../../components/layout/Plug/Plug";
 import * as mobilenet from "@tensorflow-models/mobilenet";
-import styles from "./PostingPage.module.less";
 import { readyImageCallbackType } from "../../../types/callbacks";
 import { useUploadImage } from "../../../fullStore/queries/imageQueries";
 import { imageType } from "../../../types/storeTypes";
@@ -24,8 +23,17 @@ import {
   CustomStack,
   SmallGoldenRatioBox,
 } from "../../../components/ui/customStyledComponents";
+import styles from "./PostingPageStyle"
+import { useTranslation } from "react-i18next";
+import { addDynamicResources } from "../../../i18n/i18n";
 
-export const PostingPage: FC<{}> = () => {
+const PostingPage: FC<{}> = () => {
+
+  const {t} = useTranslation("authorized");
+  useEffect(() => {
+    addDynamicResources("authorized");
+  }, [])
+
   let [currentIsLoading, setCurrentIsLoading] = useState<boolean>(false);
   const [model, setModel] = useState<any>(null);
 
@@ -153,19 +161,7 @@ export const PostingPage: FC<{}> = () => {
     <>
       {currentIsLoading ? (
         <Box
-          sx={{
-            width: "100vw",
-            height: "100vh",
-            overflow: "hidden",
-            position: "fixed",
-            zIndex: "9999",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: "#fff",
-            top: "0",
-            left: "0",
-          }}
+          sx={styles.above}
         >
           <CircularProgress size={100} />
         </Box>
@@ -173,54 +169,40 @@ export const PostingPage: FC<{}> = () => {
         ""
       )}
       <CustomStack
-        sx={{
-          flexDirection: "column",
-          paddingBottom: "120px",
-        }}
+        sx={styles.stack}
       >
         <PageHeader isShowing={false}>
           <Header text="Post" />
           <Plug />
         </PageHeader>
         <SmallGoldenRatioBox
-          sx={{
-            alignItems: "center",
-          }}
+          sx={styles.smallGoldenRatioBox}
         >
           <ImageUpload readyImageCallback={readyImageCallback} />
           <CustomStack
-            sx={{
-              flexDirection: "column",
-              padding: "0 15px",
-            }}
+            sx={styles.insideStack}
           >
             <ChangeInput
               text={description}
               isMultiline={true}
               changeInputCallback={descriptionCallback}
               placeholder="Description"
-              sx={{
-                marginTop: "20px",
-              }}
+              sx={styles.changeInput}
             />
             <ChangeInput
               text={tags.map((tag) => (tag = "#" + tag)).join(" ")}
               changeInputCallback={tagCallback}
               placeholder="#Tags"
               isMultiline={true}
-              sx={{
-                marginTop: "20px",
-              }}
+              sx={styles.changeInput}
             />
             <Button
-              sx={{
-                marginTop: "20px",
-              }}
+              sx={styles.changeInput}
               onClick={postHandler}
               variant="contained"
               disabled={!(description && tags.length && imageFile)}
             >
-              Post
+              {t("posting_button")}
             </Button>
           </CustomStack>
         </SmallGoldenRatioBox>
@@ -228,3 +210,5 @@ export const PostingPage: FC<{}> = () => {
     </>
   );
 };
+
+export default PostingPage;

@@ -24,7 +24,9 @@ import {
   menuOptionsHandlerCallbackType,
 } from "../../../types/callbacks";
 import { commentType, imageType } from "../../../types/storeTypes";
-import styles from "./PostPage.module.less";
+import styles from "./PostPageStyle";
+import { useTranslation } from "react-i18next";
+import { addDynamicResources } from "../../../i18n/i18n";
 
 export const transformNumber = (number: number) => {
   let result = String(number);
@@ -36,7 +38,13 @@ export const transformNumber = (number: number) => {
   return result;
 }; // потом убрать куда-нибудь
 
-export const PostPage: FC<{}> = () => {
+const PostPage: FC<{}> = () => {
+
+  const {t} = useTranslation("authorized");
+  useEffect(() => {
+    addDynamicResources("authorized");
+  }, [])
+
   const imageId = +useParams().imageId.slice(1);
   const isCommentSectionOpenedByParams =
     useParams().isCommentSectionOpened.slice(1) === "true";
@@ -192,17 +200,7 @@ export const PostPage: FC<{}> = () => {
           <>
             <Box
               ref={ref}
-              sx={{
-                width: "100%",
-                height: "80vh",
-                padding: "0 25px",
-                overflowY: "scroll",
-                borderTop: "1px solid #000",
-                display: "flex",
-                justifyContent: "flex-start",
-                alignItems: "center",
-                flexDirection: "column",
-              }}
+              sx={styles.comments}
             >
               {comments && comments.length
                 ? comments.map((comment: any) => (
@@ -219,8 +217,8 @@ export const PostPage: FC<{}> = () => {
               isMultiline={true}
               text={inputText}
               addInputCallback={sendCommentCallback}
-              buttonText="Send"
-              placeholder="Looking good!"
+              buttonText={t("post_buttonText")}
+              placeholder={t("post_placeholder")}
             />
           </>
         ) : (
@@ -230,3 +228,5 @@ export const PostPage: FC<{}> = () => {
     </ColumnWrap>
   );
 };
+
+export default PostPage;

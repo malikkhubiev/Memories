@@ -1,5 +1,5 @@
 import { Box, Button } from "@mui/material";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Header } from "../../../components/layout/Headers/Header/Header";
 import { CustomPreferences } from "../../../components/logic/Preferences/CustomPreferences/CustomPreferences";
@@ -17,7 +17,9 @@ import { selectId } from "../../../fullStore/combos/user/userSlice";
 import { useAppSelector } from "../../../fullStore/hooks";
 import { RootState } from "../../../fullStore/rootStore";
 import useCustomDispatch from "../../../hooks/useCustomDispatch";
-import styles from "./PreferencesPage.module.less";
+import styles from "./PreferencesPageStyle";
+import { useTranslation } from "react-i18next";
+import { addDynamicResources } from "../../../i18n/i18n";
 
 const preferences = [
   { text: "sport", isSelected: false },
@@ -30,7 +32,13 @@ const preferences = [
   { text: "USSR", isSelected: false },
 ];
 
-export const PreferencesPage: FC<{}> = () => {
+const PreferencesPage: FC<{}> = () => {
+
+  const {t} = useTranslation("authorized");
+  useEffect(() => {
+    addDynamicResources("authorized");
+  }, [])
+
   const id = useAppSelector((state: RootState) => selectId(state));
   const dispatch = useCustomDispatch();
 
@@ -167,23 +175,14 @@ export const PreferencesPage: FC<{}> = () => {
 
   return (
     <Box
-      sx={{
-        width: "100%",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "flex-start",
-      }}
+      sx={styles.container}
     >
       <SmallGoldenRatioBox>
         <CustomStack
-          sx={{
-            flexDirection: "column",
-            textAlign: "center",
-            padding: "25px",
-          }}
+          sx={styles.stack}
         >
-          <Header text="Select your preferences from the list or add your own" />
-          <Box className={styles.preferences}>
+          <Header text={t("preferences_title")} />
+          <Box sx={styles.preferences}>
             {customPreferences.map((preference) => (
               <CustomPreference
                 key={preference}
@@ -206,7 +205,7 @@ export const PreferencesPage: FC<{}> = () => {
             disabled={!selectedPreferences.length}
             onClick={nextButtonHanlder}
           >
-            Next
+            {t("preferences_button")}
           </Button>
         </CustomStack>
       </SmallGoldenRatioBox>
@@ -215,3 +214,5 @@ export const PreferencesPage: FC<{}> = () => {
 };
 
 export type addCustomPrefType = (preferenceText: string) => void;
+
+export default PreferencesPage;

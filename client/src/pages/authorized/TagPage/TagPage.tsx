@@ -14,14 +14,14 @@ import { useAppDispatch } from "../../../fullStore/hooks";
 import { useGetImagesByTag } from "../../../fullStore/queries/tagsQueries";
 import { sortByToggleCallbackType } from "../../../types/callbacks";
 import { imageType } from "../../../types/storeTypes";
-import styles from "./TagPage.module.less";
+import styles from "./TagPageStyle";
 
 type imagesType = {
   count: string;
   rows: imageType[] | [];
 };
 
-export const TagPage: FC<{}> = () => {
+const TagPage: FC<{}> = () => {
   const [currentImages, setCurrentImages] = useState<imagesType>({
     count: "0",
     rows: [],
@@ -99,9 +99,7 @@ export const TagPage: FC<{}> = () => {
             sortByToggleCallback={sortByToggleCallback}
           >
             <Typography
-              sx={{
-                fontSize: "30px",
-              }}
+              sx={styles.tag}
               variant="body2"
             >
               #{tagName}
@@ -112,3 +110,5 @@ export const TagPage: FC<{}> = () => {
     </ColumnWrap>
   );
 };
+
+export default TagPage;

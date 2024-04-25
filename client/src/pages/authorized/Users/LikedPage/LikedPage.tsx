@@ -1,21 +1,30 @@
 import { Box } from "@mui/material";
 import React, { FC, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Header } from "../../../components/layout/Headers/Header/Header";
-import { PageHeader } from "../../../components/layout/Headers/PageHeader/PageHeader";
-import { Plug } from "../../../components/layout/Plug/Plug";
-import { RowUser } from "../../../components/logic/RowUser/RowUser";
-import { UsersList } from "../../../components/logic/UsersList/UsersList";
-import { SmallGoldenRatioBox } from "../../../components/ui/customStyledComponents";
+import { Header } from "../../../../components/layout/Headers/Header/Header";
+import { PageHeader } from "../../../../components/layout/Headers/PageHeader/PageHeader";
+import { Plug } from "../../../../components/layout/Plug/Plug";
+import { RowUser } from "../../../../components/logic/RowUser/RowUser";
+import { UsersList } from "../../../../components/logic/UsersList/UsersList";
+import { SmallGoldenRatioBox } from "../../../../components/ui/customStyledComponents";
 import {
   setErrorMessage,
   setIsLoading,
-} from "../../../fullStore/combos/user/userSlice";
-import { useAppDispatch } from "../../../fullStore/hooks";
-import { useGetImageLikersBySubstr } from "../../../fullStore/queries/searchQueries";
-import { imageLikerType } from "../../../types/storeTypes";
+} from "../../../../fullStore/combos/user/userSlice";
+import { useAppDispatch } from "../../../../fullStore/hooks";
+import { useGetImageLikersBySubstr } from "../../../../fullStore/queries/searchQueries";
+import { imageLikerType } from "../../../../types/storeTypes";
+import styles from "./LikedPageStyle"
+import { useTranslation } from "react-i18next";
+import { addDynamicResources } from "../../../../i18n/i18n";
 
-export const LikedPage: FC<{}> = () => {
+const LikedPage: FC<{}> = () => {
+
+  const {t} = useTranslation("authorized");
+  useEffect(() => {
+    addDynamicResources("authorized");
+  }, [])
+
   const imageId = +useParams().imageId.slice(1);
   const [getLikers] = useGetImageLikersBySubstr();
   const usualDispatch = useAppDispatch();
@@ -52,21 +61,15 @@ export const LikedPage: FC<{}> = () => {
 
   return (
     <Box
-      sx={{
-        width: "100%",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "column",
-      }}
+      sx={styles.container}
     >
       <PageHeader>
-        <Header text="Liked" />
+        <Header text={t("liked_title")} />
         <Plug />
       </PageHeader>
       <SmallGoldenRatioBox>
         <UsersList
-          numberOf={number + " users liked this post"}
+          numberOf={number + " " + t("liked_numberOf")}
           searchHandler={searchHandler}
         >
           {likers
@@ -84,3 +87,5 @@ export const LikedPage: FC<{}> = () => {
     </Box>
   );
 };
+
+export default LikedPage;

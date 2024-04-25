@@ -1,30 +1,51 @@
-import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
-import signInEn from "./locales/signIn/signIn.en.json";
-import signInRu from "./locales/signIn/signIn.ru.json";
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
 
-const resources = {
-  en: {
-    signIn: signInEn,
-  },
-  ru: {
-    signIn: signInRu,
+let resourcesLoaded: any = {
+  en: {},
+  ru: {},
+};
+
+// @ts-ignore
+const loadResources = async (page: string, language: string) => {
+  try {
+    return await import(`./locales/${page}/${page}.${language}.json`);
+  } catch (error) {
+    console.error(`Failed to load resources for ${page}: ${error}`);
+    return {};
   }
 };
-// @ts-ignore
-i18n
-// @ts-ignore
-  .use(initReactI18next)
-  // @ts-ignore
-  .init({
-    // @ts-ignore
-    fallbackLng: 'en',
-    debug: true,
-    interpolation: {
-      escapeValue: false
-    },
-    wait: true,
-    resources: resources
-  });
+
+const takeOrLoad = async (page: string) => {
+  let toReturn: any = {};
+  if (!resourcesLoaded[i18n.language][page]) {
+    const resources = await loadResources(page, i18n.language);
+    resourcesLoaded[i18n.language][page] = resources.default;
+    toReturn = resources.default;
+  } else {
+    toReturn = resourcesLoaded[i18n.language][page];
+  }
+  console.log(toReturn);
+  return toReturn;
+};
+
+export const addDynamicResources = async (page: string) => {
+  console.log(page)
+  let resources = await takeOrLoad(page);
+  if (page === "signUp" || page === "forgotPassword") {
+    resources = {...resources, ...await takeOrLoad("emailVerifying")}
+  }
+  console.log(resources)
+  i18n.addResources(i18n.language, page, resources);
+};
+
+i18n.use(initReactI18next).init({
+  fallbackLng: "en",
+  debug: true,
+  interpolation: {
+    escapeValue: false,
+  },
+  resources: resourcesLoaded,
+});
 
 export default i18n;
