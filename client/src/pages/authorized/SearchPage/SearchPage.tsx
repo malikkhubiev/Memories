@@ -17,6 +17,7 @@ import {
 } from "../../../fullStore/combos/user/userSlice";
 import { useAppDispatch } from "../../../fullStore/hooks";
 import { CustomStack } from "../../../components/ui/customStyledComponents";
+import debounce from "lodash.debounce";
 import styles from "./SearchPageStyle";
 
 const SearchPage: FC<{}> = () => {
@@ -28,8 +29,9 @@ const SearchPage: FC<{}> = () => {
 
   const [getTagsBySubstring] = useGetTagsBySubstring();
   const [getUsersBySubstring] = useGetUsersBySubstring();
-
+  
   const searchHandler = (searchValue: string) => {
+    console.log(2)
     if (searchValue[0] === "#") {
       usualDispatch(setIsLoading(true));
       getTagsBySubstring({
@@ -66,6 +68,7 @@ const SearchPage: FC<{}> = () => {
       usualDispatch(setIsLoading(false));
     }
   };
+  const debouncedSearchHandler = debounce(searchHandler, 500);
 
   const {
     data: images,
@@ -94,7 +97,7 @@ const SearchPage: FC<{}> = () => {
             <Plug />
           </PageHeader>
           <SearchBarWithResults
-            searchHandler={searchHandler}
+            searchHandler={debouncedSearchHandler}
             searchResults={searchResults}
           />
         </Images>

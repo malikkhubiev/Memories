@@ -10,10 +10,7 @@ export const SearchBar: FC<{ searchHandler: searchButtonHandlerType }> = ({
 
   const searchValueHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue((prev) => (prev = event.target.value));
-  };
-
-  const searchButtonHandler = () => {
-    searchHandler(searchValue);
+    searchHandler(event.target.value)
   };
 
   return (
@@ -23,15 +20,8 @@ export const SearchBar: FC<{ searchHandler: searchButtonHandlerType }> = ({
         onChange={searchValueHandler}
         placeholder="Search..."
         className={styles.input}
-        onKeyPress={(ev) => {
-          console.log(ev);
-          if (ev.key === "Enter") {
-            searchButtonHandler();
-            ev.preventDefault();
-          }
-        }}
       />
-      <div className={styles.icon} onClick={searchButtonHandler}>
+      <div className={styles.icon}>
         <CustomSearchIcon />
       </div>
     </div>
