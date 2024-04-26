@@ -2,7 +2,7 @@ import { Alert } from "@mui/material";
 import React, { FC } from "react";
 import styles from "./CustomAlertStyle";
 
-interface Props {
+export interface Props {
   message: string;
 }
 
