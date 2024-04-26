@@ -1,31 +1,27 @@
 import { Box, Button, CircularProgress } from "@mui/material";
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { Header } from "../../../components/layout/Headers/Header/Header";
 import { PageHeader } from "../../../components/layout/Headers/PageHeader/PageHeader";
+import { Plug } from "../../../components/layout/Plug/Plug";
 import { ImageUpload } from "../../../components/logic/ImageUpload/ImageUpload";
 import { ChangeInput } from "../../../components/ui/Inputs/ChangeInput/ChangeInput";
-import { ColumnWrap } from "../../../components/layout/ColumnWrap/ColumnWrap";
-import { Plug } from "../../../components/layout/Plug/Plug";
-import * as mobilenet from "@tensorflow-models/mobilenet";
-import { readyImageCallbackType } from "../../../types/callbacks";
-import { useUploadImage } from "../../../fullStore/queries/imageQueries";
-import { imageType } from "../../../types/storeTypes";
-import useSocket from "../../../hooks/useSocket";
-import { useAppDispatch, useAppSelector } from "../../../fullStore/hooks";
-import { addUsualImageByDate } from "../../../fullStore/combos/images/imagesSlice";
-import {
-  selectIsLoading,
-  setIsLoading,
-} from "../../../fullStore/combos/user/userSlice";
-import { RootState } from "../../../fullStore/rootStore";
 import {
   CustomStack,
   SmallGoldenRatioBox,
 } from "../../../components/ui/customStyledComponents";
-import styles from "./PostingPageStyle";
-import { useTranslation } from "react-i18next";
+import { addUsualImageByDate } from "../../../fullStore/combos/images/imagesSlice";
+import {
+  setIsLoading
+} from "../../../fullStore/combos/user/userSlice";
+import { useAppDispatch } from "../../../fullStore/hooks";
+import { useUploadImage } from "../../../fullStore/queries/imageQueries";
+import useSocket from "../../../hooks/useSocket";
 import { addDynamicResources } from "../../../i18n/i18n";
+import { readyImageCallbackType } from "../../../types/callbacks";
+import { imageType } from "../../../types/storeTypes";
+import styles from "./PostingPageStyle";
 
 const PostingPage: FC<{}> = () => {
   const { t } = useTranslation("authorized");

@@ -6,11 +6,14 @@ import {
 } from "../../../types/callbacks";
 import { ImageInput } from "../../ui/Inputs/ImageInput/ImageInput";
 import { ImageProcessing } from "./ImageProcessing";
+import { Alert } from "@mui/material";
+import { CustomAlert } from "../../ui/CustomAlert/CustomAlert";
 
 export const ImageUpload: FC<ImageUploadPropsType> = ({
   readyImageCallback,
   src,
 }) => {
+  let [error, setError] = useState<string>("");
   let [isImageProcessingMode, setIsImageProcessingMode] =
     useState<boolean>(false);
   let [uploadedImage, setUploadedImage] = useState<HTMLCanvasElement | null>(
@@ -19,13 +22,21 @@ export const ImageUpload: FC<ImageUploadPropsType> = ({
 
   const uploadImageCallback: uploadImageCallbackType = (event) => {
     if (event.target.files && event.target.files.length > 0) {
-      const reader = new FileReader();
-      reader.readAsDataURL(event.target.files[0]);
-      reader.addEventListener("load", () => {
-        // @ts-ignore
-        setUploadedImage((prev) => (prev = reader.result));
-        setIsImageProcessingMode((prev) => (prev = true));
-      });
+      const file = event.target.files[0];
+      if (file.size < 5 * 1024 * 1024) {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.addEventListener("load", () => {
+          // @ts-ignore
+          setUploadedImage((prev) => (prev = reader.result));
+          setIsImageProcessingMode((prev) => (prev = true));
+        });
+      } else {
+        setError((prev) => (prev = "Maximum file size is 5MB"));
+        setTimeout(() => {
+          setError((prev) => (prev = ""));
+        }, 3000);
+      }
     }
   };
 
@@ -40,6 +51,7 @@ export const ImageUpload: FC<ImageUploadPropsType> = ({
 
   return (
     <>
+      {error && <CustomAlert message={error} />}
       {isImageProcessingMode ? (
         <ImageProcessing
           imageProcessedCallback={imageProcessedCallback}

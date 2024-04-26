@@ -15,6 +15,7 @@ const styles = {
   stack: {
     flexDirection: "column",
     paddingBottom: "120px",
+    position: "relative",
   },
   smallGoldenRatioBox: {
     alignItems: "center",

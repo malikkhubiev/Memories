@@ -38,6 +38,7 @@ import styles from "./App.module.less";
 import i18n, { addDynamicResources } from "../i18n/i18n";
 import { I18nextProvider, useTranslation } from "react-i18next";
 import { authorizedRoutes, customRoutes, nonAuthorizedRoutes } from "./routes";
+import { CustomAlert } from "../components/ui/CustomAlert/CustomAlert";
 
 export const App: FC<{}> = () => {
   const { t } = useTranslation("authorized");
@@ -118,9 +119,7 @@ export const App: FC<{}> = () => {
         }}
         open={Boolean(errorMessage)}
       >
-        <Alert severity="error" icon={false}>
-          {errorMessage}
-        </Alert>
+        <CustomAlert message={errorMessage} />
       </Snackbar>
       <I18nextProvider i18n={i18n}>
         {/* routes */}
