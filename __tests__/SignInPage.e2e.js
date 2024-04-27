@@ -39,13 +39,13 @@ describe("SignInPage", () => {
     await page.type("input[name=email]", "malik.hubiev@mail.ru");
     await page.type("input[name=password]", "12345678");
     await page.click("input[name=rememberMe]");
-  
+
     // Ожидаем завершения навигации после клика на кнопку отправки формы
     await page.click("button[type=submit]");
-  
+
     // Ожидаем появления элемента с id "logo" на домашней странице
     await page.waitForSelector("#logo"); // Установка таймаута на 10 секунд
-  
+
     // Проверяем, что элемент с id "logo" присутствует на странице
     const logoElement = await page.$("#logo");
     expect(logoElement).toBeTruthy();
