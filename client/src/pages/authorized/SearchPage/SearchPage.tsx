@@ -29,9 +29,9 @@ const SearchPage: FC<{}> = () => {
 
   const [getTagsBySubstring] = useGetTagsBySubstring();
   const [getUsersBySubstring] = useGetUsersBySubstring();
-  
+
   const searchHandler = (searchValue: string) => {
-    console.log(2)
+    console.log(2);
     if (searchValue[0] === "#") {
       usualDispatch(setIsLoading(true));
       getTagsBySubstring({

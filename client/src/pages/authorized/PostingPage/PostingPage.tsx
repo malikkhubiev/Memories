@@ -12,9 +12,7 @@ import {
   SmallGoldenRatioBox,
 } from "../../../components/ui/customStyledComponents";
 import { addUsualImageByDate } from "../../../fullStore/combos/images/imagesSlice";
-import {
-  setIsLoading
-} from "../../../fullStore/combos/user/userSlice";
+import { setIsLoading } from "../../../fullStore/combos/user/userSlice";
 import { useAppDispatch } from "../../../fullStore/hooks";
 import { useUploadImage } from "../../../fullStore/queries/imageQueries";
 import useSocket from "../../../hooks/useSocket";

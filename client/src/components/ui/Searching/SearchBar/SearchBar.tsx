@@ -10,7 +10,7 @@ export const SearchBar: FC<{ searchHandler: searchButtonHandlerType }> = ({
 
   const searchValueHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue((prev) => (prev = event.target.value));
-    searchHandler(event.target.value)
+    searchHandler(event.target.value);
   };
 
   return (
