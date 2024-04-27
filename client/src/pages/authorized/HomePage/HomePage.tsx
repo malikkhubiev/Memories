@@ -69,7 +69,7 @@ export const HomePage: FC<{}> = () => {
 
   return (
     <ColumnWrap>
-      <img style={{ width: "100px" }} src={logo} />
+      <img id="logo" style={{ width: "100px" }} src={logo} />
       {images.length ? (
         <>
           <Snackbar

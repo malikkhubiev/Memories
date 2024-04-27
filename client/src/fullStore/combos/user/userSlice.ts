@@ -134,7 +134,9 @@ export const userSlice = createSlice({
     builder.addCase(
       getIsAuthThunk.rejected,
       (state: any, action: PayloadAction<any>) => {
-        // state["errorMessage"] = action.payload;
+        console.log(2222)
+        console.log(action.payload)
+        //state["errorMessage"] = action.payload;
       },
     );
     // @ts-ignore

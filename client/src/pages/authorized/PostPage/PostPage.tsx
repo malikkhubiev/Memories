@@ -113,7 +113,6 @@ const PostPage: FC<{}> = () => {
       setTimeout(() => {
         window.scrollTo(0, Number.MAX_SAFE_INTEGER);
         if (ref && ref.current) {
-          // @ts-ignore
           ref.current.scrollTop = Number.MAX_SAFE_INTEGER;
         }
       }, 10);

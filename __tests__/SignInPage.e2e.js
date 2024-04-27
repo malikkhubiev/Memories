@@ -7,7 +7,7 @@ describe("SignInPage", () => {
   beforeAll(async () => {
     browser = await puppeteer.launch();
     page = await browser.newPage();
-    await page.goto("http://localhost:3000"); // Замените URL на URL вашего локального сервера React
+    await page.goto("http://localhost:8080", { waitUntil: "domcontentloaded" }); // Ожидаем загрузки DOM контента
   });
 
   afterAll(async () => {
@@ -39,12 +39,15 @@ describe("SignInPage", () => {
     await page.type("input[name=email]", "malik.hubiev@mail.ru");
     await page.type("input[name=password]", "12345678");
     await page.click("input[name=rememberMe]");
-
-    await Promise.all([
-      page.waitForNavigation(),
-      page.click("button[type=submit]"),
-    ]);
-
-    expect(page.url()).toBe("http://localhost:3000/#/");
-  });
+  
+    // Ожидаем завершения навигации после клика на кнопку отправки формы
+    await page.click("button[type=submit]");
+  
+    // Ожидаем появления элемента с id "logo" на домашней странице
+    await page.waitForSelector("#logo"); // Установка таймаута на 10 секунд
+  
+    // Проверяем, что элемент с id "logo" присутствует на странице
+    const logoElement = await page.$("#logo");
+    expect(logoElement).toBeTruthy();
+  }); // Увеличиваем тайм-аут теста до 20 секунд
 });
