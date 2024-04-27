@@ -72,6 +72,7 @@ export const userSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    // @ts-ignore
     builder.addCase(
       compareCodeThunk.fulfilled,
       (state: UserState, action: PayloadAction<string>) => {
@@ -84,6 +85,7 @@ export const userSlice = createSlice({
         state["errorMessage"] = action.payload;
       },
     );
+    // @ts-ignore
     builder.addCase(
       signInThunk.fulfilled,
       (
@@ -110,6 +112,7 @@ export const userSlice = createSlice({
         state["errorMessage"] = action.payload;
       },
     );
+    // @ts-ignore
     builder.addCase(
       getIsAuthThunk.fulfilled,
       (
@@ -134,6 +137,7 @@ export const userSlice = createSlice({
         // state["errorMessage"] = action.payload;
       },
     );
+    // @ts-ignore
     builder.addCase(
       changeNameAvatarIsOpenedThunk.fulfilled,
       (
@@ -153,6 +157,7 @@ export const userSlice = createSlice({
         state["errorMessage"] = action.payload;
       },
     );
+    // @ts-ignore
     builder.addCase(
       deleteAccountThunk.fulfilled,
       (state: UserState, action: PayloadAction<any>) => {
