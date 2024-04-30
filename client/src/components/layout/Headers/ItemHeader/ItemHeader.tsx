@@ -8,7 +8,6 @@ import {
   optionActionCallbackType,
 } from "../../../../types/callbacks";
 import { CustomAvatar } from "../../../ui/CustomAvatar/CustomAvatar";
-import { CustomMoreVerticalIcon } from "../../../ui/CustomIcons/CustomIcons";
 import { CustomMenu } from "../../../ui/CustomMenu/CustomMenu";
 import {
   CustomStack,
@@ -47,7 +46,7 @@ export const ItemHeader: FC<ItemHeaderPropsType> = ({
         imgSrc={imgSrc}
         menuOptions={menuOptions}
         callback={optionActionCallback}
-        icon={CustomMoreVerticalIcon}
+        icon="more_vertical"
       />
     </CustomStack>
   );

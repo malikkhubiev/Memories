@@ -171,13 +171,13 @@ const PostingPage: FC<{}> = () => {
               text={description}
               isMultiline={true}
               changeInputCallback={descriptionCallback}
-              placeholder="Description"
+              placeholder={t("posting_description")}
               sx={styles.changeInput}
             />
             <ChangeInput
               text={tags.map((tag) => (tag = "#" + tag)).join(" ")}
               changeInputCallback={tagCallback}
-              placeholder="#Tags"
+              placeholder={`#${t('posting_tags')}`}
               isMultiline={true}
               sx={styles.changeInput}
             />

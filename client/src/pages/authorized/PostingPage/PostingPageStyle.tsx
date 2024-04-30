@@ -8,7 +8,6 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#fff",
     top: "0",
     left: "0",
   },

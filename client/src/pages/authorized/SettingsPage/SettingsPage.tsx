@@ -1,19 +1,14 @@
 import {
-  Button,
   Box,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
+  Button,
   FormControlLabel,
   FormGroup,
   Link as MaterialLink,
   Switch,
-  TextField,
-  Typography,
+  useTheme,
 } from "@mui/material";
 import React, { FC, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { ColumnWrap } from "../../../components/layout/ColumnWrap/ColumnWrap";
 import { Header } from "../../../components/layout/Headers/Header/Header";
@@ -21,31 +16,31 @@ import { PageHeader } from "../../../components/layout/Headers/PageHeader/PageHe
 import { Plug } from "../../../components/layout/Plug/Plug";
 import { DeleteAccountButton } from "../../../components/logic/DeleteAccountButton";
 import { ImageUpload } from "../../../components/logic/ImageUpload/ImageUpload";
-import { CustomArrowOutwardIcon } from "../../../components/ui/CustomIcons/CustomIcons";
-import { SmallGoldenRatioBox } from "../../../components/ui/customStyledComponents";
+import { CustomIcon } from "../../../components/ui/CustomIcons/CustomIcons";
 import { ChangeInput } from "../../../components/ui/Inputs/ChangeInput/ChangeInput";
-import {
-  changeNameAvatarIsOpenedThunk,
-  deleteAccountThunk,
-} from "../../../fullStore/combos/user/userQueries";
+import { SmallGoldenRatioBox } from "../../../components/ui/customStyledComponents";
+import { changeNameAvatarIsOpenedThunk } from "../../../fullStore/combos/user/userQueries";
 import { logOut } from "../../../fullStore/combos/user/userSlice";
 import { useAppDispatch } from "../../../fullStore/hooks";
 import useCustomDispatch from "../../../hooks/useCustomDispatch";
 import useUser from "../../../hooks/useUser";
+import { addDynamicResources } from "../../../i18n/i18n";
 import {
   changeInputCallbackType,
   readyImageCallbackType,
 } from "../../../types/callbacks";
 import styles from "./SettingsPageStyle";
-import { useTranslation } from "react-i18next";
-import { addDynamicResources } from "../../../i18n/i18n";
+import i18n from "../../../i18n/i18n";
 
 const SettingsPage: FC<{}> = () => {
+  const theme = useTheme();
+
   const { t } = useTranslation("authorized");
   useEffect(() => {
     addDynamicResources("authorized");
   }, []);
 
+  let [language, setLanguage] = useState<string>(i18n.language);
   const usualDispatch = useAppDispatch();
 
   const user = useUser();
@@ -65,6 +60,13 @@ const SettingsPage: FC<{}> = () => {
       if (user.isOpened) setIsAccountOpened((prev) => (prev = user.isOpened));
     }
   }, [user]);
+
+  const changeLanguage = async() => {
+    const newLanguage = language === "ru"? "en" : "ru";
+    await i18n.changeLanguage(newLanguage);
+    await addDynamicResources("authorized");
+    setLanguage((prev) => (prev = newLanguage));
+  };
 
   const readyImageCallback: readyImageCallbackType = (canvas, imageFile) => {
     setImage((prev) => (prev = canvas));
@@ -118,10 +120,10 @@ const SettingsPage: FC<{}> = () => {
               to="/blocked"
               variant="body2"
               component={RouterLink}
-              sx={styles.blocked}
+              sx={styles.blocked(theme.palette.mode === "dark")}
             >
               {t("settings_blockedUsers")}
-              <CustomArrowOutwardIcon />
+              <CustomIcon type="arrow_outward" />
             </MaterialLink>
             <SmallGoldenRatioBox sx={styles.goldenRatioBox}>
               <ImageUpload
@@ -152,6 +154,12 @@ const SettingsPage: FC<{}> = () => {
                 Apply
               </Button>
             </SmallGoldenRatioBox>
+            <Box
+              onClick={changeLanguage}
+              sx={styles.lang}
+            >
+              {language}
+            </Box>
             <Button sx={styles.buttonLogOut} onClick={logoutHandler}>
               Log out
             </Button>

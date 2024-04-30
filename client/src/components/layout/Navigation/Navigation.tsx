@@ -1,4 +1,4 @@
-import { Box, Link as MaterialLink } from "@mui/material";
+import { Box, Link as MaterialLink, useTheme } from "@mui/material";
 import React, { FC } from "react";
 import { Outlet, Link as RouterLink } from "react-router-dom";
 import {
@@ -8,40 +8,44 @@ import {
 import { useAppSelector } from "../../../fullStore/hooks";
 import { RootState } from "../../../fullStore/rootStore";
 import { CustomAvatar } from "../../ui/CustomAvatar/CustomAvatar";
-import {
-  CustomAddIcon,
-  CustomHomeIcon,
-  CustomListIcon,
-  CustomSearchIcon,
-  CustomSendIcon,
-} from "../../ui/CustomIcons/CustomIcons";
 import { CustomStack } from "../../ui/customStyledComponents";
 import styles from "./NavigationStyle";
+import { CustomIcon } from "../../ui/CustomIcons/CustomIcons";
 
-export const Navigation: FC<{}> = ({}) => {
+export const Navigation: FC<NavigationPropsType> = ({
+  toggleDarkMode,
+  isDarkMode,
+}) => {
+  const theme = useTheme();
   const id = useAppSelector((state: RootState) => selectId(state));
   const avatar = useAppSelector((state: RootState) => selectAvatar(state));
 
   return (
     <>
-      <Box sx={styles.container}>
+      <Box
+        sx={{
+          ...styles.container,
+          // @ts-ignore
+          backgroundColor: theme.palette.primary.mainBg,
+        }}
+      >
         <CustomStack sx={styles.stack}>
           <MaterialLink component={RouterLink} sx={styles.link} to="search">
-            <CustomSearchIcon />
+            <CustomIcon type="search" />
+            {/* <CustomSearchIcon /> */}
           </MaterialLink>
           <MaterialLink component={RouterLink} sx={styles.link} to="">
-            <CustomHomeIcon />
+            <CustomIcon type="home" />
+          </MaterialLink>
+          <MaterialLink component={RouterLink} sx={styles.link} to="requests">
+            <CustomIcon type="list" />
           </MaterialLink>
           <MaterialLink component={RouterLink} sx={styles.link} to="posting">
-            <CustomAddIcon />
+            <CustomIcon type="add" />
           </MaterialLink>
-          {/* <MaterialLink
-            component={RouterLink}
-            sx={styles.link}
-            to="requests"
-          >
-            <CustomListIcon />
-          </MaterialLink> */}
+          <Box onClick={toggleDarkMode} sx={styles.link}>
+            <CustomIcon type="light_mode" />
+          </Box>
           <MaterialLink
             component={RouterLink}
             sx={styles.link}
@@ -50,11 +54,16 @@ export const Navigation: FC<{}> = ({}) => {
             <CustomAvatar width={25} src={avatar} />
           </MaterialLink>
           <MaterialLink component={RouterLink} sx={styles.link} to="chats">
-            <CustomSendIcon />
+            <CustomIcon type="send" />
           </MaterialLink>
         </CustomStack>
       </Box>
       <Outlet></Outlet>
     </>
   );
+};
+
+type NavigationPropsType = {
+  toggleDarkMode: () => void;
+  isDarkMode: boolean;
 };

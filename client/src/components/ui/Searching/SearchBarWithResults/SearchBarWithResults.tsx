@@ -1,6 +1,6 @@
-import { Box, useMediaQuery, useTheme } from "@mui/material";
+import { Box, useMediaQuery, useTheme, Link as MaterialLink } from "@mui/material";
 import React, { FC, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import {
   searchButtonHandlerType,
   searchResultsType,
@@ -12,7 +12,7 @@ import {
   TypographyWithEllipsis,
 } from "../../customStyledComponents";
 import { SearchBar } from "../SearchBar/SearchBar";
-import styles from "./SearchBarWithResults.module.less";
+import styles from "./SearchBarWithResultsStyle";
 
 export const SearchBarWithResults: FC<SearchBarWithResultsPropsType> = ({
   searchHandler,
@@ -20,10 +20,6 @@ export const SearchBarWithResults: FC<SearchBarWithResultsPropsType> = ({
 }) => {
   const [localSearchResults, setLocalSearchResults] =
     useState<searchResultsType>(searchResults);
-
-  const blurHandler = () => {
-    setLocalSearchResults((prev) => (prev = { results: [] }));
-  };
 
   useEffect(() => {
     setLocalSearchResults((prev) => (prev = searchResults));
@@ -34,32 +30,19 @@ export const SearchBarWithResults: FC<SearchBarWithResultsPropsType> = ({
 
   return (
     <SmallGoldenRatioBox
-      sx={{
-        position: "relative",
-      }}
-      onBlur={blurHandler}
+      sx={styles.rel}
     >
       <ColumnWrap removePadding={true}>
         <SearchBar searchHandler={searchHandler} />
         {localSearchResults.results.length !== 0 && (
           <Box
-            sx={{
-              top: "100%",
-              width: "100%",
-              maxHeight: "90vh",
-              overflow: "scroll",
-              position: "absolute",
-              display: "flex",
-              justifyContent: "flex-start",
-              alignItems: "flex-start",
-              flexDirection: "column",
-              padding: () => (isSmallSize ? "50px 15px" : "50px"),
-            }}
+            sx={styles.container(isSmallSize)}
           >
             {localSearchResults.results.map((searchResult: any) => (
-              <Link
+              <MaterialLink
+                component={RouterLink}
                 key={searchResult.name}
-                className={styles.link}
+                sx={styles.link}
                 to={
                   localSearchResults.type === "tag"
                     ? `/tags/:${searchResult.id}/:${searchResult.name}`
@@ -72,10 +55,7 @@ export const SearchBarWithResults: FC<SearchBarWithResultsPropsType> = ({
                   ""
                 )}
                 <Box
-                  sx={{
-                    maxWidth: "75%",
-                    marginLeft: "10px",
-                  }}
+                  sx={styles.item}
                 >
                   <TypographyWithEllipsis>
                     {localSearchResults.type === "tag"
@@ -83,7 +63,7 @@ export const SearchBarWithResults: FC<SearchBarWithResultsPropsType> = ({
                       : searchResult.name}
                   </TypographyWithEllipsis>
                 </Box>
-              </Link>
+              </MaterialLink>
             ))}
           </Box>
         )}

@@ -19,37 +19,28 @@ import {
 import { tagType } from "../../../types/storeTypes";
 import { ItemHeader } from "../../layout/Headers/ItemHeader/ItemHeader";
 import { Buttons } from "../../ui/Buttons/ImageButtons/ImageButtons";
-import {
-  CustomDeleteIcon,
-  CustomDownloadIcon,
-  CustomFilledBookmarkIcon,
-  CustomHideImageIcon,
-  CustomNotInterestedIcon,
-  CustomShowImageIcon,
-  CustomUnsaveIcon,
-} from "../../ui/CustomIcons/CustomIcons";
 import { BasicMenuComponent } from "../../ui/CustomMenu/CustomComponents/CustomMenuComponents";
 import { menuOption } from "../../ui/CustomMenu/CustomMenu";
 import { ThreeLineTypographyWithEllipsis } from "../../ui/customStyledComponents";
 import styles from "./Image.module.less";
+import { useTranslation } from "react-i18next";
+import { addDynamicResources } from "../../../i18n/i18n";
 
 const ownImageMenuOptions = [
-  { id: 1, props: { body: "Save", icon: CustomFilledBookmarkIcon } },
-  { id: 2, props: { body: "Unsave", icon: CustomUnsaveIcon } },
-  { id: 3, props: { body: "Download", icon: CustomDownloadIcon } },
-  { id: 4, props: { body: "Hide", icon: CustomHideImageIcon } },
-  { id: 5, props: { body: "Show", icon: CustomShowImageIcon } },
-  { id: 6, props: { body: "Delete", icon: CustomDeleteIcon } },
+  { id: 1, props: { body: "image_button_save", icon: "filled_bookmark" } },
+  { id: 2, props: { body: "image_button_unsave", icon: "unsave" } },
+  { id: 3, props: { body: "image_button_download", icon: "download" } },
+  { id: 4, props: { body: "image_button_hide", icon: "hide" } },
+  { id: 5, props: { body: "image_button_show", icon: "show" } },
+  { id: 6, props: { body: "image_button_delete", icon: "delete" } },
 ];
 
 const notOwnImageMenuOptions = [
-  { id: 7, props: { body: "Not interested", icon: CustomNotInterestedIcon } },
-  { id: 8, props: { body: "Download", icon: CustomDownloadIcon } },
-  { id: 9, props: { body: "Save", icon: CustomFilledBookmarkIcon } },
-  { id: 10, props: { body: "Unsave", icon: CustomUnsaveIcon } },
+  { id: 7, props: { body: "image_button_notInterested", icon: "not_interested" } },
+  { id: 8, props: { body: "image_button_download", icon: "download" } },
+  { id: 9, props: { body: "image_button_save", icon: "filled_bookmark" } },
+  { id: 10, props: { body: "image_button_unsave", icon: "unsave" } },
 ];
-
-let outSideMenyOptions: menuOption[];
 
 export const Image: FC<ImagePropsType> = ({
   setImagePosition,
@@ -73,6 +64,40 @@ export const Image: FC<ImagePropsType> = ({
   isPrivate,
   isSaved,
 }) => {
+
+  let [outSideMenuOptions, setOutsideMenuOptions] = useState<any[]>([]);
+  const { t } = useTranslation("authorized");
+  useEffect(() => {
+    addDynamicResources("authorized");
+    let menuOptions: any[];
+    if (isOwn) {
+      menuOptions = JSON.parse(JSON.stringify(ownImageMenuOptions));
+      if (isPrivate)
+        menuOptions.splice(3, 1); // splice HIDE
+      else menuOptions.splice(4, 1); // splice SHOW
+    } else {
+      menuOptions = JSON.parse(JSON.stringify(notOwnImageMenuOptions));
+    }
+    if (isSaved) {
+      menuOptions = menuOptions.filter(
+        (option) => ![1,9].includes(option.id) // splice SAVE
+      );
+    } else {
+      menuOptions = menuOptions.filter(
+        (option) => ![2,10].includes(option.id) // splice UNSAVE
+      );
+    }
+    menuOptions = menuOptions.map((option) => {
+      option["props"]["body"] = t(option["props"]["body"]);
+      return option;
+    })
+    const processedOptions = menuOptions;
+    processedOptions.forEach((option: menuOption) => {
+      option["component"] = BasicMenuComponent;
+    });
+    setOutsideMenuOptions(prev=>prev=processedOptions)
+  }, []);
+
   const isPostPage = useLocation().pathname.includes("post");
 
   const optionActionCallback: optionActionCallbackType<
@@ -80,30 +105,6 @@ export const Image: FC<ImagePropsType> = ({
   > = (action) => {
     menuOptionsHandlerCallback(id, action);
   };
-
-  let menuOptions: any[];
-
-  if (isOwn) {
-    menuOptions = [...ownImageMenuOptions];
-    if (isPrivate)
-      menuOptions.splice(3, 1); // splice HIDE
-    else menuOptions.splice(4, 1); // splice SHOW
-  } else {
-    menuOptions = [...notOwnImageMenuOptions];
-  }
-
-  if (isSaved) {
-    menuOptions = menuOptions.filter((option) => option.props.body !== "Save");
-  } else {
-    menuOptions = menuOptions.filter(
-      (option) => option.props.body !== "Unsave",
-    );
-  }
-
-  outSideMenyOptions = menuOptions;
-  outSideMenyOptions.forEach((option: menuOption) => {
-    option["component"] = BasicMenuComponent;
-  });
 
   let [currentNumberOfLikes, setCurrentNumberOfLikes] =
     useState<string>(numberOfLikes);
@@ -169,7 +170,7 @@ export const Image: FC<ImagePropsType> = ({
       <div className={styles.header}>
         <ItemHeader
           optionActionCallback={optionActionCallback}
-          menuOptions={outSideMenyOptions}
+          menuOptions={outSideMenuOptions}
           imgSrc={src}
           authorId={authorId}
           authorName={authorName}
@@ -200,7 +201,7 @@ export const Image: FC<ImagePropsType> = ({
         }}
       >
         <Box sx={{ width: "100%", justifyContent: "center" }}>
-          <Typography variant="h5">{numberOfViews} views</Typography>
+          <Typography variant="h5">{numberOfViews} {t('image_views')}</Typography>
         </Box>
         <div className={styles.description}>
           <div className={styles.line}></div>

@@ -30,11 +30,7 @@ import { Plug } from "../../layout/Plug/Plug";
 import { Avatar } from "../../ui/Buttons/Avatar/Avatar";
 import { CustomAvatar } from "../../ui/CustomAvatar/CustomAvatar";
 import {
-  CustomArrowBackIcon,
-  CustomBlockIcon,
-  CustomBroomIcon,
-  CustomDeleteIcon,
-  CustomMoreVerticalIcon,
+  CustomIcon,
 } from "../../ui/CustomIcons/CustomIcons";
 import { BasicMenuComponent } from "../../ui/CustomMenu/CustomComponents/CustomMenuComponents";
 import { CustomMenu, menuOption } from "../../ui/CustomMenu/CustomMenu";
@@ -44,9 +40,9 @@ import { Message } from "../Message/Message";
 import styles from "./Messages.module.less";
 
 const menuOptions: any[] = [
-  { id: 1, props: { body: "Clear chat", icon: CustomBroomIcon } },
-  { id: 2, props: { body: "Delete chat", icon: CustomDeleteIcon } },
-  { id: 3, props: { body: "Block user", icon: CustomBlockIcon } },
+  { id: 1, props: { body: "Clear chat", icon: "broom" } },
+  { id: 2, props: { body: "Delete chat", icon: "delete" } },
+  { id: 3, props: { body: "Block user", icon: "block" } },
 ];
 
 export const Messages: FC<MessagesPropsTypes> = ({
@@ -177,7 +173,7 @@ export const Messages: FC<MessagesPropsTypes> = ({
       <div className={styles.header}>
         {isSmallSize ? (
           <div onClick={() => setCurrentChat((prev) => (prev = null))}>
-            <CustomArrowBackIcon />
+            <CustomIcon type="arrow_back" />
           </div>
         ) : (
           ""
@@ -195,7 +191,7 @@ export const Messages: FC<MessagesPropsTypes> = ({
         </div>
         {typeof id !== "string" ? (
           <CustomMenu
-            icon={CustomMoreVerticalIcon}
+            icon="more_vertical"
             menuOptions={menuOptions}
             callback={customMenuHandler}
           />

@@ -1,29 +1,35 @@
 import React, { FC, useState } from "react";
 import { searchButtonHandlerType } from "../../../../types/common";
-import { CustomSearchIcon } from "../../CustomIcons/CustomIcons";
-import styles from "./SearchBar.module.less";
+import { CustomIcon } from "../../CustomIcons/CustomIcons";
+import styles from "./SearchBarStyle";
+import { useTheme } from "@mui/material";
 
 export const SearchBar: FC<{ searchHandler: searchButtonHandlerType }> = ({
   searchHandler,
 }) => {
   let [searchValue, setSearchValue] = useState<string>("");
 
+  const theme = useTheme();
+
   const searchValueHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue((prev) => (prev = event.target.value));
-    searchHandler(event.target.value);
+    const val = event.target.value;
+    setSearchValue((prev) => (prev = val));
+    if (val.trim() !== "") searchHandler(val);
   };
 
   return (
-    <div className={styles.bar}>
+    <div style={styles.bar}>
       <input
         value={searchValue}
         onChange={searchValueHandler}
         placeholder="Search..."
-        className={styles.input}
+        style={{  
+          ...styles.input,
+          color: theme.palette.mode === "dark" ? "#fff" : "#000",
+          borderColor: theme.palette.mode === "dark"? "#fff" : "#000"
+        }}
       />
-      <div className={styles.icon}>
-        <CustomSearchIcon />
-      </div>
+      <CustomIcon type="search" />
     </div>
   );
 };

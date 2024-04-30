@@ -1,8 +1,7 @@
 import React, { FC } from "react";
 import { saveToggleCallbackType } from "../../../types/callbacks";
 import {
-  CustomBookmarkIcon,
-  CustomFilledBookmarkIcon,
+  CustomIcon,
 } from "../CustomIcons/CustomIcons";
 
 export const Save: FC<SavePropsType> = ({ isSaveMode, saveToggleCallback }) => {
@@ -14,13 +13,21 @@ export const Save: FC<SavePropsType> = ({ isSaveMode, saveToggleCallback }) => {
     <div onClick={handler}>
       {isSaveMode ? (
         <div title="Usual images">
-          <CustomBookmarkIcon
-            width={`${35}`} // 35px
+          <CustomIcon
+            type="bookmark"
+            extra={{
+              width: "35px",
+            }}
           />
         </div>
       ) : (
         <div title="Saved images">
-          <CustomFilledBookmarkIcon width={`${35}`} />
+          <CustomIcon
+            type="filled_bookmark"
+            extra={{
+              width: "35px",
+            }}
+          />
         </div>
       )}
     </div>

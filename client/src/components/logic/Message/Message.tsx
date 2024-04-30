@@ -1,14 +1,10 @@
+import { Box, Typography, styled } from "@mui/material";
 import React, { FC } from "react";
-import { BasicMenuComponent } from "../../ui/CustomMenu/CustomComponents/CustomMenuComponents";
-import {
-  CustomClearIcon,
-  CustomMoreVerticalIcon,
-} from "../../ui/CustomIcons/CustomIcons";
-import { CustomMenu } from "../../ui/CustomMenu/CustomMenu";
-import styles from "./Messages.module.less";
 import { messageOptionsCallbackType } from "../../../types/callbacks";
+import { BasicMenuComponent } from "../../ui/CustomMenu/CustomComponents/CustomMenuComponents";
+import { CustomMenu } from "../../ui/CustomMenu/CustomMenu";
 import { SmallGreyText } from "../../ui/customStyledComponents";
-import { Box, styled, Typography } from "@mui/material";
+import styles from "./Messages.module.less";
 
 export const Message: FC<MessagePropsType> = ({
   id,
@@ -24,7 +20,7 @@ export const Message: FC<MessagePropsType> = ({
     {
       id: 1,
       component: BasicMenuComponent,
-      props: { body: "Delete from me", icon: CustomClearIcon },
+      props: { body: "Delete from me", icon: "clear" },
     },
   ];
 
@@ -69,7 +65,7 @@ export const Message: FC<MessagePropsType> = ({
               <CustomMenu
                 callback={handler}
                 menuOptions={menuOptions}
-                icon={CustomMoreVerticalIcon}
+                icon={"more_vertical"}
               />
             </>
           ) : (
@@ -78,7 +74,7 @@ export const Message: FC<MessagePropsType> = ({
                 side="left"
                 callback={handler}
                 menuOptions={menuOptions}
-                icon={CustomMoreVerticalIcon}
+                icon={"more_vertical"}
               />
               <SmallGreyText>
                 {`${new Date(createdAt).toLocaleDateString()}, ${new Date(createdAt).toLocaleTimeString()}`}

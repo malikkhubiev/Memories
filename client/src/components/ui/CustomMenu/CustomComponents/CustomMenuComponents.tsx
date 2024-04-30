@@ -1,17 +1,18 @@
 import { Box, Typography } from "@mui/material";
 import React, { FC } from "react";
 import styles from "./CustomMenuComponents.module.less";
+import { CustomIcon } from "../../CustomIcons/CustomIcons";
 
 const urlOutside = "https://www.youtube.com/";
 
-export const BasicMenuComponent: FC<{ body: string; icon: FC<any> }> = (
-  props,
+export const BasicMenuComponent: FC<{ body: string; icon: string }> = (
+  {body, icon},
 ) => {
   return (
     <div className={styles.component}>
-      {props.icon && <props.icon />}
+      {icon && <CustomIcon type={icon} />}
       <Box className={styles.box}>
-        <Typography variant="body2">{props.body}</Typography>
+        <Typography variant="body2">{body}</Typography>
       </Box>
     </div>
   );

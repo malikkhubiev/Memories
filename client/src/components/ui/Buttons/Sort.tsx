@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { sortByToggleCallbackType } from "../../../types/callbacks";
-import { CustomDateIcon, CustomStarIcon } from "../CustomIcons/CustomIcons";
+import { CustomIcon } from "../CustomIcons/CustomIcons";
 
 export const Sort: FC<SortPropsType> = ({
   isSortingByPopularity,
@@ -17,11 +17,21 @@ export const Sort: FC<SortPropsType> = ({
     <div onClick={handler}>
       {isSortingByPopularity ? (
         <div title="Sort images by date">
-          <CustomStarIcon width={`${35}`} />
+          <CustomIcon
+            type="star"
+            extra={{
+              width: "35px",
+            }}
+          />
         </div>
       ) : (
         <div title="Sort images by popularity">
-          <CustomDateIcon width={`${35}`} />
+          <CustomIcon
+            type="date"
+            extra={{
+              width: "35px",
+            }}
+          />
         </div>
       )}
     </div>

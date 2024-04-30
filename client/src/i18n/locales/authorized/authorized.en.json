@@ -1,6 +1,8 @@
 {
   "chats_noChatsMessage": "It's never late to have a chat",
   "posting_button": "Post",
+  "posting_description": "Description",
+  "posting_tags": "Tags",
   "post_buttonText": "Send",
   "post_placeholder": "Looking good!",
   "preferences_title": "Select your preferences from the list or add your own",
@@ -21,5 +23,16 @@
   "followers_buttonUnfollow": "unfollow",
   "followers_buttonFollow": "follow",
   "liked_title": "Liked",
-  "liked_numberOf": "users liked this post"
+  "liked_numberOf": "users liked this post",
+  "profile_followers": "followers",
+  "profile_following": "following",
+  "profile_posts": "posts",
+  "image_views": "views",
+  "image_button_save": "Save",
+  "image_button_unsave": "Unsave",
+  "image_button_download": "Download",
+  "image_button_hide": "Hide",
+  "image_button_show": "Show",
+  "image_button_delete": "Delete",
+  "image_button_notInterested": "Not interested"
 }

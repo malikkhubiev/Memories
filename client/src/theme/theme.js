@@ -1,26 +1,6 @@
 import { createTheme } from "@mui/material";
 
-let theme = createTheme({
-  palette: {
-    primary: {
-      main: "#4285f4",
-      light: "#679df6",
-      dark: "#2e5daa",
-      contrastText: "#fff",
-    },
-    secondary: {
-      light: "#5cb975",
-      main: "#34a853",
-      dark: "#24753a",
-      contrastText: "#000",
-    },
-    black: {
-      main: "#f8ffb7",
-    },
-    grey: {
-      main: "grey",
-    },
-  },
+const base = {
   typography: {
     fontFamily: "Century Gothic",
     h1: {
@@ -49,14 +29,57 @@ let theme = createTheme({
       },
     },
   },
+}
+
+export let lightTheme = createTheme({
+  palette: {
+    mode: 'light',
+    primary: {
+      main: '#1976d2', // синий
+      mainBg: "#fff"
+    },
+    secondary: {
+      main: '#4caf50', // зелёный
+    },
+    text: {
+      primary: '#000000', // чёрный
+    }
+  },
+  ...base
 });
 
-theme = createTheme(theme, {
+export let darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+    primary: {
+      main: '#1976d2', // синий
+      mainBg: "#121212"
+    },
+    secondary: {
+      main: '#4caf50', // зелёный
+    },
+    text: {
+      primary: '#ffffff', // белый
+    }
+  },
+  ...base
+});
+
+lightTheme = createTheme(lightTheme, {
   typography: {
     h3: {
-      color: theme.palette.grey.main,
+      color: lightTheme.palette.text,
     },
   },
 });
 
-export default theme;
+darkTheme = createTheme(darkTheme, {
+  typography: {
+    h3: {
+      color: darkTheme.palette.text,
+    },
+  },
+});
+
+const toExport = {lightTheme, darkTheme}
+export default toExport;

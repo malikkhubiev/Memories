@@ -6,15 +6,12 @@ import { HashRouter } from "react-router-dom";
 import { App } from "./App/App";
 import { store } from "./fullStore/rootStore";
 import "./index.css";
-import theme from "./theme/theme";
 
 const root = createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
-    <ThemeProvider theme={theme}>
-      <HashRouter>
-        <App />
-      </HashRouter>
-    </ThemeProvider>
+    <HashRouter>
+      <App />
+    </HashRouter>
   </Provider>,
 );

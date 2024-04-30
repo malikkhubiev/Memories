@@ -1,5 +1,5 @@
 import React, { FC, memo } from "react";
-import { CustomAccountCircle } from "../CustomIcons/CustomIcons";
+import { CustomIcon } from "../CustomIcons/CustomIcons";
 
 export const CustomAvatar: FC<CustomAvatarPropsType> = memo(
   ({ src, width }) => {
@@ -15,7 +15,12 @@ export const CustomAvatar: FC<CustomAvatarPropsType> = memo(
             src={process.env.REACT_APP_API_URL + src}
           />
         ) : (
-          <CustomAccountCircle width={`${width + 10}px` || null} />
+          <CustomIcon
+            type="account_circle"
+            extra={{
+              width: width + 10 + "px",
+            }}
+          />
         )}
       </>
     );

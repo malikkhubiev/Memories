@@ -8,6 +8,7 @@ import {
   messagesMenuOptionsActionsType,
   optionActionCallbackType,
 } from "../../../types/callbacks";
+import { CustomIcon } from "../CustomIcons/CustomIcons";
 
 export const CustomMenu: FC<CustomMenPropsType> = ({
   menuOptions,
@@ -41,7 +42,9 @@ export const CustomMenu: FC<CustomMenPropsType> = ({
   return (
     <>
       <IconButton onClick={handleOpen}>
-        <props.icon width={iconWidth ? iconWidth : null} />
+        <CustomIcon type={props.icon} extra={iconWidth &&{
+          width: iconWidth+"px",
+        }} />
       </IconButton>
       <Menu
         anchorEl={anchorEl}
@@ -103,7 +106,7 @@ export type menuOption = {
   component: FC<any>;
   props: {
     body: string;
-    icon: FC<any>;
+    icon: string;
   };
 };
 
@@ -116,7 +119,7 @@ type CustomMenPropsType = {
     | messagesMenuOptionsActionsType
     | commentMenuOptionsActionsType
   >;
-  icon: FC<any>;
+  icon: string;
   iconWidth?: string;
   url?: string;
   side?: "left";

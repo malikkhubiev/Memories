@@ -1,11 +1,8 @@
-import { Box, Popover, Typography, Link as MaterialLink } from "@mui/material";
+import { Box, Popover, Typography, Link as MaterialLink, useTheme } from "@mui/material";
 import React, { FC } from "react";
 import { Link as RouterLink } from "react-router-dom";
-import {
-  CustomFilledLikeIcon,
-  CustomLikeIcon,
-} from "../../CustomIcons/CustomIcons";
-import styles from "./Like.module.less";
+import { CustomIcon } from "../../CustomIcons/CustomIcons";
+import styles from "./LikeStyle";
 
 export const Like: FC<LikePropsType> = ({
   imageId,
@@ -14,6 +11,9 @@ export const Like: FC<LikePropsType> = ({
   unLike,
   numberOfLikes,
 }) => {
+
+  const theme = useTheme();
+
   const likeHandler = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
     like();
@@ -29,9 +29,9 @@ export const Like: FC<LikePropsType> = ({
   const id = open ? "simple-popover" : undefined;
 
   return (
-    <div className={styles.like}>
+    <Box sx={styles.main}>
       {imageId ? (
-        <Box className={styles.icon}>
+        <Box>
           <Popover
             id={id}
             open={open}
@@ -49,10 +49,7 @@ export const Like: FC<LikePropsType> = ({
             <MaterialLink
               variant="body2"
               component={RouterLink}
-              sx={{
-                textDecoration: "none",
-                color: "#000",
-              }}
+              sx={styles.seeAll(theme)}
               to={`/liked:${imageId}`}
             >
               See all liked
@@ -60,32 +57,42 @@ export const Like: FC<LikePropsType> = ({
           </Popover>
           {isLiked ? (
             <Box onClick={unLike}>
-              <CustomFilledLikeIcon width="40" />
+              <CustomIcon
+                type="filled_like"
+                extra={styles.iconExtra}
+              />
             </Box>
           ) : (
             <Box aria-describedby={id} onClick={likeHandler}>
-              <CustomLikeIcon width="40" />
+              <CustomIcon
+                type="like"
+                extra={styles.iconExtra}
+              />
             </Box>
           )}
         </Box>
       ) : (
-        <Box className={styles.icon} onClick={isLiked ? unLike : like}>
+        <Box onClick={isLiked ? unLike : like}>
           {isLiked ? (
-            <CustomFilledLikeIcon width="40" />
+            <CustomIcon
+              type="filled_like"
+              extra={styles.iconExtra}
+            />
           ) : (
-            <CustomLikeIcon width="40" />
+            <CustomIcon
+              type="like"
+              extra={styles.iconExtra}
+            />
           )}
         </Box>
       )}
       <Typography
-        sx={{
-          fontSize: "20px",
-        }}
+        sx={styles.count(theme)}
         variant="body2"
       >
         {numberOfLikes}
       </Typography>
-    </div>
+    </Box>
   );
 };
 

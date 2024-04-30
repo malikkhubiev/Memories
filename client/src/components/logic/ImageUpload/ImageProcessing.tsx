@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { imageProcessedCallbackType } from "../../../types/callbacks";
 import getCroppedImg from "../../../utils/imageProcessing/cropImage";
 import { dataURLtoFile } from "../../../utils/imageProcessing/dataUrlToFile";
-import { CustomArrowBackIcon } from "../../ui/CustomIcons/CustomIcons";
+import { CustomIcon } from "../../ui/CustomIcons/CustomIcons";
 import styles from "./ImageProcessing.module.less";
 
 export const ImageProcessing: FC<ImageProcessingType> = ({
@@ -50,7 +50,7 @@ export const ImageProcessing: FC<ImageProcessingType> = ({
           }}
           onClick={arrowBackClickHandler}
         >
-          <CustomArrowBackIcon />
+          <CustomIcon type="arrow_back" />
         </Box>
         <input
           type="range"

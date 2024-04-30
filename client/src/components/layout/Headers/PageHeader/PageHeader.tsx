@@ -1,7 +1,7 @@
-import React, { FC, memo, ReactElement, useEffect, useState } from "react";
+import React, { FC, ReactElement, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { onArrowBackClickCallbackType } from "../../../../types/callbacks";
-import { CustomArrowBackIcon } from "../../../ui/CustomIcons/CustomIcons";
+import { CustomIcon } from "../../../ui/CustomIcons/CustomIcons";
 import { CustomStack } from "../../../ui/customStyledComponents";
 import { Plug } from "../../Plug/Plug";
 import styles from "./PageHeader.module.less";
@@ -60,7 +60,7 @@ export const PageHeader: FC<PageHeaderType> = ({
           <Plug />
         ) : (
           <div className={styles.back} onClick={arrowBackClickHandler}>
-            <CustomArrowBackIcon />
+            <CustomIcon type="arrow_back" />
           </div>
         )}
         {children}

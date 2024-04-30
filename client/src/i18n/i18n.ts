@@ -35,12 +35,12 @@ export const addDynamicResources = async (page: string) => {
   if (page === "signUp" || page === "forgotPassword") {
     resources = { ...resources, ...(await takeOrLoad("emailVerifying")) };
   }
-  console.log(resources);
   i18n.addResources(i18n.language, page, resources);
+  console.log(resources);
 };
 
 i18n.use(initReactI18next).init({
-  fallbackLng: "en",
+  fallbackLng: "ru",
   debug: true,
   interpolation: {
     escapeValue: false,

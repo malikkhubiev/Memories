@@ -1,7 +1,15 @@
-import { Alert, CircularProgress, Snackbar } from "@mui/material";
-import React, { FC, Suspense, useEffect } from "react";
-import { Outlet, Route, Routes } from "react-router-dom";
+import {
+  CircularProgress,
+  Container,
+  CssBaseline,
+  Snackbar,
+  ThemeProvider,
+} from "@mui/material";
+import React, { FC, useEffect, useState } from "react";
+import { I18nextProvider, useTranslation } from "react-i18next";
+import { Route, Routes } from "react-router-dom";
 import { Navigation } from "../components/layout/Navigation/Navigation";
+import { CustomAlert } from "../components/ui/CustomAlert/CustomAlert";
 import { selectOwnImagesErrorMessage } from "../fullStore/combos/images/imagesSlice";
 import { addProfileThunk } from "../fullStore/combos/profile/profileQueries";
 import {
@@ -18,27 +26,10 @@ import {
 import { useAppDispatch, useAppSelector } from "../fullStore/hooks";
 import { RootState } from "../fullStore/rootStore";
 import useCustomDispatch from "../hooks/useCustomDispatch";
-// import { ChatsPage } from "../pages/authorized/ChatsPage/ChatsPage";
-// import { HomePage } from "../pages/authorized/HomePage/HomePage";
-// import { PostingPage } from "../pages/authorized/PostingPage/PostingPage";
-// import { PostPage } from "../pages/authorized/PostPage/PostPage";
-// import { PreferencesPage } from "../pages/authorized/PreferencesPage/PreferencesPage";
-// import { ProfilePage } from "../pages/authorized/ProfilePage/ProfilePage";
-// import { RequestsPage } from "../pages/authorized/RequestsPage/RequestsPage";
-// import { SearchPage } from "../pages/authorized/SearchPage/SearchPage";
-// import { SettingsPage } from "../pages/authorized/SettingsPage/SettingsPage";
-// import { TagPage } from "../pages/authorized/TagPage/TagPage";
-// import { BlockedPage } from "../pages/authorized/Users/BlockedPage/BlockedPage";
-// import { FollowersPage } from "../pages/authorized/Users/FollowersPage/FollowersPage";
-// import { LikedPage } from "../pages/authorized/Users/LikedPage/LikedPage";
-// import { ForgotPasswordPage } from "../pages/nonAuthorized/ForgotPasswordPage/ForgotPasswordPage";
-// import { SignInPage } from "../pages/nonAuthorized/SignInPage/SignInPage";
-// import { SignUpPage } from "../pages/nonAuthorized/SignUpPage/SignUpPage";
-import styles from "./App.module.less";
 import i18n, { addDynamicResources } from "../i18n/i18n";
-import { I18nextProvider, useTranslation } from "react-i18next";
+import styles from "./App.module.less";
 import { authorizedRoutes, customRoutes, nonAuthorizedRoutes } from "./routes";
-import { CustomAlert } from "../components/ui/CustomAlert/CustomAlert";
+import { lightTheme, darkTheme } from "../theme/theme";
 
 export const App: FC<{}> = () => {
   const { t } = useTranslation("authorized");
@@ -61,6 +52,12 @@ export const App: FC<{}> = () => {
   // selectors about auth
   let isAuth = useAppSelector((state: RootState) => selectIsAuth(state));
   const id = useAppSelector((state: RootState) => selectId(state));
+
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(true);
+
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+  };
 
   const usualDispatch = useAppDispatch();
   const thunkDispatch = useCustomDispatch();
@@ -97,46 +94,59 @@ export const App: FC<{}> = () => {
   }, [errorMessage]);
 
   return (
-    <div className={`styles.app ${isLoading && styles.overflow}`}>
-      {/* loading */}
-      {isLoading ? (
-        <div className={styles.loading}>
-          <CircularProgress size={100} />
-        </div>
-      ) : (
-        ""
-      )}
-
-      {/* error message */}
-      <Snackbar
-        sx={{
-          zIndex: "9999",
-          textAlign: "center",
-        }}
-        anchorOrigin={{
-          vertical: "top",
-          horizontal: "center",
-        }}
-        open={Boolean(errorMessage)}
-      >
-        <CustomAlert message={errorMessage} />
-      </Snackbar>
-      <I18nextProvider i18n={i18n}>
-        {/* routes */}
-        <Routes>
-          {isAuth ? (
-            <Route path="/" element={<Navigation />}>
-              {authorizedRoutes.map((route: any) =>
-                customRoutes(route, styles),
-              )}
-            </Route>
+    <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+      <CssBaseline>
+        <div className={`styles.app ${isLoading && styles.overflow}`}>
+          {/* loading */}
+          {isLoading ? (
+            <div className={styles.loading}>
+              <CircularProgress size={100} />
+            </div>
           ) : (
-            <Route path="/">
-              {nonAuthorizedRoutes.map((route) => customRoutes(route, styles))}
-            </Route>
+            ""
           )}
-        </Routes>
-      </I18nextProvider>
-    </div>
+
+          {/* error message */}
+          <Snackbar
+            sx={{
+              zIndex: "9999",
+              textAlign: "center",
+            }}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "center",
+            }}
+            open={Boolean(errorMessage)}
+          >
+            <CustomAlert message={errorMessage} />
+          </Snackbar>
+          <I18nextProvider i18n={i18n}>
+            <Routes>
+              {isAuth ? (
+                <Route
+                  path="/"
+                  element={
+                    <Navigation
+                      isDarkMode={isDarkMode}
+                      toggleDarkMode={toggleDarkMode}
+                    />
+                  }
+                >
+                  {authorizedRoutes.map((route: any) =>
+                    customRoutes(route, styles),
+                  )}
+                </Route>
+              ) : (
+                <Route path="/">
+                  {nonAuthorizedRoutes.map((route) =>
+                    customRoutes(route, styles),
+                  )}
+                </Route>
+              )}
+            </Routes>
+          </I18nextProvider>
+        </div>
+      </CssBaseline>
+    </ThemeProvider>
   );
 };

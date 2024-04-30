@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import React, { ChangeEventHandler, FC, useState } from "react";
 import { changeInputCallbackType } from "../../../../types/callbacks";
-import { CustomEditIcon } from "../../CustomIcons/CustomIcons";
+import { CustomIcon } from "../../CustomIcons/CustomIcons";
 import styles from "./ChangeInput.module.less";
 
 export const ChangeInput: FC<ChangeInputPropsType> = ({
@@ -67,7 +67,7 @@ export const ChangeInput: FC<ChangeInputPropsType> = ({
             {text || placeholder}
           </Typography>
           <div onClick={openChangingMode}>
-            <CustomEditIcon />
+            <CustomIcon type="edit" />
           </div>
         </div>
       )}

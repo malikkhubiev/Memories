@@ -1,6 +1,6 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { CustomSettingsIcon } from "../../ui/CustomIcons/CustomIcons";
+import { CustomIcon } from "../../ui/CustomIcons/CustomIcons";
 import { Images } from "../Images/Images";
 import { PageHeader } from "../../layout/Headers/PageHeader/PageHeader";
 import { OtherProfileButtons } from "./OtherProfileButtons";
@@ -18,6 +18,8 @@ import {
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import styled from "@emotion/styled";
 import { CustomAvatar } from "../../ui/CustomAvatar/CustomAvatar";
+import { useTranslation } from "react-i18next";
+import { addDynamicResources } from "../../../i18n/i18n";
 
 export const Profile: FC<ProfilePropsType> = ({
   id,
@@ -30,6 +32,12 @@ export const Profile: FC<ProfilePropsType> = ({
   isOpenedForMe,
   isRequestSended,
 }) => {
+
+  const { t } = useTranslation("authorized");
+  useEffect(() => {
+    addDynamicResources("authorized");
+  }, []);
+
   let [images, setImages] = useState<imageType[] | []>([]);
   let [postsNumber, setPostsNumber] = useState<string>("0");
 
@@ -55,7 +63,7 @@ export const Profile: FC<ProfilePropsType> = ({
           <Plug></Plug>
           {isOwn && (
             <Link to="/settings">
-              <CustomSettingsIcon />
+              <CustomIcon type="settings" />
             </Link>
           )}
         </PageHeader>
@@ -99,7 +107,7 @@ export const Profile: FC<ProfilePropsType> = ({
             </Box>
             <Link to={`/follow/:ers/:${id}`}>
               <ColumnWrap removePadding={true}>
-                <CurrentTypography variant="body2">Followers</CurrentTypography>
+                <CurrentTypography variant="body2">{t("profile_followers")}</CurrentTypography>
                 <CurrentTypography variant="body2">
                   {followers.number ? followers.number : 0}
                 </CurrentTypography>
@@ -107,7 +115,7 @@ export const Profile: FC<ProfilePropsType> = ({
             </Link>
             <Box>
               <ColumnWrap removePadding={true}>
-                <CurrentTypography variant="body2">Posts</CurrentTypography>
+                <CurrentTypography variant="body2">{t("profile_posts")}</CurrentTypography>
                 <CurrentTypography variant="body2">
                   {postsNumber}
                 </CurrentTypography>
@@ -115,7 +123,7 @@ export const Profile: FC<ProfilePropsType> = ({
             </Box>
             <Link to={`/follow/:ing/:${id}`}>
               <ColumnWrap removePadding={true}>
-                <CurrentTypography variant="body2">Following</CurrentTypography>
+                <CurrentTypography variant="body2">{t("profile_following")}</CurrentTypography>
                 <CurrentTypography variant="body2">
                   {following.number ? following.number : 0}
                 </CurrentTypography>

@@ -26,7 +26,7 @@ import {
 import { profileType } from "../../../types/storeTypes";
 import { Sort } from "../../ui/Buttons/Sort";
 import { ToggleButton } from "../../ui/Buttons/ToggleButton";
-import { CustomBlockIcon } from "../../ui/CustomIcons/CustomIcons";
+import { CustomIcon } from "../../ui/CustomIcons/CustomIcons";
 
 const CurrentBox = styled(Box)(({ theme }) => ({
   width: "50px",
@@ -122,7 +122,7 @@ export const OtherProfileButtons: FC<OtherProfileButtonsPropsType> = ({
     <>
       <CurrentBox>
         <div title="Block user" onClick={block}>
-          <CustomBlockIcon />
+          <CustomIcon type="block" />
         </div>
       </CurrentBox>
       {isOpenedForMe ? (

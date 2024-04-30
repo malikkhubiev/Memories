@@ -15,7 +15,6 @@ import {
   WhatsappIcon,
   WhatsappShareButton,
 } from "react-share";
-import { CustomShareIcon } from "../../CustomIcons/CustomIcons";
 import { CustomMenu } from "../../CustomMenu/CustomMenu";
 import { ButtonComponent } from "../../CustomMenu/CustomComponents/CustomMenuComponents";
 import styles from "./Share.module.less";
@@ -74,7 +73,7 @@ export const Share: FC<SharePropsType> = ({ url }) => {
         <CustomMenu
           menuOptions={socialMedia}
           callback={handler}
-          icon={CustomShareIcon}
+          icon={"share"}
           iconWidth="40"
           url={url}
         />

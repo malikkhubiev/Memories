@@ -1,10 +1,10 @@
+import { Box, Typography, useTheme } from "@mui/material";
 import React, { FC } from "react";
-import { Link, useParams } from "react-router-dom";
-import { CustomCommentsIcon } from "../../CustomIcons/CustomIcons";
-import { ColumnWrap } from "../../../layout/ColumnWrap/ColumnWrap";
-import styles from "./Comments.module.less";
+import { Link } from "react-router-dom";
 import { commentsCallbackType } from "../../../../types/callbacks";
-import { Typography } from "@mui/material";
+import { ColumnWrap } from "../../../layout/ColumnWrap/ColumnWrap";
+import { CustomIcon } from "../../CustomIcons/CustomIcons";
+import styles from "../Like/LikeStyle";
 
 export const Comments: FC<CommentsPropsType> = ({
   imageId,
@@ -12,30 +12,37 @@ export const Comments: FC<CommentsPropsType> = ({
   isCommentSectionOpened,
   numberOfComments,
 }) => {
+
+  const theme = useTheme();
+
   const handler = () => {
     commentsCallback && commentsCallback(!isCommentSectionOpened);
   };
 
   return (
-    <div onClick={handler}>
+    <Box sx={styles.main} onClick={handler}>
       <ColumnWrap removePadding={true}>
         {!commentsCallback ? (
           <Link to={`/post/:${imageId}/:true`}>
-            <CustomCommentsIcon width="40" />
+            <CustomIcon
+              type="comments"
+              extra={styles.iconExtra}
+            />
           </Link>
         ) : (
-          <CustomCommentsIcon width="40" />
+          <CustomIcon
+            type="comments"
+            extra={styles.iconExtra}
+          />
         )}
         <Typography
-          sx={{
-            fontSize: "20px",
-          }}
+          sx={styles.count(theme)}
           variant="body2"
         >
           {numberOfComments}
         </Typography>
       </ColumnWrap>
-    </div>
+    </Box>
   );
 };
 

@@ -18,10 +18,7 @@ import {
 import { chatType } from "../../../types/storeTypes";
 import { Header } from "../../layout/Headers/Header/Header";
 import {
-  CustomArrowBackIcon,
-  CustomBroomIcon,
-  CustomDeleteIcon,
-  CustomMoreVerticalIcon,
+  CustomIcon
 } from "../../ui/CustomIcons/CustomIcons";
 import { BasicMenuComponent } from "../../ui/CustomMenu/CustomComponents/CustomMenuComponents";
 import { CustomMenu, menuOption } from "../../ui/CustomMenu/CustomMenu";
@@ -29,8 +26,8 @@ import { Chat } from "../Chat/Chat";
 import styles from "./Chats.module.less";
 
 const menuOptions: any[] = [
-  { id: 1, props: { body: "Clear all chats", icon: CustomBroomIcon } },
-  { id: 2, props: { body: "Delete all chats", icon: CustomDeleteIcon } },
+  { id: 1, props: { body: "Clear all chats", icon: "broom" } },
+  { id: 2, props: { body: "Delete all chats", icon: "delete" } },
 ];
 
 export const Chats: FC<ChatsPropsType> = ({
@@ -125,13 +122,13 @@ export const Chats: FC<ChatsPropsType> = ({
     >
       <div className={styles.header}>
         <div onClick={() => navigate(-1)}>
-          <CustomArrowBackIcon />
+          <CustomIcon type="arrow_back" />
         </div>
         <Header text={"Chats"} />
         <CustomMenu
           menuOptions={menuOptions}
           callback={optionActionCallback}
-          icon={CustomMoreVerticalIcon}
+          icon="more_vertical"
         />
       </div>
       {chats && chats.length

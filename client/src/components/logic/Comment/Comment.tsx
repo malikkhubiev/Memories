@@ -16,11 +16,10 @@ import {
 } from "../../../types/callbacks";
 import { ItemHeader } from "../../layout/Headers/ItemHeader/ItemHeader";
 import { Like } from "../../ui/Buttons/Like/Like";
-import { CustomDeleteIcon } from "../../ui/CustomIcons/CustomIcons";
 import { CustomStack } from "../../ui/customStyledComponents";
 import styles from "./Comment.module.less";
 
-const option = { id: 1, props: { body: "Delete", icon: CustomDeleteIcon } };
+const option = { id: 1, props: { body: "Delete", icon: "delete" } };
 
 export const Comment: FC<CommentPropsType> = ({
   id,
