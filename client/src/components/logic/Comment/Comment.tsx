@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import {
   setErrorMessage,
   setIsLoading,
@@ -15,11 +15,15 @@ import {
   optionActionCallbackType,
 } from "../../../types/callbacks";
 import { ItemHeader } from "../../layout/Headers/ItemHeader/ItemHeader";
-import { Like } from "../../ui/Buttons/Like/Like";
+import Like from "../../ui/Buttons/Like/Like";
 import { CustomStack } from "../../ui/customStyledComponents";
 import styles from "./Comment.module.less";
+import { useTranslation } from "react-i18next";
+import { addDynamicResources } from "../../../i18n/i18n";
 
-const option = { id: 1, props: { body: "Delete", icon: "delete" } };
+const rawMenuOptions = [
+  { id: 1, props: { body: "comment_delete_button", icon: "delete" } },
+];
 
 export const Comment: FC<CommentPropsType> = ({
   id,
@@ -33,6 +37,17 @@ export const Comment: FC<CommentPropsType> = ({
   numberOfLikes,
   isLiked,
 }) => {
+  let [menuOptions, setMenuOptions] = useState<any[]>([]);
+  const { t } = useTranslation("authorized");
+  useEffect(() => {
+    addDynamicResources("authorized");
+    const menuOptionsCopy = JSON.parse(JSON.stringify(rawMenuOptions));
+    menuOptionsCopy.forEach((option: any) => {
+      option["props"]["body"] = t(option["props"]["body"]);
+    });
+    setMenuOptions((prev) => (prev = menuOptionsCopy));
+  }, []);
+
   let [currentIsLiked, setCurrentIsLiked] = useState<boolean>(isLiked);
   let [currentNumberOfLikes, setCurrentNumberOfLikes] =
     useState<string>(numberOfLikes);
@@ -78,7 +93,7 @@ export const Comment: FC<CommentPropsType> = ({
         <>
           <ItemHeader
             optionActionCallback={optionActionCallback}
-            menuOptions={[option]}
+            menuOptions={menuOptions}
             authorId={authorId}
             authorName={authorName}
             isOwn={isOwn}

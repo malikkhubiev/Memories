@@ -146,7 +146,7 @@ const FollowersPage: FC<{}> = () => {
         <Plug />
       </PageHeader>
       <SmallGoldenRatioBox>
-        <UsersList numberOf={number + " users"} searchHandler={searchHandler}>
+        <UsersList numberOf={number + " " + t("followers_users")} searchHandler={searchHandler}>
           {list.length
             ? list.map((user: any) => {
                 if (user.id === ownId)

@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { CustomStack } from "../../customStyledComponents";
 import { Comments, CommentsPropsType } from "../Comments/Comments";
-import { Like, LikePropsType } from "../Like/Like";
+import Like, { LikePropsType } from "../Like/Like";
 import { Share, SharePropsType } from "../Share/Share";
 import styles from "./ImageButtons.module.less";
 

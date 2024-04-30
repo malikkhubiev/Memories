@@ -40,7 +40,7 @@ export const addDynamicResources = async (page: string) => {
 };
 
 i18n.use(initReactI18next).init({
-  fallbackLng: "ru",
+  fallbackLng: "en",
   debug: true,
   interpolation: {
     escapeValue: false,

@@ -79,14 +79,18 @@ export const EmailVerifying: FC<EmailVerifyingPropsType> = ({
             buttonText={t("sendButtonText")}
             label={t("emailLabel")}
             addInputCallback={sendButtonHandler}
+            inputTestId="email-input"
+            buttonTestId="send-button"
           />
           {hasEmailBeenSent ? (
             <AddInput
               sx={styles.verifyInput}
               text=""
-              buttonText="Verify"
+              buttonText={t("addInput_verify")}
               label={t("verificationCode")}
               addInputCallback={verifyButtonHandler}
+              inputTestId="verification-code-input"
+              buttonTestId="verify-button"
             />
           ) : (
             ""

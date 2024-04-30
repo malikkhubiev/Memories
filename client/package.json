@@ -4,7 +4,7 @@
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
-    "test": "npx jest CustomAlert.test.tsx",
+    "test": "jest",
     "storybook": "storybook dev -p 6006",
     "dev": "webpack-dev-server --config webpack.dev.js --mode development --open",
     "build": "webpack --config webpack.prod.js --mode production",

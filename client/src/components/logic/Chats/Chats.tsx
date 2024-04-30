@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import React, { Dispatch, FC, SetStateAction, useEffect } from "react";
+import React, { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   useClearAllChats,
@@ -22,10 +22,12 @@ import { BasicMenuComponent } from "../../ui/CustomMenu/CustomComponents/CustomM
 import { CustomMenu, menuOption } from "../../ui/CustomMenu/CustomMenu";
 import { Chat } from "../Chat/Chat";
 import styles from "./Chats.module.less";
+import { useTranslation } from "react-i18next";
+import { addDynamicResources } from "../../../i18n/i18n";
 
-const menuOptions: any[] = [
-  { id: 1, props: { body: "Clear all chats", icon: "broom" } },
-  { id: 2, props: { body: "Delete all chats", icon: "delete" } },
+const rawMenuOptions: any[] = [
+  { id: 1, props: { body: "chats_clear_all_chats_button", icon: "broom" } },
+  { id: 2, props: { body: "chats_delete_all_chats_button", icon: "delete" } },
 ];
 
 export const Chats: FC<ChatsPropsType> = ({
@@ -34,10 +36,23 @@ export const Chats: FC<ChatsPropsType> = ({
   setChats,
   setCurrentChat,
 }) => {
+
   const navigate = useNavigate();
 
   const [clearAllChats] = useClearAllChats();
   const [deleteAllChats] = useDeleteAllChats();
+  let [menuOptions, setMenuOptions] = useState<any[]>([]);
+
+  const { t } = useTranslation("authorized");
+  useEffect(() => {
+    addDynamicResources("authorized");
+    const processedOptions = JSON.parse(JSON.stringify(rawMenuOptions))
+    processedOptions.forEach((option: menuOption) => {
+      option["component"] = BasicMenuComponent;
+      option["props"]["body"] = t(option["props"]["body"])
+    });
+    setMenuOptions((prev) => (prev = processedOptions));
+  }, []);
 
   const usualDispatch = useAppDispatch();
 
@@ -92,12 +107,6 @@ export const Chats: FC<ChatsPropsType> = ({
     }
   };
 
-  useEffect(() => {
-    menuOptions.forEach((option: menuOption) => {
-      option["component"] = BasicMenuComponent;
-    });
-  }, []);
-
   return (
     <Box
       sx={{
@@ -122,7 +131,7 @@ export const Chats: FC<ChatsPropsType> = ({
         <div onClick={() => navigate(-1)}>
           <CustomIcon type="arrow_back" />
         </div>
-        <Header text={"Chats"} />
+        <Header text={t("chats_header")} />
         <CustomMenu
           menuOptions={menuOptions}
           callback={optionActionCallback}

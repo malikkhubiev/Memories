@@ -7,14 +7,21 @@ import {
   DialogTitle,
   TextField,
 } from "@mui/material";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { deleteAccountThunk } from "../../fullStore/combos/user/userQueries";
 import useCustomDispatch from "../../hooks/useCustomDispatch";
+import { useTranslation } from "react-i18next";
+import { addDynamicResources } from "../../i18n/i18n";
 
 export const DeleteAccountButton: FC<{}> = () => {
   const [open, setOpen] = useState<boolean>(false);
   let [password, setPassword] = useState<string>("");
+  
+  const { t } = useTranslation("authorized");
+  useEffect(() => {
+    addDynamicResources("authorized");
+  }, []);
 
   const navigate = useNavigate();
 
@@ -39,24 +46,24 @@ export const DeleteAccountButton: FC<{}> = () => {
   return (
     <>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Account deleting</DialogTitle>
+        <DialogTitle>{t("delete_title")}</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Please enter your password to confirm that you are the account owner
+            {t("delete_confirmation")}
           </DialogContentText>
           <TextField
             autoFocus
             value={password}
             onChange={passwordChangeHandler}
             id="password"
-            label="Password"
+            label={t("delete_password_label")}
             type="password"
             fullWidth
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={deleteAccauntHandler}>Delete</Button>
+          <Button onClick={handleClose}>{t("delete_cancel_button")}</Button>
+          <Button onClick={deleteAccauntHandler}>{t("delete_delete_button")}</Button>
         </DialogActions>
       </Dialog>
       <Button
@@ -66,7 +73,7 @@ export const DeleteAccountButton: FC<{}> = () => {
           marginTop: "50px",
         }}
       >
-        Delete account
+        {t("delete_confirm_button")}
       </Button>
     </>
   );

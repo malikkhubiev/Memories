@@ -96,7 +96,10 @@ const ForgotPasswordPage: FC<{}> = () => {
             <Header text={t("forgotPasHeader")} />
             <Plug />
           </PageHeader>
-          <form onSubmit={formik.handleSubmit}>
+          <form
+            data-testid="forgot-password-form"
+            onSubmit={formik.handleSubmit}
+          >
             <CustomPasswordField
               formik={formik}
               name="password"

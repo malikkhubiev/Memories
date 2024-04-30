@@ -2,6 +2,8 @@ import { Box, Button, TextField } from "@mui/material";
 import React, { FC, useEffect, useState } from "react";
 import { addInputCallbackType } from "../../../../types/callbacks";
 import styles from "./AddInput.moudle.less";
+import { useTranslation } from "react-i18next";
+import { addDynamicResources } from "../../../../i18n/i18n";
 
 export const AddInput: FC<AddInputPropsType> = ({
   text,
@@ -11,8 +13,14 @@ export const AddInput: FC<AddInputPropsType> = ({
   label,
   sx,
   lines,
+  inputTestId,
+  buttonTestId
 }) => {
   let [value, setValue] = useState<string>(text);
+  const { t } = useTranslation("authorized");
+  useEffect(() => {
+    addDynamicResources("authorized");
+  }, []);
 
   useEffect(() => {
     setValue((prev) => (prev = text));
@@ -44,6 +52,7 @@ export const AddInput: FC<AddInputPropsType> = ({
             md: "80%",
           },
         }}
+        data-testid={inputTestId}
         multiline={isMultiline}
         maxRows={lines || null}
         label={label}
@@ -66,10 +75,11 @@ export const AddInput: FC<AddInputPropsType> = ({
           },
           height: "100%",
         }}
+        data-testid={buttonTestId}
         onClick={buttonHandler}
         variant="contained"
       >
-        Send
+        {t("addInput_send")}
       </Button>
     </Box>
   );
@@ -80,6 +90,8 @@ type AddInputPropsType = {
   label?: string;
   text?: string;
   sx?: any;
+  inputTestId?: string;
+  buttonTestId?: string;
   buttonText: string;
   addInputCallback: addInputCallbackType;
   isMultiline?: true;

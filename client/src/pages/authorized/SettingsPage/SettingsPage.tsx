@@ -155,10 +155,10 @@ const SettingsPage: FC<{}> = () => {
               </Button>
             </SmallGoldenRatioBox>
             <Box onClick={changeLanguage} sx={styles.lang}>
-              {language}
+              {t("settings_language")} : {language}
             </Box>
             <Button sx={styles.buttonLogOut} onClick={logoutHandler}>
-              Log out
+              {t("settings_logout")}
             </Button>
             <DeleteAccountButton />
           </Box>

@@ -5,26 +5,33 @@ import {
   Link as MaterialLink,
   useTheme,
 } from "@mui/material";
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { CustomIcon } from "../../CustomIcons/CustomIcons";
 import styles from "./LikeStyle";
 
-export const Like: FC<LikePropsType> = ({
+const Like: FC<LikePropsType> = ({
   imageId,
-  isLiked,
+  isLiked: isLikedProps,
   like,
   unLike,
   numberOfLikes,
 }) => {
   const theme = useTheme();
 
+  let [isLiked, setIsLiked] = useState<boolean>(isLikedProps);
   const likeHandler = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-    like();
+    if (isLiked) {
+      setIsLiked(prev => prev = false)
+      unLike();
+    }else{
+      setIsLiked(prev => prev = true)
+      setAnchorEl(event.currentTarget);
+      like();
+    }
   };
 
-  const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -35,8 +42,8 @@ export const Like: FC<LikePropsType> = ({
 
   return (
     <Box sx={styles.main}>
-      {imageId ? (
-        <Box>
+      <Box>
+        {imageId && (
           <Popover
             id={id}
             open={open}
@@ -60,31 +67,25 @@ export const Like: FC<LikePropsType> = ({
               See all liked
             </MaterialLink>
           </Popover>
-          {isLiked ? (
-            <Box onClick={unLike}>
-              <CustomIcon type="filled_like" extra={styles.iconExtra} />
-            </Box>
-          ) : (
-            <Box aria-describedby={id} onClick={likeHandler}>
-              <CustomIcon type="like" extra={styles.iconExtra} />
-            </Box>
-          )}
-        </Box>
-      ) : (
-        <Box onClick={isLiked ? unLike : like}>
-          {isLiked ? (
+        )}
+        {isLiked ? (
+          <div data-testid="unLike" onClick={likeHandler}>
             <CustomIcon type="filled_like" extra={styles.iconExtra} />
-          ) : (
+          </div>
+        ) : (
+          <div data-testid="like" aria-describedby={id} onClick={likeHandler}>
             <CustomIcon type="like" extra={styles.iconExtra} />
-          )}
-        </Box>
-      )}
+          </div>
+        )}
+      </Box>
       <Typography sx={styles.count(theme)} variant="body2">
         {numberOfLikes}
       </Typography>
     </Box>
   );
 };
+
+export default Like;
 
 export type LikePropsType = {
   imageId?: number;
