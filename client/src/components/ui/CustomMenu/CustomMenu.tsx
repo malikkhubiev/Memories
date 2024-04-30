@@ -42,9 +42,14 @@ export const CustomMenu: FC<CustomMenPropsType> = ({
   return (
     <>
       <IconButton onClick={handleOpen}>
-        <CustomIcon type={props.icon} extra={iconWidth &&{
-          width: iconWidth+"px",
-        }} />
+        <CustomIcon
+          type={props.icon}
+          extra={
+            iconWidth && {
+              width: iconWidth + "px",
+            }
+          }
+        />
       </IconButton>
       <Menu
         anchorEl={anchorEl}

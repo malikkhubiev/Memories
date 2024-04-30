@@ -29,9 +29,7 @@ import { chatType, messageType } from "../../../types/storeTypes";
 import { Plug } from "../../layout/Plug/Plug";
 import { Avatar } from "../../ui/Buttons/Avatar/Avatar";
 import { CustomAvatar } from "../../ui/CustomAvatar/CustomAvatar";
-import {
-  CustomIcon,
-} from "../../ui/CustomIcons/CustomIcons";
+import { CustomIcon } from "../../ui/CustomIcons/CustomIcons";
 import { BasicMenuComponent } from "../../ui/CustomMenu/CustomComponents/CustomMenuComponents";
 import { CustomMenu, menuOption } from "../../ui/CustomMenu/CustomMenu";
 import { TypographyWithEllipsis } from "../../ui/customStyledComponents";

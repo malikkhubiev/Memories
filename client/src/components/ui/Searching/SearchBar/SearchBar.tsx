@@ -23,10 +23,10 @@ export const SearchBar: FC<{ searchHandler: searchButtonHandlerType }> = ({
         value={searchValue}
         onChange={searchValueHandler}
         placeholder="Search..."
-        style={{  
+        style={{
           ...styles.input,
           color: theme.palette.mode === "dark" ? "#fff" : "#000",
-          borderColor: theme.palette.mode === "dark"? "#fff" : "#000"
+          borderColor: theme.palette.mode === "dark" ? "#fff" : "#000",
         }}
       />
       <CustomIcon type="search" />

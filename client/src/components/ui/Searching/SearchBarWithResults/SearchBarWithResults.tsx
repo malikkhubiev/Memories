@@ -1,4 +1,9 @@
-import { Box, useMediaQuery, useTheme, Link as MaterialLink } from "@mui/material";
+import {
+  Box,
+  useMediaQuery,
+  useTheme,
+  Link as MaterialLink,
+} from "@mui/material";
 import React, { FC, useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import {
@@ -29,15 +34,11 @@ export const SearchBarWithResults: FC<SearchBarWithResultsPropsType> = ({
   const isSmallSize = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
-    <SmallGoldenRatioBox
-      sx={styles.rel}
-    >
+    <SmallGoldenRatioBox sx={styles.rel}>
       <ColumnWrap removePadding={true}>
         <SearchBar searchHandler={searchHandler} />
         {localSearchResults.results.length !== 0 && (
-          <Box
-            sx={styles.container(isSmallSize)}
-          >
+          <Box sx={styles.container(isSmallSize)}>
             {localSearchResults.results.map((searchResult: any) => (
               <MaterialLink
                 component={RouterLink}
@@ -54,9 +55,7 @@ export const SearchBarWithResults: FC<SearchBarWithResultsPropsType> = ({
                 ) : (
                   ""
                 )}
-                <Box
-                  sx={styles.item}
-                >
+                <Box sx={styles.item}>
                   <TypographyWithEllipsis>
                     {localSearchResults.type === "tag"
                       ? `#${searchResult.name}`

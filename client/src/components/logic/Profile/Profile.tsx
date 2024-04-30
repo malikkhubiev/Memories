@@ -32,7 +32,6 @@ export const Profile: FC<ProfilePropsType> = ({
   isOpenedForMe,
   isRequestSended,
 }) => {
-
   const { t } = useTranslation("authorized");
   useEffect(() => {
     addDynamicResources("authorized");
@@ -107,7 +106,9 @@ export const Profile: FC<ProfilePropsType> = ({
             </Box>
             <Link to={`/follow/:ers/:${id}`}>
               <ColumnWrap removePadding={true}>
-                <CurrentTypography variant="body2">{t("profile_followers")}</CurrentTypography>
+                <CurrentTypography variant="body2">
+                  {t("profile_followers")}
+                </CurrentTypography>
                 <CurrentTypography variant="body2">
                   {followers.number ? followers.number : 0}
                 </CurrentTypography>
@@ -115,7 +116,9 @@ export const Profile: FC<ProfilePropsType> = ({
             </Link>
             <Box>
               <ColumnWrap removePadding={true}>
-                <CurrentTypography variant="body2">{t("profile_posts")}</CurrentTypography>
+                <CurrentTypography variant="body2">
+                  {t("profile_posts")}
+                </CurrentTypography>
                 <CurrentTypography variant="body2">
                   {postsNumber}
                 </CurrentTypography>
@@ -123,7 +126,9 @@ export const Profile: FC<ProfilePropsType> = ({
             </Box>
             <Link to={`/follow/:ing/:${id}`}>
               <ColumnWrap removePadding={true}>
-                <CurrentTypography variant="body2">{t("profile_following")}</CurrentTypography>
+                <CurrentTypography variant="body2">
+                  {t("profile_following")}
+                </CurrentTypography>
                 <CurrentTypography variant="body2">
                   {following.number ? following.number : 0}
                 </CurrentTypography>

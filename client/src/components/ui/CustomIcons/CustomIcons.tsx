@@ -12,24 +12,24 @@ const base = {
   cursor: "pointer",
 };
 
-const extraInside:any = {
-  share:()=> ({
+const extraInside: any = {
+  share: () => ({
     transform: "scale(-1, 1)",
   }),
-  arrow_outward:() => ({
+  arrow_outward: () => ({
     transform: "rotate(-45deg)",
   }),
-  light_mode:(theme: any) => ({
+  light_mode: (theme: any) => ({
     fill: theme.palette.text,
-    backgroundColor: theme.palette.primary.mainBg
-  })
+    backgroundColor: theme.palette.primary.mainBg,
+  }),
 };
 
 export const CustomIcon: FC<CustomIconPropsType> = ({ type, extra }) => {
   const theme = useTheme();
-  let insideExtra:any = {};
+  let insideExtra: any = {};
   if (extraInside[type]) {
-    insideExtra = {...insideExtra, ...extraInside[type](theme)}
+    insideExtra = { ...insideExtra, ...extraInside[type](theme) };
   }
   return (
     <svg

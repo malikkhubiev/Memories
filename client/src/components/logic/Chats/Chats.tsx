@@ -17,9 +17,7 @@ import {
 } from "../../../types/callbacks";
 import { chatType } from "../../../types/storeTypes";
 import { Header } from "../../layout/Headers/Header/Header";
-import {
-  CustomIcon
-} from "../../ui/CustomIcons/CustomIcons";
+import { CustomIcon } from "../../ui/CustomIcons/CustomIcons";
 import { BasicMenuComponent } from "../../ui/CustomMenu/CustomComponents/CustomMenuComponents";
 import { CustomMenu, menuOption } from "../../ui/CustomMenu/CustomMenu";
 import { Chat } from "../Chat/Chat";

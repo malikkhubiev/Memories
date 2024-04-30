@@ -7,7 +7,7 @@ const styles = {
     alignItems: "center",
     flexDirection: "column",
   },
-  blocked:(isDarkMode: boolean) => ({
+  blocked: (isDarkMode: boolean) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -27,6 +27,6 @@ const styles = {
   lang: {
     userSelect: "none",
     cursor: "pointer",
-  }
+  },
 };
 export default styles;

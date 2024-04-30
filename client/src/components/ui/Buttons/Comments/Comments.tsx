@@ -12,7 +12,6 @@ export const Comments: FC<CommentsPropsType> = ({
   isCommentSectionOpened,
   numberOfComments,
 }) => {
-
   const theme = useTheme();
 
   const handler = () => {
@@ -24,21 +23,12 @@ export const Comments: FC<CommentsPropsType> = ({
       <ColumnWrap removePadding={true}>
         {!commentsCallback ? (
           <Link to={`/post/:${imageId}/:true`}>
-            <CustomIcon
-              type="comments"
-              extra={styles.iconExtra}
-            />
+            <CustomIcon type="comments" extra={styles.iconExtra} />
           </Link>
         ) : (
-          <CustomIcon
-            type="comments"
-            extra={styles.iconExtra}
-          />
+          <CustomIcon type="comments" extra={styles.iconExtra} />
         )}
-        <Typography
-          sx={styles.count(theme)}
-          variant="body2"
-        >
+        <Typography sx={styles.count(theme)} variant="body2">
           {numberOfComments}
         </Typography>
       </ColumnWrap>

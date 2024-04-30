@@ -16,15 +16,21 @@ export const HideShowToggle: FC<HideShowTogglePropsType> = ({
     <div style={{ cursor: "pointer", padding: "5px" }} onClick={handler}>
       {isHideMode ? (
         <Box title="Look at public images">
-          <CustomIcon type="hide_toggle" extra={{
-            width: "35px",
-          }} />
+          <CustomIcon
+            type="hide_toggle"
+            extra={{
+              width: "35px",
+            }}
+          />
         </Box>
       ) : (
         <Box title="Look at private images">
-          <CustomIcon type="show_toggle" extra={{
-            width: "35px",
-          }} />
+          <CustomIcon
+            type="show_toggle"
+            extra={{
+              width: "35px",
+            }}
+          />
         </Box>
       )}
     </div>

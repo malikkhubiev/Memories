@@ -6,7 +6,7 @@ const styles = {
     flexDirection: "column",
     position: "relative",
   },
-  count:(theme: any) => ({
+  count: (theme: any) => ({
     fontSize: "15px",
     position: "absolute",
     top: "-5px",
@@ -26,10 +26,10 @@ const styles = {
   iconExtra: {
     width: "40px",
   },
-  seeAll:(theme:any) => ({
+  seeAll: (theme: any) => ({
     textDecoration: "none",
     color: theme.palette.text.primary,
-  })
-}
+  }),
+};
 
 export default styles;

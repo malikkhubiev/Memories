@@ -36,7 +36,10 @@ const ownImageMenuOptions = [
 ];
 
 const notOwnImageMenuOptions = [
-  { id: 7, props: { body: "image_button_notInterested", icon: "not_interested" } },
+  {
+    id: 7,
+    props: { body: "image_button_notInterested", icon: "not_interested" },
+  },
   { id: 8, props: { body: "image_button_download", icon: "download" } },
   { id: 9, props: { body: "image_button_save", icon: "filled_bookmark" } },
   { id: 10, props: { body: "image_button_unsave", icon: "unsave" } },
@@ -64,7 +67,6 @@ export const Image: FC<ImagePropsType> = ({
   isPrivate,
   isSaved,
 }) => {
-
   let [outSideMenuOptions, setOutsideMenuOptions] = useState<any[]>([]);
   const { t } = useTranslation("authorized");
   useEffect(() => {
@@ -80,22 +82,22 @@ export const Image: FC<ImagePropsType> = ({
     }
     if (isSaved) {
       menuOptions = menuOptions.filter(
-        (option) => ![1,9].includes(option.id) // splice SAVE
+        (option) => ![1, 9].includes(option.id), // splice SAVE
       );
     } else {
       menuOptions = menuOptions.filter(
-        (option) => ![2,10].includes(option.id) // splice UNSAVE
+        (option) => ![2, 10].includes(option.id), // splice UNSAVE
       );
     }
     menuOptions = menuOptions.map((option) => {
       option["props"]["body"] = t(option["props"]["body"]);
       return option;
-    })
+    });
     const processedOptions = menuOptions;
     processedOptions.forEach((option: menuOption) => {
       option["component"] = BasicMenuComponent;
     });
-    setOutsideMenuOptions(prev=>prev=processedOptions)
+    setOutsideMenuOptions((prev) => (prev = processedOptions));
   }, []);
 
   const isPostPage = useLocation().pathname.includes("post");
@@ -201,7 +203,9 @@ export const Image: FC<ImagePropsType> = ({
         }}
       >
         <Box sx={{ width: "100%", justifyContent: "center" }}>
-          <Typography variant="h5">{numberOfViews} {t('image_views')}</Typography>
+          <Typography variant="h5">
+            {numberOfViews} {t("image_views")}
+          </Typography>
         </Box>
         <div className={styles.description}>
           <div className={styles.line}></div>

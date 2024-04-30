@@ -28,7 +28,7 @@ const styles = {
   item: {
     maxWidth: "75%",
     marginLeft: "10px",
-  }
+  },
 };
 
 export default styles;

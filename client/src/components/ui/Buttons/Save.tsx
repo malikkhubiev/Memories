@@ -1,8 +1,6 @@
 import React, { FC } from "react";
 import { saveToggleCallbackType } from "../../../types/callbacks";
-import {
-  CustomIcon,
-} from "../CustomIcons/CustomIcons";
+import { CustomIcon } from "../CustomIcons/CustomIcons";
 
 export const Save: FC<SavePropsType> = ({ isSaveMode, saveToggleCallback }) => {
   const handler = () => {

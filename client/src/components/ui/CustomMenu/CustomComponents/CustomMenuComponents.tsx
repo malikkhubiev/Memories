@@ -5,9 +5,10 @@ import { CustomIcon } from "../../CustomIcons/CustomIcons";
 
 const urlOutside = "https://www.youtube.com/";
 
-export const BasicMenuComponent: FC<{ body: string; icon: string }> = (
-  {body, icon},
-) => {
+export const BasicMenuComponent: FC<{ body: string; icon: string }> = ({
+  body,
+  icon,
+}) => {
   return (
     <div className={styles.component}>
       {icon && <CustomIcon type={icon} />}

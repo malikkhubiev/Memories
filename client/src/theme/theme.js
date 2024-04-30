@@ -29,40 +29,40 @@ const base = {
       },
     },
   },
-}
+};
 
 export let lightTheme = createTheme({
   palette: {
-    mode: 'light',
+    mode: "light",
     primary: {
-      main: '#1976d2', // синий
-      mainBg: "#fff"
+      main: "#1976d2", // синий
+      mainBg: "#fff",
     },
     secondary: {
-      main: '#4caf50', // зелёный
+      main: "#4caf50", // зелёный
     },
     text: {
-      primary: '#000000', // чёрный
-    }
+      primary: "#000000", // чёрный
+    },
   },
-  ...base
+  ...base,
 });
 
 export let darkTheme = createTheme({
   palette: {
-    mode: 'dark',
+    mode: "dark",
     primary: {
-      main: '#1976d2', // синий
-      mainBg: "#121212"
+      main: "#1976d2", // синий
+      mainBg: "#121212",
     },
     secondary: {
-      main: '#4caf50', // зелёный
+      main: "#4caf50", // зелёный
     },
     text: {
-      primary: '#ffffff', // белый
-    }
+      primary: "#ffffff", // белый
+    },
   },
-  ...base
+  ...base,
 });
 
 lightTheme = createTheme(lightTheme, {
@@ -81,5 +81,5 @@ darkTheme = createTheme(darkTheme, {
   },
 });
 
-const toExport = {lightTheme, darkTheme}
+const toExport = { lightTheme, darkTheme };
 export default toExport;

@@ -61,8 +61,8 @@ const SettingsPage: FC<{}> = () => {
     }
   }, [user]);
 
-  const changeLanguage = async() => {
-    const newLanguage = language === "ru"? "en" : "ru";
+  const changeLanguage = async () => {
+    const newLanguage = language === "ru" ? "en" : "ru";
     await i18n.changeLanguage(newLanguage);
     await addDynamicResources("authorized");
     setLanguage((prev) => (prev = newLanguage));
@@ -154,10 +154,7 @@ const SettingsPage: FC<{}> = () => {
                 Apply
               </Button>
             </SmallGoldenRatioBox>
-            <Box
-              onClick={changeLanguage}
-              sx={styles.lang}
-            >
+            <Box onClick={changeLanguage} sx={styles.lang}>
               {language}
             </Box>
             <Button sx={styles.buttonLogOut} onClick={logoutHandler}>

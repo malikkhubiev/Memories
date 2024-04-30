@@ -1,4 +1,10 @@
-import { Box, Popover, Typography, Link as MaterialLink, useTheme } from "@mui/material";
+import {
+  Box,
+  Popover,
+  Typography,
+  Link as MaterialLink,
+  useTheme,
+} from "@mui/material";
 import React, { FC } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { CustomIcon } from "../../CustomIcons/CustomIcons";
@@ -11,7 +17,6 @@ export const Like: FC<LikePropsType> = ({
   unLike,
   numberOfLikes,
 }) => {
-
   const theme = useTheme();
 
   const likeHandler = (event: React.MouseEvent<HTMLElement>) => {
@@ -57,39 +62,24 @@ export const Like: FC<LikePropsType> = ({
           </Popover>
           {isLiked ? (
             <Box onClick={unLike}>
-              <CustomIcon
-                type="filled_like"
-                extra={styles.iconExtra}
-              />
+              <CustomIcon type="filled_like" extra={styles.iconExtra} />
             </Box>
           ) : (
             <Box aria-describedby={id} onClick={likeHandler}>
-              <CustomIcon
-                type="like"
-                extra={styles.iconExtra}
-              />
+              <CustomIcon type="like" extra={styles.iconExtra} />
             </Box>
           )}
         </Box>
       ) : (
         <Box onClick={isLiked ? unLike : like}>
           {isLiked ? (
-            <CustomIcon
-              type="filled_like"
-              extra={styles.iconExtra}
-            />
+            <CustomIcon type="filled_like" extra={styles.iconExtra} />
           ) : (
-            <CustomIcon
-              type="like"
-              extra={styles.iconExtra}
-            />
+            <CustomIcon type="like" extra={styles.iconExtra} />
           )}
         </Box>
       )}
-      <Typography
-        sx={styles.count(theme)}
-        variant="body2"
-      >
+      <Typography sx={styles.count(theme)} variant="body2">
         {numberOfLikes}
       </Typography>
     </Box>
