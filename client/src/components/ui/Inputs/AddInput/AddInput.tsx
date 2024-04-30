@@ -14,7 +14,7 @@ export const AddInput: FC<AddInputPropsType> = ({
   sx,
   lines,
   inputTestId,
-  buttonTestId
+  buttonTestId,
 }) => {
   let [value, setValue] = useState<string>(text);
   const { t } = useTranslation("authorized");

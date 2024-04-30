@@ -17,7 +17,7 @@ import { addDynamicResources } from "../../i18n/i18n";
 export const DeleteAccountButton: FC<{}> = () => {
   const [open, setOpen] = useState<boolean>(false);
   let [password, setPassword] = useState<string>("");
-  
+
   const { t } = useTranslation("authorized");
   useEffect(() => {
     addDynamicResources("authorized");
@@ -48,9 +48,7 @@ export const DeleteAccountButton: FC<{}> = () => {
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{t("delete_title")}</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            {t("delete_confirmation")}
-          </DialogContentText>
+          <DialogContentText>{t("delete_confirmation")}</DialogContentText>
           <TextField
             autoFocus
             value={password}
@@ -63,7 +61,9 @@ export const DeleteAccountButton: FC<{}> = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>{t("delete_cancel_button")}</Button>
-          <Button onClick={deleteAccauntHandler}>{t("delete_delete_button")}</Button>
+          <Button onClick={deleteAccauntHandler}>
+            {t("delete_delete_button")}
+          </Button>
         </DialogActions>
       </Dialog>
       <Button

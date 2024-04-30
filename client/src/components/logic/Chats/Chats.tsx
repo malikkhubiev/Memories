@@ -1,5 +1,11 @@
 import { Box } from "@mui/material";
-import React, { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
+import React, {
+  Dispatch,
+  FC,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { useNavigate } from "react-router-dom";
 import {
   useClearAllChats,
@@ -36,7 +42,6 @@ export const Chats: FC<ChatsPropsType> = ({
   setChats,
   setCurrentChat,
 }) => {
-
   const navigate = useNavigate();
 
   const [clearAllChats] = useClearAllChats();
@@ -46,10 +51,10 @@ export const Chats: FC<ChatsPropsType> = ({
   const { t } = useTranslation("authorized");
   useEffect(() => {
     addDynamicResources("authorized");
-    const processedOptions = JSON.parse(JSON.stringify(rawMenuOptions))
+    const processedOptions = JSON.parse(JSON.stringify(rawMenuOptions));
     processedOptions.forEach((option: menuOption) => {
       option["component"] = BasicMenuComponent;
-      option["props"]["body"] = t(option["props"]["body"])
+      option["props"]["body"] = t(option["props"]["body"]);
     });
     setMenuOptions((prev) => (prev = processedOptions));
   }, []);

@@ -16,7 +16,9 @@
     "all": "concurrently \"npm run server\" \"npm run client\""
   },
   "jest": {
-    "testMatch": ["**/__tests__/**/*.e2e.js"]
+    "testMatch": [
+      "**/__tests__/**/*.e2e.js"
+    ]
   },
   "keywords": [],
   "author": "",

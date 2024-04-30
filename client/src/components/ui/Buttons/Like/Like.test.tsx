@@ -15,7 +15,7 @@ test("renders like component with provided props", () => {
   const { getByText, getByTestId } = render(
     <BrowserRouter>
       <Like {...props} />
-    </BrowserRouter>
+    </BrowserRouter>,
   );
 
   expect(getByText("10")).toBeInTheDocument();
@@ -37,7 +37,7 @@ test("renders unlike component with provided props", () => {
   const { getByText, getByTestId } = render(
     <BrowserRouter>
       <Like {...props} />
-    </BrowserRouter>
+    </BrowserRouter>,
   );
 
   expect(getByText("10")).toBeInTheDocument();

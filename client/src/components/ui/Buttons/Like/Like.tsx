@@ -22,10 +22,10 @@ const Like: FC<LikePropsType> = ({
   let [isLiked, setIsLiked] = useState<boolean>(isLikedProps);
   const likeHandler = (event: React.MouseEvent<HTMLElement>) => {
     if (isLiked) {
-      setIsLiked(prev => prev = false)
+      setIsLiked((prev) => (prev = false));
       unLike();
-    }else{
-      setIsLiked(prev => prev = true)
+    } else {
+      setIsLiked((prev) => (prev = true));
       setAnchorEl(event.currentTarget);
       like();
     }
