@@ -1,14 +1,16 @@
 const styles = {
-  comments: {
+  comments: (theme: any) => ({
     width: "100%",
-    height: "80vh",
-    padding: "0 25px",
+    padding: "25px",
     overflowY: "scroll",
-    borderTop: "1px solid #000",
+    borderTop: `1px solid ${theme.palette.primary.main}`,
     display: "flex",
     justifyContent: "flex-start",
     alignItems: "center",
     flexDirection: "column",
-  },
+  }),
+  column_wrap: {
+    paddingBottom: "80px"
+  }
 };
 export default styles;

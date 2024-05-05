@@ -1,4 +1,4 @@
-import { Box, Link as MaterialLink, Typography } from "@mui/material";
+import { Box, Link as MaterialLink, Typography, useTheme } from "@mui/material";
 import React, { FC, useEffect, useRef, useState } from "react";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 import {
@@ -22,7 +22,7 @@ import { Buttons } from "../../ui/Buttons/ImageButtons/ImageButtons";
 import { BasicMenuComponent } from "../../ui/CustomMenu/CustomComponents/CustomMenuComponents";
 import { menuOption } from "../../ui/CustomMenu/CustomMenu";
 import { ThreeLineTypographyWithEllipsis } from "../../ui/customStyledComponents";
-import styles from "./Image.module.less";
+import styles from "./ImageStyle";
 import { useTranslation } from "react-i18next";
 import { addDynamicResources } from "../../../i18n/i18n";
 
@@ -67,8 +67,11 @@ export const Image: FC<ImagePropsType> = ({
   isPrivate,
   isSaved,
 }) => {
+  const theme = useTheme();
+
   let [outSideMenuOptions, setOutsideMenuOptions] = useState<any[]>([]);
   const { t } = useTranslation("authorized");
+
   useEffect(() => {
     addDynamicResources("authorized");
     let menuOptions: any[];
@@ -168,20 +171,21 @@ export const Image: FC<ImagePropsType> = ({
   );
 
   return (
-    <div id={`${id}`} ref={ref} className={styles.imageComponent}>
-      <div className={styles.header}>
+    <Box id={`${id}`} ref={ref} sx={styles.imageComponent}>
+      <Box sx={styles.header}>
         <ItemHeader
           optionActionCallback={optionActionCallback}
           menuOptions={outSideMenuOptions}
           imgSrc={src}
           authorId={authorId}
+          component="image"
           authorName={authorName}
           isOwn={isOwn}
           avatar={avatar}
           createdAt={createdAt}
         />
-      </div>
-      <img className={styles.image} src={process.env.REACT_APP_API_URL + src} />
+      </Box>
+      <img style={styles.image} src={process.env.REACT_APP_API_URL + src} />
       <Buttons
         numberOfComments={numberOfComments}
         commentsCallback={commentsCallback || null}
@@ -207,36 +211,35 @@ export const Image: FC<ImagePropsType> = ({
             {numberOfViews} {t("image_views")}
           </Typography>
         </Box>
-        <div className={styles.description}>
-          <div className={styles.line}></div>
+        <Box sx={styles.description}>
+          <Box sx={styles.line(theme)}></Box>
           <Box sx={{ maxWidth: "80%" }}>
             {isPostPage ? (
-              <Typography variant="body2">{description}</Typography>
+              <Typography sx={styles.desc_with_el} variant="body2">
+                {description}
+              </Typography>
             ) : (
               <ThreeLineTypographyWithEllipsis>
                 {description}
               </ThreeLineTypographyWithEllipsis>
             )}
           </Box>
-        </div>
-        <div className={styles.tags}>
+        </Box>
+        <Box sx={styles.tags}>
           {tagsForShow.map((tag: any) => (
             <MaterialLink
               key={tag.id}
               variant="body2"
               component={RouterLink}
-              sx={{
-                textDecoration: "none",
-                color: "primary.main",
-              }}
+              sx={styles.tag}
               to={`/tags/:${tag.id}/:${tag.name}`}
             >
               #{tag.name}
             </MaterialLink>
           ))}
-        </div>
+        </Box>
       </Box>
-    </div>
+    </Box>
   );
 };
 

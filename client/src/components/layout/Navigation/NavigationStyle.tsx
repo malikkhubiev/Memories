@@ -1,5 +1,13 @@
 const styles = {
-  container: {
+  container: (theme: any) => ({
+    [theme.breakpoints.down('sm')]: {
+      width: "100%",
+      borderRadius: "0",
+    },
+    [theme.breakpoints.up('sm')]: {
+      width: "645px",
+      borderRadius: "50px"
+    },
     position: "fixed",
     zIndex: "1000",
     bottom: "0",
@@ -8,22 +16,38 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    boxShadow:
-      "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
-    borderRadius: "50px",
     userSelect: "none",
-  },
-  stack: {
+    borderTop: "2px solid",
+    backgroundColor: theme.palette.mode === "dark" ? theme.palette.primary.violet : theme.palette.primary.mainBg,
+    borderColor: theme.palette.primary.violet
+  }),
+  stack: (theme: any) => ({
     justifyContent: "center",
-    padding: {
-      md: "25px 45px",
-      xs: "15px 25px",
+    [theme.breakpoints.down('sm')]: {
+      padding: "15px 0",
     },
-  },
-  link: {
+    [theme.breakpoints.up('sm')]: {
+      padding: "25px 45px",
+    },
+  }),
+  link: (theme: any) => ({
     cursor: "pointer",
-    margin: "0 25px",
-  },
+    [theme.breakpoints.down('sm')]: {
+      margin: "0 12px",
+    },
+    [theme.breakpoints.up('sm')]: {
+      margin: "0 25px",
+    },
+    transition: "0.5s",
+    "&:hover": {
+      [theme.breakpoints.down('sm')]: {
+        transform: "scale(1.25)",
+      },
+      [theme.breakpoints.up('sm')]: {
+        transform: "scale(1.5)",
+      },
+    }
+  }),
 };
 
 export default styles;

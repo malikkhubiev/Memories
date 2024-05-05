@@ -1,7 +1,7 @@
-import { Button, TextField } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import React, { FC, useState } from "react";
 import { addCustomPrefType } from "../../../../pages/authorized/PreferencesPage/PreferencesPage";
-import styles from "./CustomPreferences.module.less";
+import styles from "./CustomPreferencesStyle";
 
 export const CustomPreferences: FC<{ addCustomPref: addCustomPrefType }> = ({
   addCustomPref,
@@ -20,7 +20,7 @@ export const CustomPreferences: FC<{ addCustomPref: addCustomPrefType }> = ({
   };
 
   return (
-    <div className={styles.customPreferences}>
+    <Box sx={styles.container}>
       <TextField
         value={preferenceText}
         onChange={preferenceInputHandler}
@@ -28,8 +28,8 @@ export const CustomPreferences: FC<{ addCustomPref: addCustomPrefType }> = ({
         variant="standard"
       />
       <Button onClick={addButtonHandler} color="primary" variant="contained">
-        add
+        +
       </Button>
-    </div>
+    </Box>
   );
 };

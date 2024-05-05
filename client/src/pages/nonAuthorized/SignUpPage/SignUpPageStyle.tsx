@@ -17,6 +17,9 @@ const styles = {
     marginTop: "20px",
     textAlign: "center",
   },
+  link: (theme: any) => ({
+    color: theme.palette.primary.violet
+  }),
   redirect: (isSmallSize: boolean) => ({
     margin: "20px 0",
     textAlign: "center",

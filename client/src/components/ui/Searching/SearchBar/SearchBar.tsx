@@ -22,20 +22,36 @@ export const SearchBar: FC<{ searchHandler: searchButtonHandlerType }> = ({
     setSearchValue((prev) => (prev = val));
     if (val.trim() !== "") searchHandler(val);
   };
+  
+  const placeholderStyles = `
+    ::-webkit-input-placeholder {
+      color: ${theme.palette.primary.main};
+    }
+    :-moz-placeholder {
+      color: ${theme.palette.primary.main};
+    }
+    ::-moz-placeholder {
+      color: ${theme.palette.primary.main};
+    }
+    :-ms-input-placeholder {
+      color: ${theme.palette.primary.main};
+    }
+  `;
 
   return (
-    <div style={styles.bar}>
-      <input
-        value={searchValue}
-        onChange={searchValueHandler}
-        placeholder={t("search_placeholder") + "..."}
-        style={{
-          ...styles.input,
-          color: theme.palette.mode === "dark" ? "#fff" : "#000",
-          borderColor: theme.palette.mode === "dark" ? "#fff" : "#000",
-        }}
-      />
-      <CustomIcon type="search" />
-    </div>
+    <>
+      <style>{placeholderStyles}</style>
+      <div style={styles.bar(theme)}>
+        <input
+          value={searchValue}
+          onChange={searchValueHandler}
+          placeholder={t("search_placeholder") + "..."}
+          style={{
+            ...styles.input(theme),
+          }}
+        />
+        <CustomIcon type="search" />
+      </div>
+    </>
   );
 };

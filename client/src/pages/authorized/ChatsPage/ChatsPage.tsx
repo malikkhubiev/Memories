@@ -333,7 +333,7 @@ const ChatsPage: FC<{}> = () => {
   }
 
   const theme = useTheme();
-  const isSmallSize = useMediaQuery(theme.breakpoints.down("md"));
+  const isSmallSize = useMediaQuery(theme.breakpoints.down("xl"));
 
   return (
     <Box sx={styles.page}>

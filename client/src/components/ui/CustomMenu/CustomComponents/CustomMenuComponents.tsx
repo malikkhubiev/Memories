@@ -1,21 +1,19 @@
 import { Box, Typography } from "@mui/material";
 import React, { FC } from "react";
-import styles from "./CustomMenuComponents.module.less";
+import styles from "./CustomMenuComponentsStyle";
 import { CustomIcon } from "../../CustomIcons/CustomIcons";
-
-const urlOutside = "https://www.youtube.com/";
 
 export const BasicMenuComponent: FC<{ body: string; icon: string }> = ({
   body,
   icon,
 }) => {
   return (
-    <div className={styles.component}>
+    <Box sx={styles.component}>
       {icon && <CustomIcon type={icon} />}
-      <Box className={styles.box}>
+      <Box sx={styles.box}>
         <Typography variant="body2">{body}</Typography>
       </Box>
-    </div>
+    </Box>
   );
 };
 
@@ -27,12 +25,12 @@ export const ButtonComponent: FC<{
 }> = (props) => {
   return (
     <props.button url={props.url}>
-      <div className={styles.component}>
+      <Box sx={styles.component}>
         {props.icon && <props.icon size={32} round={true} />}
-        <Box className={styles.box}>
+        <Box sx={styles.box}>
           <Typography variant="body2">{props.name}</Typography>
         </Box>
-      </div>
+      </Box>
     </props.button>
   );
 };

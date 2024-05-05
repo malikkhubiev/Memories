@@ -1,6 +1,6 @@
 import { Box, Link as MaterialLink, useTheme } from "@mui/material";
 import React, { FC } from "react";
-import { Outlet, Link as RouterLink } from "react-router-dom";
+import { Outlet, Link as RouterLink, useLocation } from "react-router-dom";
 import {
   selectAvatar,
   selectId,
@@ -19,45 +19,46 @@ export const Navigation: FC<NavigationPropsType> = ({
   const theme = useTheme();
   const id = useAppSelector((state: RootState) => selectId(state));
   const avatar = useAppSelector((state: RootState) => selectAvatar(state));
-
+  const location = useLocation();
+  const linkStyle = styles.link(theme)
+  const pathsWithoutNav = ["/chats", "/settings"]
   return (
     <>
-      <Box
-        sx={{
-          ...styles.container,
-          // @ts-ignore
-          backgroundColor: theme.palette.primary.mainBg,
-        }}
-      >
-        <CustomStack sx={styles.stack}>
-          <MaterialLink component={RouterLink} sx={styles.link} to="search">
-            <CustomIcon type="search" />
-            {/* <CustomSearchIcon /> */}
-          </MaterialLink>
-          <MaterialLink component={RouterLink} sx={styles.link} to="">
-            <CustomIcon type="home" />
-          </MaterialLink>
-          <MaterialLink component={RouterLink} sx={styles.link} to="requests">
-            <CustomIcon type="list" />
-          </MaterialLink>
-          <MaterialLink component={RouterLink} sx={styles.link} to="posting">
-            <CustomIcon type="add" />
-          </MaterialLink>
-          <Box onClick={toggleDarkMode} sx={styles.link}>
-            <CustomIcon type="light_mode" />
-          </Box>
-          <MaterialLink
-            component={RouterLink}
-            sx={styles.link}
-            to={`profile:${id}`}
-          >
-            <CustomAvatar width={25} src={avatar} />
-          </MaterialLink>
-          <MaterialLink component={RouterLink} sx={styles.link} to="chats">
-            <CustomIcon type="send" />
-          </MaterialLink>
-        </CustomStack>
-      </Box>
+      {!pathsWithoutNav.includes(location.pathname) && (
+        <Box
+          sx={{
+            ...styles.container(theme),
+          }}
+        >
+          <CustomStack sx={styles.stack(theme)}>
+            <MaterialLink component={RouterLink} sx={linkStyle} to="search">
+              <CustomIcon type="search" />
+            </MaterialLink>
+            <MaterialLink component={RouterLink} sx={linkStyle} to="">
+              <CustomIcon type="home" />
+            </MaterialLink>
+            <MaterialLink component={RouterLink} sx={linkStyle} to="requests">
+              <CustomIcon type="list" />
+            </MaterialLink>
+            <MaterialLink component={RouterLink} sx={linkStyle} to="posting">
+              <CustomIcon type="add" />
+            </MaterialLink>
+            <Box onClick={toggleDarkMode} sx={linkStyle}>
+              <CustomIcon type="light_mode" />
+            </Box>
+            <MaterialLink
+              component={RouterLink}
+              sx={linkStyle}
+              to={`profile:${id}`}
+            >
+              <CustomAvatar width={25} src={avatar} />
+            </MaterialLink>
+            <MaterialLink component={RouterLink} sx={linkStyle} to="chats">
+              <CustomIcon type="send" />
+            </MaterialLink>
+          </CustomStack>
+        </Box>
+      )}
       <Outlet></Outlet>
     </>
   );

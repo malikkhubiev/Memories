@@ -35,12 +35,14 @@ import { CustomMenu, menuOption } from "../../ui/CustomMenu/CustomMenu";
 import { TypographyWithEllipsis } from "../../ui/customStyledComponents";
 import { AddInput } from "../../ui/Inputs/AddInput/AddInput";
 import { Message } from "../Message/Message";
-import styles from "./Messages.module.less";
+import styles from "./MessagesStyle";
+import { useTranslation } from "react-i18next";
+import { addDynamicResources } from "../../../i18n/i18n";
 
-const menuOptions: any[] = [
-  { id: 1, props: { body: "Clear chat", icon: "broom" } },
-  { id: 2, props: { body: "Delete chat", icon: "delete" } },
-  { id: 3, props: { body: "Block user", icon: "block" } },
+const rawMenuOptions: any[] = [
+  { id: 1, props: { body: "chats_clearChat", icon: "broom" } },
+  { id: 2, props: { body: "chats_deleteChat", icon: "delete" } },
+  { id: 3, props: { body: "chats_blockUser", icon: "block" } },
 ];
 
 export const Messages: FC<MessagesPropsTypes> = ({
@@ -56,7 +58,11 @@ export const Messages: FC<MessagesPropsTypes> = ({
   setCurrentChat,
   upTheChat,
 }) => {
+
+  const { t } = useTranslation("authorized");
+
   // state
+  let [menuOptions, setMenuOptions] = useState<any[]>([]);
   let [messageText, setMessageText] = useState<string>("");
   let [isSendedMessage, setIsSendedMessage] = useState<boolean>(false);
   const [openSnackBar, setOpenSnackBar] = React.useState(false);
@@ -75,10 +81,14 @@ export const Messages: FC<MessagesPropsTypes> = ({
   const { sendData } = useSocket("chats");
 
   useEffect(() => {
+    addDynamicResources("authorized");
     // menu
-    menuOptions.forEach((option: menuOption) => {
+    let processedOptions = JSON.parse(JSON.stringify(rawMenuOptions))
+    processedOptions.forEach((option: menuOption) => {
       option["component"] = BasicMenuComponent;
+      option["props"]["body"] = t(option["props"]["body"]);
     });
+    setMenuOptions((prev) => (prev = processedOptions));
   }, []);
 
   useEffect(() => {
@@ -149,26 +159,13 @@ export const Messages: FC<MessagesPropsTypes> = ({
   };
 
   const theme = useTheme();
-  const isSmallSize = useMediaQuery(theme.breakpoints.down("md"));
+  const isSmallSize = useMediaQuery(theme.breakpoints.down("xl"));
 
   return (
     <Box
-      sx={{
-        width: {
-          xl: "50%",
-          lg: "50%",
-          md: "50%",
-          sm: "100%",
-          xs: "100%",
-        },
-        height: "100%",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        flexDirection: "column",
-      }}
+      sx={styles.container}
     >
-      <div className={styles.header}>
+      <Box sx={styles.header(theme)}>
         {isSmallSize ? (
           <div onClick={() => setCurrentChat((prev) => (prev = null))}>
             <CustomIcon type="arrow_back" />
@@ -176,17 +173,14 @@ export const Messages: FC<MessagesPropsTypes> = ({
         ) : (
           ""
         )}
-        <div className={styles.chatter}>
+        <Box sx={styles.chatter}>
           <CustomAvatar width={50} src={chatterAva} />
           <TypographyWithEllipsis
-            sx={{
-              marginLeft: "20px",
-              maxWidth: "70%",
-            }}
+            sx={styles.withEllipsis}
           >
             {chatterName}
           </TypographyWithEllipsis>
-        </div>
+        </Box>
         {typeof id !== "string" ? (
           <CustomMenu
             icon="more_vertical"
@@ -196,14 +190,14 @@ export const Messages: FC<MessagesPropsTypes> = ({
         ) : (
           <Plug />
         )}
-      </div>
+      </Box>
       <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         open={openSnackBar}
-        message={`${newMessagesCounter} new messages`}
+        message={`${newMessagesCounter} ${t("chats_newMessages")}`}
       />
-      <div className={styles.body}>
-        <div ref={messagesBlockRef} className={styles.messages}>
+      <Box sx={styles.body(theme)}>
+        <div ref={messagesBlockRef} style={styles.messages}>
           {messages?.length
             ? messages.map((message: any) => (
                 <Message
@@ -223,9 +217,10 @@ export const Messages: FC<MessagesPropsTypes> = ({
           text={messageText}
           addInputCallback={sendMessageHandler}
           buttonText="Send"
-          placeholder="Looking good!"
+          placeholder={t("chats_placeholder")}
+          icon="send"
         />
-      </div>
+      </Box>
     </Box>
   );
 };

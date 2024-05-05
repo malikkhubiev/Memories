@@ -197,6 +197,7 @@ const PreferencesPage: FC<{}> = () => {
           </Box>
           <CustomPreferences addCustomPref={addCustomPref} />
           <Button
+            sx={styles.nextButton}
             disabled={!selectedPreferences.length}
             onClick={nextButtonHanlder}
           >

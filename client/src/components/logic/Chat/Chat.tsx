@@ -1,4 +1,4 @@
-import { Badge, Box, Typography } from "@mui/material";
+import { Badge, Box, Typography, useTheme } from "@mui/material";
 import React, { FC } from "react";
 import { setChatIdCallbackType } from "../../../types/callbacks";
 import { messageType } from "../../../types/storeTypes";
@@ -7,7 +7,7 @@ import {
   SmallGreyText,
   TypographyWithEllipsis,
 } from "../../ui/customStyledComponents";
-import styles from "./Chats.module.less";
+import styles from "./ChatStyle";
 
 export const Chat: FC<ChatPropsType> = ({
   setChatIdCallback,
@@ -22,55 +22,39 @@ export const Chat: FC<ChatPropsType> = ({
     setChatIdCallback(id);
   };
 
+  const theme = useTheme();
+
   return (
-    <Badge
-      sx={{ width: "100%" }}
-      color="primary"
-      badgeContent={newMessagesNumber}
+    <Box
+      sx={styles.wrap}
     >
       <Box
         onClick={clickHandler}
-        sx={{
-          cursor: "pointer",
-          width: "100%",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: "20px 10px",
-          color: () => (isCurrent ? "#fff" : "#000"),
-          backgroundColor: () => (isCurrent ? "primary.light" : "#fff"),
-        }}
+        sx={styles.body(theme, isCurrent)}
       >
-        <div className={styles.leftSide}>
-          <CustomAvatar width={50} src={chatterAva} />
-          <div className={styles.mainData}>
+        <Box sx={styles.leftSide}>
+          <CustomAvatar extra={styles.avatar} width={50} src={chatterAva} />
+          <Box sx={styles.mainData}>
             <TypographyWithEllipsis>{chatterName}</TypographyWithEllipsis>
             <SmallGreyText
-              sx={{
-                color: () => (isCurrent ? "#fff" : "#000"),
-              }}
+              sx={styles.grey(theme, isCurrent)}
             >
               <TypographyWithEllipsis>
                 {lastMessage?.text}
               </TypographyWithEllipsis>
             </SmallGreyText>
-          </div>
-        </div>
-        <div className={styles.rightSide}>
+          </Box>
+        </Box>
+        <Box sx={styles.rightSide}>
           <Typography
-            sx={{
-              fontSize: {
-                xs: "15px",
-                sm: "25px",
-              },
-            }}
+            sx={styles.date}
           >
             {lastMessage &&
-              new Date(lastMessage.createdAt).toLocaleDateString()}
+              `${new Date(lastMessage.createdAt).toLocaleDateString()}`.slice(0,5)}
           </Typography>
-        </div>
+        </Box>
       </Box>
-    </Badge>
+    </Box>
   );
 };
 

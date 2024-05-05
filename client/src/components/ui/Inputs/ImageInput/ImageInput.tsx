@@ -2,7 +2,8 @@ import { Box, useMediaQuery, useTheme } from "@mui/material";
 import React, { FC, useRef } from "react";
 import uploadImage from "../../../../assets/123.png";
 import { uploadImageCallbackType } from "../../../../types/callbacks";
-import styles from "./ImageInput.module.less";
+import styles from "./ImageInputStyle";
+import { CustomIcon } from "../../CustomIcons/CustomIcons";
 
 export const ImageInput: FC<ImageInputPropsType> = ({
   uploadImageCallback,
@@ -20,30 +21,20 @@ export const ImageInput: FC<ImageInputPropsType> = ({
   const isSmallSize = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
-    <Box
-      onClick={inputHandler}
-      sx={{
-        width: isSmallSize ? "100%" : "50%",
-        height: "auto",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        cursor: "pointer",
-      }}
-    >
+    <Box onClick={inputHandler} sx={styles.container(isSmallSize)}>
       <input
         ref={ref}
-        className={styles.invisibleInput}
+        style={styles.invisibleInput}
         type="file"
         onChange={uploadImageCallback}
       />
       {src ? (
         <img
-          className={styles.image}
+          style={styles.image}
           src={src.length > 40 ? src : process.env.REACT_APP_API_URL + src}
         />
       ) : (
-        <img className={styles.image} src={uploadImage} />
+        <CustomIcon extra={styles.image} type="upload_image" />
       )}
     </Box>
   );

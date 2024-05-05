@@ -136,7 +136,7 @@ class authController {
       }
 
       if (!name && !avatar && !isOpened)
-        throw new Error("You didn't provide any new data");
+        res.json({message: "ok"})
 
       const response = await changeNameAvatarIsOpened(
         id,

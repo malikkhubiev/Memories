@@ -1,10 +1,20 @@
-import { Box, Typography, styled } from "@mui/material";
-import React, { FC } from "react";
+import { Box, Typography, useTheme } from "@mui/material";
+import React, { FC, useEffect, useState } from "react";
 import { messageOptionsCallbackType } from "../../../types/callbacks";
 import { BasicMenuComponent } from "../../ui/CustomMenu/CustomComponents/CustomMenuComponents";
-import { CustomMenu } from "../../ui/CustomMenu/CustomMenu";
+import { CustomMenu, menuOption } from "../../ui/CustomMenu/CustomMenu";
 import { SmallGreyText } from "../../ui/customStyledComponents";
-import styles from "./Messages.module.less";
+import styles from "./MessageStyle";
+import { useTranslation } from "react-i18next";
+import { addDynamicResources } from "../../../i18n/i18n";
+
+const rawMenuOptions: any[] = [
+  {
+    id: 1,
+    component: BasicMenuComponent,
+    props: { body: "chats_deleteMessage", icon: "clear" },
+  },
+];
 
 export const Message: FC<MessagePropsType> = ({
   id,
@@ -13,50 +23,31 @@ export const Message: FC<MessagePropsType> = ({
   createdAt,
   messageOptionsCallback,
 }) => {
+  const { t } = useTranslation("authorized");
+
+  let [menuOptions, setMenuOptions] = useState<any[]>([]);
+
+  useEffect(() => {
+    addDynamicResources("authorized");
+    // menu
+    let processedOptions = JSON.parse(JSON.stringify(rawMenuOptions))
+    processedOptions.forEach((option: menuOption) => {
+      option["component"] = BasicMenuComponent;
+      option["props"]["body"] = t(option["props"]["body"]);
+    });
+    setMenuOptions((prev) => (prev = processedOptions));
+  }, []);
+
   const handler = () => {
     messageOptionsCallback(id);
   };
-  const menuOptions = [
-    {
-      id: 1,
-      component: BasicMenuComponent,
-      props: { body: "Delete from me", icon: "clear" },
-    },
-  ];
 
-  const Message = styled(Box)(({ theme }) => ({
-    width: "100%",
-    display: "flex",
-    alignItems: "center",
-    margin: "50px 0",
-  }));
-
-  const Header = styled(Box)(({ theme }) => ({
-    width: "100%",
-    display: "flex",
-    alignItems: "center",
-  }));
-
-  const Body = styled(Box)(({ theme }) => ({
-    width: "100%",
-    display: "flex",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    padding: "25px 35px",
-  }));
+  const theme = useTheme()
 
   return (
-    <Message
-      sx={{
-        justifyContent: () => (isOwn ? "flex-end" : "flex-start"),
-      }}
-    >
-      <div className={styles.container}>
-        <Header
-          sx={{
-            justifyContent: () => (isOwn ? "flex-end" : "flex-start"),
-          }}
-        >
+    <Box sx={styles.message(isOwn)}>
+      <Box sx={styles.container(isOwn)}>
+        <Box sx={styles.header(isOwn)}>
           {isOwn ? (
             <>
               <SmallGreyText>
@@ -81,28 +72,17 @@ export const Message: FC<MessagePropsType> = ({
               </SmallGreyText>
             </>
           )}
-        </Header>
-        <Body
-          sx={{
-            backgroundColor: () => (isOwn ? "primary.main" : "secondary.main"),
-            borderRadius: () =>
-              isOwn ? "50px 0 50px 50px" : "0 50px 50px 50px",
-          }}
-        >
+        </Box>
+        <Box sx={styles.body(theme, isOwn)}>
           <Typography
             variant="body2"
-            sx={{
-              overflow: "hidden",
-              wordWrap: "break-word",
-              fontSize: "25px",
-              color: () => (isOwn ? "#fff" : "#000"),
-            }}
+            sx={styles.text(isOwn)}
           >
             {text}
           </Typography>
-        </Body>
-      </div>
-    </Message>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 

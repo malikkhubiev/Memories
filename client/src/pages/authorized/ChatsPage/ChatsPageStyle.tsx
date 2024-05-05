@@ -7,7 +7,7 @@ const styles = {
     alignItems: "center",
   },
   plug: {
-    width: "50%",
+    width: "67%",
     height: "100%",
     display: "flex",
     justifyContent: "center",

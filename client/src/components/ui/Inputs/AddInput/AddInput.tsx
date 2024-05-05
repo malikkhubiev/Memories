@@ -1,9 +1,10 @@
 import { Box, Button, TextField } from "@mui/material";
 import React, { FC, useEffect, useState } from "react";
 import { addInputCallbackType } from "../../../../types/callbacks";
-import styles from "./AddInput.moudle.less";
+import styles from "./AddInputStyle";
 import { useTranslation } from "react-i18next";
 import { addDynamicResources } from "../../../../i18n/i18n";
+import { CustomIcon } from "../../CustomIcons/CustomIcons";
 
 export const AddInput: FC<AddInputPropsType> = ({
   text,
@@ -15,6 +16,8 @@ export const AddInput: FC<AddInputPropsType> = ({
   lines,
   inputTestId,
   buttonTestId,
+  icon,
+  iconExtra,
 }) => {
   let [value, setValue] = useState<string>(text);
   const { t } = useTranslation("authorized");
@@ -34,24 +37,13 @@ export const AddInput: FC<AddInputPropsType> = ({
     addInputCallback(value);
   };
 
-  let boxSx = {
-    width: "100%",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  };
+  let boxSx = styles.defaultBox;
   if (sx) boxSx = { ...boxSx, ...sx };
 
   return (
     <Box sx={boxSx}>
       <TextField
-        sx={{
-          margin: "0",
-          width: {
-            xs: "70%",
-            md: "80%",
-          },
-        }}
+        sx={styles.input}
         data-testid={inputTestId}
         multiline={isMultiline}
         maxRows={lines || null}
@@ -68,18 +60,16 @@ export const AddInput: FC<AddInputPropsType> = ({
         }}
       />
       <Button
-        sx={{
-          width: {
-            xs: "30%",
-            md: "20%",
-          },
-          height: "100%",
-        }}
+        sx={styles.button}
         data-testid={buttonTestId}
         onClick={buttonHandler}
         variant="contained"
       >
-        {t("addInput_send")}
+        {icon ? (
+          <CustomIcon extra={iconExtra && iconExtra} type={icon} />
+        ) : (
+          t("addInput_send")
+        )}
       </Button>
     </Box>
   );
@@ -96,4 +86,6 @@ type AddInputPropsType = {
   addInputCallback: addInputCallbackType;
   isMultiline?: true;
   lines?: number;
+  icon?: string;
+  iconExtra?: any;
 };

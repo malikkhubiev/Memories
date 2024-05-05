@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React, { FC, useEffect, useState } from "react";
 import {
   setErrorMessage,
@@ -17,7 +17,7 @@ import {
 import { ItemHeader } from "../../layout/Headers/ItemHeader/ItemHeader";
 import Like from "../../ui/Buttons/Like/Like";
 import { CustomStack } from "../../ui/customStyledComponents";
-import styles from "./Comment.module.less";
+import styles from "./CommentStyle";
 import { useTranslation } from "react-i18next";
 import { addDynamicResources } from "../../../i18n/i18n";
 
@@ -88,7 +88,7 @@ export const Comment: FC<CommentPropsType> = ({
   };
 
   return (
-    <div className={styles.comment}>
+    <Box sx={styles.comment}>
       <CustomStack sx={{ flexDirection: "column" }}>
         <>
           <ItemHeader
@@ -97,25 +97,26 @@ export const Comment: FC<CommentPropsType> = ({
             authorId={authorId}
             authorName={authorName}
             isOwn={isOwn}
+            component="comment"
             avatar={avatar}
             createdAt={createdAt}
           />
-          <div className={styles.line}>
-            <Typography variant="body2" className={styles.body}>
+          <Box sx={styles.line}>
+            <Typography variant="body2" sx={styles.body}>
               {text}
             </Typography>
-            <div className={styles.like}>
+            <Box sx={styles.like}>
               <Like
                 isLiked={currentIsLiked}
                 like={like}
                 unLike={unLike}
                 numberOfLikes={currentNumberOfLikes}
               />
-            </div>
-          </div>
+            </Box>
+          </Box>
         </>
       </CustomStack>
-    </div>
+    </Box>
   );
 };
 

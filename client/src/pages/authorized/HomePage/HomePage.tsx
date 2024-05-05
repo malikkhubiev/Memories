@@ -1,4 +1,4 @@
-import { Box, Snackbar } from "@mui/material";
+import { Box, Snackbar, useTheme } from "@mui/material";
 import React, { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ColumnWrap } from "../../../components/layout/ColumnWrap/ColumnWrap";
@@ -14,7 +14,9 @@ import { useAppDispatch, useAppSelector } from "../../../fullStore/hooks";
 import { RootState } from "../../../fullStore/rootStore";
 import useSocket from "../../../hooks/useSocket";
 import { imageType } from "../../../types/storeTypes";
-import logo from "../../../assets/logo.png";
+import styles from "./HomePageStyle";
+import logo from "../../../assets/logo.svg";
+import { Logo } from "../../../components/ui/CustomIcons/CustomIcons";
 
 export const HomePage: FC<{}> = () => {
   const usualDispatch = useAppDispatch();
@@ -67,9 +69,14 @@ export const HomePage: FC<{}> = () => {
     }
   }, [user]);
 
+  const theme = useTheme();
+
   return (
     <ColumnWrap>
-      <img id="logo" style={{ width: "100px" }} src={logo} />
+      <div id="logo">
+        {/* @ts-ignore */}
+        <Logo fill={theme.palette.primary.violet} sx={styles.logo(theme)} />
+      </div>
       {images.length ? (
         <>
           <Snackbar

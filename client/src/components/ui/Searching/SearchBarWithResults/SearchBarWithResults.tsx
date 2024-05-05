@@ -38,7 +38,7 @@ export const SearchBarWithResults: FC<SearchBarWithResultsPropsType> = ({
       <ColumnWrap removePadding={true}>
         <SearchBar searchHandler={searchHandler} />
         {localSearchResults.results.length !== 0 && (
-          <Box sx={styles.container(isSmallSize)}>
+          <Box sx={styles.container(theme, isSmallSize)}>
             {localSearchResults.results.map((searchResult: any) => (
               <MaterialLink
                 component={RouterLink}

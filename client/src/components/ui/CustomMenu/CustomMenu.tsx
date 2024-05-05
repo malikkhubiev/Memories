@@ -39,17 +39,20 @@ export const CustomMenu: FC<CustomMenPropsType> = ({
     handleClose();
   };
 
+  const extra: any = {};
+  if (iconWidth) {
+    extra.width = iconWidth + "px";
+  }
+  if (props.icon === "share") {
+    extra.transform = "translateY(-5px) scale(-1, 1)";
+  }else{
+    extra.transform = "scale(-1, 1)";
+  }
+
   return (
     <>
       <IconButton onClick={handleOpen}>
-        <CustomIcon
-          type={props.icon}
-          extra={
-            iconWidth && {
-              width: iconWidth + "px",
-            }
-          }
-        />
+        <CustomIcon type={props.icon} extra={extra} />
       </IconButton>
       <Menu
         anchorEl={anchorEl}

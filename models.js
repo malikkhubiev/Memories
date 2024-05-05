@@ -45,6 +45,7 @@ const Tag = sequelize.define("tag", {
 const Comment = sequelize.define("comment", {
   id,
   text: { type: DataTypes.STRING, allowNull: false },
+  isOwn: { type: DataTypes.BOOLEAN, allowNull: false }
 });
 
 const Chat = sequelize.define("chat", {

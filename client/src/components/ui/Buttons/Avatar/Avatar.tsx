@@ -1,13 +1,14 @@
 import React, { FC } from "react";
-import styles from "./Avatar.module.less";
+import styles from "./AvatarStyle";
+import { Box } from "@mui/material";
 
 export const Avatar: FC<{ avatar: string }> = ({ avatar }) => {
   if (avatar)
     return (
       <img
-        className={styles.avatar}
+        style={styles.avatar}
         src={process.env.REACT_APP_API_URL + avatar}
       />
     );
-  else return <div className={styles.plug}></div>;
+  else return <Box sx={styles.plug}></Box>;
 };

@@ -419,6 +419,8 @@ class userService {
     return result;
   };
   follow = async (followerId, followingId) => {
+    console.log(followerId)
+    console.log(followingId)
     await UserFollowers.create({
       FollowerId: followerId,
       userId: followingId,

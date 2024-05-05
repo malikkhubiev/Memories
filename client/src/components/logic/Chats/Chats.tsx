@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import React, {
   Dispatch,
   FC,
@@ -27,7 +27,7 @@ import { CustomIcon } from "../../ui/CustomIcons/CustomIcons";
 import { BasicMenuComponent } from "../../ui/CustomMenu/CustomComponents/CustomMenuComponents";
 import { CustomMenu, menuOption } from "../../ui/CustomMenu/CustomMenu";
 import { Chat } from "../Chat/Chat";
-import styles from "./Chats.module.less";
+import styles from "./ChatsStyle";
 import { useTranslation } from "react-i18next";
 import { addDynamicResources } from "../../../i18n/i18n";
 
@@ -112,27 +112,13 @@ export const Chats: FC<ChatsPropsType> = ({
     }
   };
 
+  const theme = useTheme();
+
   return (
     <Box
-      sx={{
-        width: {
-          xl: "50%",
-          lg: "50%",
-          md: "50%",
-          sm: "100%",
-          xs: "100%",
-        },
-        height: "100%",
-        display: "flex",
-        justifyContent: "flex-start",
-        alignItems: "center",
-        flexDirection: "column",
-        overflowX: "hidden",
-        overFlowY: "scroll",
-        backgroundColor: "grey",
-      }}
+      sx={styles.container(theme)}
     >
-      <div className={styles.header}>
+      <Box sx={styles.header(theme)}>
         <div onClick={() => navigate(-1)}>
           <CustomIcon type="arrow_back" />
         </div>
@@ -142,7 +128,7 @@ export const Chats: FC<ChatsPropsType> = ({
           callback={optionActionCallback}
           icon="more_vertical"
         />
-      </div>
+      </Box>
       {chats && chats.length
         ? chats.map((chat: any) => (
             <Chat

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { commentsCallbackType } from "../../../../types/callbacks";
 import { ColumnWrap } from "../../../layout/ColumnWrap/ColumnWrap";
 import { CustomIcon } from "../../CustomIcons/CustomIcons";
-import styles from "../Like/LikeStyle";
+import styles from "../commonButtonStyle";
 
 export const Comments: FC<CommentsPropsType> = ({
   imageId,

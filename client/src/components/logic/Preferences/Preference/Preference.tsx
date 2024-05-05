@@ -1,14 +1,7 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import { styled } from "@mui/system";
 import React, { FC } from "react";
-import styles from "./Preference.module.less";
-
-const PreferenceBox = styled(Box)(({ theme }) => ({
-  padding: "15px",
-  borderRadius: "50px",
-  margin: "10px",
-  cursor: "pointer",
-}));
+import styles from "./PreferenceStyle";
 
 export const Preference: FC<PreferencePropsType> = ({
   text,
@@ -16,6 +9,9 @@ export const Preference: FC<PreferencePropsType> = ({
   selectPref,
   unSelectPref,
 }) => {
+
+  const theme = useTheme();
+
   const selectHandler = () => {
     if (!isSelected) {
       selectPref(text);
@@ -25,24 +21,17 @@ export const Preference: FC<PreferencePropsType> = ({
   };
 
   return (
-    <PreferenceBox
+    <Box
       onClick={selectHandler}
-      sx={{
-        backgroundColor: () => (isSelected ? "primary.main" : "transparent"),
-        color: () => (isSelected ? "#fff" : "#000"),
-      }}
+      sx={styles.box(theme, isSelected)}
     >
       <Typography
         variant="body2"
-        sx={{
-          wordBreak: "break-word",
-          fontWeight: "bold",
-          fontSize: "30px",
-        }}
+        sx={styles.text}
       >
         #{text}
       </Typography>
-    </PreferenceBox>
+    </Box>
   );
 };
 
@@ -50,29 +39,25 @@ export const CustomPreference: FC<CustomPreferencePropsType> = ({
   text,
   removeCustomPref,
 }) => {
+
+  const theme = useTheme();
+
   const selectHandler = () => {
     removeCustomPref(text);
   };
 
   return (
-    <PreferenceBox
+    <Box
       onClick={selectHandler}
-      sx={{
-        backgroundColor: "primary.main",
-        color: "#fff",
-      }}
+      sx={styles.customBox(theme)}
     >
       <Typography
         variant="body2"
-        sx={{
-          wordBreak: "break-word",
-          fontWeight: "bold",
-          fontSize: "30px",
-        }}
+        sx={styles.text}
       >
         #{text}
       </Typography>
-    </PreferenceBox>
+    </Box>
   );
 };
 

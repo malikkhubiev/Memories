@@ -2,7 +2,11 @@ const { Comment, CommentLike, User, Image } = require("../models");
 
 class commentService {
   add = async (authorId, imageId, text) => {
-    const comment = await Comment.create({ authorId, imageId, text });
+    const image = await Image.findOne({where: {id: imageId}});
+    let isOwn;
+    if (image.authorId === authorId) isOwn = true;
+    else isOwn = false;
+    const comment = await Comment.create({ authorId, imageId, text, isOwn });
     await Image.increment("popularity", { by: 20, where: { id: imageId } });
     const author = await User.findOne({ where: { id: authorId } });
     const commentLikes = await CommentLike.findAndCountAll({

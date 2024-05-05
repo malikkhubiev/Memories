@@ -3,7 +3,7 @@ import { CustomStack } from "../../customStyledComponents";
 import { Comments, CommentsPropsType } from "../Comments/Comments";
 import Like, { LikePropsType } from "../Like/Like";
 import { Share, SharePropsType } from "../Share/Share";
-import styles from "./ImageButtons.module.less";
+import styles from "./ImageButtonsStyle";
 
 export const Buttons: FC<ButtonsPropsType> = ({
   isLiked,
@@ -17,15 +17,7 @@ export const Buttons: FC<ButtonsPropsType> = ({
   isCommentSectionOpened,
 }) => {
   return (
-    <CustomStack
-      sx={{
-        padding: {
-          xl: "25px 50px",
-          sm: "25px 20px",
-          xs: "25px 20px",
-        },
-      }}
-    >
+    <CustomStack sx={styles.stack}>
       <Like
         imageId={imageId}
         isLiked={isLiked}

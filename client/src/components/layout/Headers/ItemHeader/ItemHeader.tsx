@@ -1,4 +1,4 @@
-import { Typography, useTheme } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import React, { FC } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -13,24 +13,27 @@ import {
   CustomStack,
   TypographyWithEllipsis,
 } from "../../../ui/customStyledComponents";
-import styles from "./ItemHeader.module.less";
+import styles from "./ItemHeaderStyle";
 
 export const ItemHeader: FC<ItemHeaderPropsType> = ({
   authorId,
   authorName,
   menuOptions,
   avatar,
+  component,
   createdAt,
+  isOwn,
   optionActionCallback,
   imgSrc,
 }) => {
   const theme = useTheme();
+  console.log(component + " " + isOwn)
 
   return (
     <CustomStack>
-      <Link to={`/profile:${authorId}`} className={styles.link}>
+      <Link to={`/profile:${authorId}`} style={styles.link}>
         <CustomAvatar src={avatar} width={55} />
-        <div className={styles.nameDate}>
+        <Box sx={styles.nameDate}>
           <Typography variant="body2">{authorName}</Typography>
           <TypographyWithEllipsis
             sx={{
@@ -40,14 +43,25 @@ export const ItemHeader: FC<ItemHeaderPropsType> = ({
           >
             {`${new Date(createdAt).toLocaleDateString()}, ${new Date(createdAt).toLocaleTimeString()}`}
           </TypographyWithEllipsis>
-        </div>
+        </Box>
       </Link>
-      <CustomMenu
-        imgSrc={imgSrc}
-        menuOptions={menuOptions}
-        callback={optionActionCallback}
-        icon="more_vertical"
-      />
+      {component === "image" ? (
+        <CustomMenu
+          imgSrc={imgSrc}
+          menuOptions={menuOptions}
+          callback={optionActionCallback}
+          icon="more_vertical"
+        />
+      ) : (
+        isOwn && (
+          <CustomMenu
+            imgSrc={imgSrc}
+            menuOptions={menuOptions}
+            callback={optionActionCallback}
+            icon="more_vertical"
+          />
+        )
+      )}
     </CustomStack>
   );
 };
@@ -62,6 +76,7 @@ type ItemHeaderPropsType = {
   authorId: number;
   authorName: string;
   isOwn: boolean;
+  component: "image" | "comment";
   avatar: string;
   createdAt: string;
   imgSrc?: string;

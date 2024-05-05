@@ -26,7 +26,8 @@ import {
 import { imageType } from "../../../types/storeTypes";
 import { HideShowToggle } from "../../ui/Buttons/HideShowToggle/HideShowToggle";
 import { Save } from "../../ui/Buttons/Save";
-import { Sort } from "../../ui/Buttons/Sort";
+import { Sort } from "../../ui/Buttons/Sort/Sort";
+import styles from "./ProfileStyle";
 
 export const OwnProfileButtons: FC<OwnProfileButtonsPropsType> = ({
   id,
@@ -140,12 +141,7 @@ export const OwnProfileButtons: FC<OwnProfileButtonsPropsType> = ({
 
   return (
     <Box
-      sx={{
-        width: "100%",
-        display: "flex",
-        justifyContent: "space-around",
-        alignItems: "center",
-      }}
+      sx={styles.ownButtons}
     >
       <HideShowToggle
         isHideMode={isHideMode}

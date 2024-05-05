@@ -14,7 +14,7 @@ import { ColumnWrap } from "../../../components/layout/ColumnWrap/ColumnWrap";
 import { Header } from "../../../components/layout/Headers/Header/Header";
 import { PageHeader } from "../../../components/layout/Headers/PageHeader/PageHeader";
 import { Plug } from "../../../components/layout/Plug/Plug";
-import { DeleteAccountButton } from "../../../components/logic/DeleteAccountButton";
+import { DeleteAccountButton } from "../../../components/logic/DeleteAccountButton/DeleteAccountButton";
 import { ImageUpload } from "../../../components/logic/ImageUpload/ImageUpload";
 import { CustomIcon } from "../../../components/ui/CustomIcons/CustomIcons";
 import { ChangeInput } from "../../../components/ui/Inputs/ChangeInput/ChangeInput";
@@ -30,7 +30,6 @@ import {
   readyImageCallbackType,
 } from "../../../types/callbacks";
 import styles from "./SettingsPageStyle";
-import i18n from "../../../i18n/i18n";
 
 const SettingsPage: FC<{}> = () => {
   const theme = useTheme();
@@ -40,7 +39,6 @@ const SettingsPage: FC<{}> = () => {
     addDynamicResources("authorized");
   }, []);
 
-  let [language, setLanguage] = useState<string>(i18n.language);
   const usualDispatch = useAppDispatch();
 
   const user = useUser();
@@ -61,13 +59,6 @@ const SettingsPage: FC<{}> = () => {
     }
   }, [user]);
 
-  const changeLanguage = async () => {
-    const newLanguage = language === "ru" ? "en" : "ru";
-    await i18n.changeLanguage(newLanguage);
-    await addDynamicResources("authorized");
-    setLanguage((prev) => (prev = newLanguage));
-  };
-
   const readyImageCallback: readyImageCallbackType = (canvas, imageFile) => {
     setImage((prev) => (prev = canvas));
     setImageFile((prev) => (prev = imageFile));
@@ -79,11 +70,8 @@ const SettingsPage: FC<{}> = () => {
     setDidUsernameChanged(true);
   };
 
-  const isAccauntOpenedCallback = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    checked: boolean,
-  ) => {
-    setIsAccountOpened((prev) => (prev = checked));
+  const isAccauntOpenedCallback = () => {
+    setIsAccountOpened((prev) => (prev = !prev));
     setDidIsOpenedUpdated(true);
   };
 
@@ -108,7 +96,7 @@ const SettingsPage: FC<{}> = () => {
   };
 
   return (
-    <ColumnWrap>
+    <ColumnWrap removePadding={true}>
       {user && (
         <>
           <PageHeader isShowing={false}>
@@ -116,51 +104,58 @@ const SettingsPage: FC<{}> = () => {
             <Plug />
           </PageHeader>
           <Box sx={styles.container}>
-            <MaterialLink
-              to="/blocked"
-              variant="body2"
-              component={RouterLink}
-              sx={styles.blocked(theme.palette.mode === "dark")}
-            >
-              {t("settings_blockedUsers")}
-              <CustomIcon type="arrow_outward" />
-            </MaterialLink>
             <SmallGoldenRatioBox sx={styles.goldenRatioBox}>
-              <ImageUpload
-                readyImageCallback={readyImageCallback}
-                src={(image as string) || null}
-              />
-              <ChangeInput
-                sx={styles.changeInput}
-                text={username}
-                changeInputCallback={usernameCallback}
-              />
-              <FormGroup>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={isAccountOpened}
-                      onChange={isAccauntOpenedCallback}
-                    />
-                  }
-                  label={`${t("settings_acc1")} ${isAccountOpened ? t("settings_acc2") : t("settings_acc3")}`}
-                />
-              </FormGroup>
-              <Button
-                onClick={applyChanges}
-                variant="contained"
-                sx={styles.buttonApply}
+              <MaterialLink
+                to="/blocked"
+                variant="body2"
+                component={RouterLink}
+                sx={styles.blocked(theme.palette.mode === "dark")}
               >
-                Apply
-              </Button>
+                {t("settings_blockedUsers")}
+                <CustomIcon type="arrow_outward" />
+              </MaterialLink>
+              <Box sx={styles.image}>
+                <ImageUpload
+                  readyImageCallback={readyImageCallback}
+                  src={(image as string) || null}
+                />
+              </Box>
+              <Box sx={styles.user_info}>
+                <ChangeInput
+                  sx={styles.changeInput}
+                  text={username}
+                  changeInputCallback={usernameCallback}
+                />
+                <Box sx={styles.account}>
+                  has{"\u00A0"}
+                  <div
+                    style={styles.account_type(theme)}
+                    onClick={isAccauntOpenedCallback}
+                  >
+                    {isAccountOpened ? t("settings_acc2") : t("settings_acc3")}
+                  </div>
+                  {"\u00A0"}
+                  account
+                </Box>
+                <Button
+                  onClick={applyChanges}
+                  variant="contained"
+                  sx={styles.buttonApply}
+                >
+                  {t("settings_apply")}
+                </Button>
+              </Box>
             </SmallGoldenRatioBox>
-            <Box onClick={changeLanguage} sx={styles.lang}>
-              {t("settings_language")} : {language}
+            <Box sx={styles.line(theme)}>
+              <DeleteAccountButton />
+              <Button
+                fullWidth
+                sx={styles.buttonLogOut}
+                onClick={logoutHandler}
+              >
+                {t("settings_logout")}
+              </Button>
             </Box>
-            <Button sx={styles.buttonLogOut} onClick={logoutHandler}>
-              {t("settings_logout")}
-            </Button>
-            <DeleteAccountButton />
           </Box>
         </>
       )}

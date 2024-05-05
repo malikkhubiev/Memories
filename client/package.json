@@ -7,8 +7,7 @@
     "test": "jest",
     "storybook": "storybook dev -p 6006",
     "dev": "webpack-dev-server --config webpack.dev.js --mode development --open",
-    "build": "webpack --config webpack.prod.js --mode production",
-    "build-storybook": "storybook build"
+    "build": "webpack --config webpack.prod.js --mode production && open http://127.0.0.1:8888/"
   },
   "jest": {
     "testEnvironment": "jsdom",
@@ -80,9 +79,11 @@
     "less": "^4.1.2",
     "less-loader": "^11.0.0",
     "mini-css-extract-plugin": "^2.6.0",
+    "open": "^10.1.0",
     "storybook": "^8.0.9",
     "style-loader": "^3.3.1",
     "ts-loader": "^9.3.0",
+    "webpack-bundle-analyzer": "^4.10.2",
     "webpack-dev-server": "^4.9.0"
   }
 }

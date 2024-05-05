@@ -1,4 +1,4 @@
-import { Link as MaterialLink, Typography } from "@mui/material";
+import { Box, Link as MaterialLink, Typography } from "@mui/material";
 import React, { FC } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import {
@@ -11,7 +11,7 @@ import { Avatar } from "../../ui/Buttons/Avatar/Avatar";
 import { ToggleButton } from "../../ui/Buttons/ToggleButton";
 import { CustomAvatar } from "../../ui/CustomAvatar/CustomAvatar";
 import { TypographyWithEllipsis } from "../../ui/customStyledComponents";
-import styles from "./RowUser.module.less";
+import styles from "./RowUserStyle";
 
 export const RowUser: FC<RowUserPropsType> = ({
   id,
@@ -28,17 +28,10 @@ export const RowUser: FC<RowUserPropsType> = ({
   };
 
   return (
-    <div className={styles.row}>
+    <Box sx={styles.row}>
       <MaterialLink
         component={RouterLink}
-        sx={{
-          maxWidth: "58%",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          color: "unset",
-          textDecoration: "none",
-        }}
+        sx={styles.link}
         to={`/profile:${id}`}
       >
         <CustomAvatar src={avatar} width={50} />
@@ -71,7 +64,7 @@ export const RowUser: FC<RowUserPropsType> = ({
       ) : (
         ""
       )}
-    </div>
+    </Box>
   );
 };
 

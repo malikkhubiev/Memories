@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import React, { FC, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ColumnWrap } from "../../../components/layout/ColumnWrap/ColumnWrap";
@@ -178,8 +178,10 @@ const PostPage: FC<{}> = () => {
     }
   }, [comments]);
 
+  const theme = useTheme();
+
   return (
-    <ColumnWrap>
+    <ColumnWrap sx={styles.column_wrap}>
       <PageHeader isShowing={false}>
         <Plug />
         <Plug />
@@ -196,7 +198,7 @@ const PostPage: FC<{}> = () => {
         )}
         {isCurrentCommentSectionOpened ? (
           <>
-            <Box ref={ref} sx={styles.comments}>
+            <Box ref={ref} sx={styles.comments(theme)}>
               {comments && comments.length
                 ? comments.map((comment: any) => (
                     <Comment
@@ -214,6 +216,7 @@ const PostPage: FC<{}> = () => {
               addInputCallback={sendCommentCallback}
               buttonText={t("post_buttonText")}
               placeholder={t("post_placeholder")}
+              icon="send"
             />
           </>
         ) : (

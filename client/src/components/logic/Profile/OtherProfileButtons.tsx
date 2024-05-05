@@ -24,7 +24,7 @@ import {
   toggleButtonCallbackType,
 } from "../../../types/callbacks";
 import { profileType } from "../../../types/storeTypes";
-import { Sort } from "../../ui/Buttons/Sort";
+import { Sort } from "../../ui/Buttons/Sort/Sort";
 import { ToggleButton } from "../../ui/Buttons/ToggleButton";
 import { CustomIcon } from "../../ui/CustomIcons/CustomIcons";
 

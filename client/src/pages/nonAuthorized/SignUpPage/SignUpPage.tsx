@@ -91,6 +91,7 @@ export const SignUpPage: FC<{}> = () => {
   });
 
   const theme = useTheme();
+  const linkStyle = styles.link(theme)
   const isSmallSize = useMediaQuery(theme.breakpoints.down("sm"));
 
   useEffect(() => {
@@ -133,11 +134,22 @@ export const SignUpPage: FC<{}> = () => {
             <Box sx={styles.terms}>
               <Typography variant="body2">
                 {t("terms1")}
-                <MaterialLink component={RouterLink} to="/signIn">
+                {"\u00A0"}
+                <MaterialLink
+                  sx={linkStyle}
+                  component={RouterLink}
+                  to="/signIn"
+                >
                   {t("terms2")}
+                  {"\u00A0"}
                 </MaterialLink>
                 {t("terms3")}
-                <MaterialLink component={RouterLink} to="/signIn">
+                {"\u00A0"}
+                <MaterialLink
+                  sx={linkStyle}
+                  component={RouterLink}
+                  to="/signIn"
+                >
                   {t("terms4")}
                 </MaterialLink>
               </Typography>
@@ -146,7 +158,8 @@ export const SignUpPage: FC<{}> = () => {
         )}
         <Box sx={styles.redirect(isSmallSize)}>
           <Typography variant="body2">{t("alreadyAccount")}</Typography>
-          <MaterialLink variant="body2" component={RouterLink} to="/signIn">
+          <MaterialLink sx={linkStyle} variant="body2" component={RouterLink} to="/signIn">
+            {"\u00A0"}
             {t("signIn")}
           </MaterialLink>
         </Box>

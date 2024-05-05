@@ -8,7 +8,7 @@ import {
   BigGoldenRatioBox,
   CustomStack,
 } from "../../ui/customStyledComponents";
-import styles from "./Images.module.less";
+import styles from "./ImagesStyle";
 import { ImagesByOne } from "./ImagesByOne";
 
 export const Images: FC<ImagesPropsType> = ({ images, children }) => {
@@ -24,7 +24,7 @@ export const Images: FC<ImagesPropsType> = ({ images, children }) => {
   };
 
   return (
-    <div className={styles.imagesComponent}>
+    <Box sx={styles.imagesComponent}>
       {idOfSelected ? (
         <CustomStack
           sx={{
@@ -66,7 +66,7 @@ export const Images: FC<ImagesPropsType> = ({ images, children }) => {
                   <img
                     onClick={imageClickHandler}
                     id={image.id}
-                    className={styles.image}
+                    style={styles.image}
                     src={process.env.REACT_APP_API_URL + image.src}
                   />
                 </Box>
@@ -74,7 +74,7 @@ export const Images: FC<ImagesPropsType> = ({ images, children }) => {
           </BigGoldenRatioBox>
         </CustomStack>
       )}
-    </div>
+    </Box>
   );
 };
 

@@ -25,18 +25,15 @@ const takeOrLoad = async (page: string) => {
   } else {
     toReturn = resourcesLoaded[i18n.language][page];
   }
-  console.log(toReturn);
   return toReturn;
 };
 
 export const addDynamicResources = async (page: string) => {
-  console.log(page);
   let resources = await takeOrLoad(page);
   if (page === "signUp" || page === "forgotPassword") {
     resources = { ...resources, ...(await takeOrLoad("emailVerifying")) };
   }
   i18n.addResources(i18n.language, page, resources);
-  console.log(resources);
 };
 
 i18n.use(initReactI18next).init({

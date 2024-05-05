@@ -61,6 +61,7 @@ const SignInPage = () => {
   }, []);
 
   const theme = useTheme();
+  const linkStyle = styles.link(theme)
   const isSmallSize = useMediaQuery(theme.breakpoints.down("sm"));
 
   useEffect(() => {
@@ -72,12 +73,13 @@ const SignInPage = () => {
   return (
     <Box sx={styles.container}>
       <PageHeader isShowing={false}>
-        <Typography variant="h1">{t("header")}</Typography>
+        <Plug />
         <Plug />
       </PageHeader>
       <SmallGoldenRatioBox sx={styles.goldenRatBox}>
         <CustomStack sx={styles.column}>
-          <form style={{ width: "100%" }} onSubmit={formik.handleSubmit}>
+          <Typography variant="h1">{t("header")}</Typography>
+          <form style={styles.form} onSubmit={formik.handleSubmit}>
             <CustomEmailField formik={formik} label={t("email")} />
             <CustomPasswordField
               sx={styles.password}
@@ -94,6 +96,7 @@ const SignInPage = () => {
           </form>
           <Box sx={styles.box}>
             <MaterialLink
+              sx={linkStyle}
               variant="body2"
               component={RouterLink}
               to="/forgotPassword"
@@ -103,8 +106,8 @@ const SignInPage = () => {
           </Box>
           <Box sx={styles.redirect(isSmallSize)}>
             <Typography variant="body2">{t("haveAccount")}</Typography>
-            <MaterialLink variant="body2" component={RouterLink} to="/signUp">
-              {t("signUp")}
+            <MaterialLink sx={linkStyle} variant="body2" component={RouterLink} to="/signUp">
+              {'\u00A0'}{t("signUp")}
             </MaterialLink>
           </Box>
         </CustomStack>

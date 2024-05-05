@@ -20,11 +20,14 @@ const styles = {
     alignItems: "center",
   },
   insideStack: {
+    width: "375px",
+    justifyContent: "start",
     flexDirection: "column",
     padding: "0 15px",
   },
   changeInput: {
     marginTop: "20px",
+    width: '100%'
   },
 };
 export default styles;

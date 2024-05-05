@@ -82,6 +82,7 @@ const imagesProcessing = async (images, ownId) => {
       const author = await User.findOne({ where: { id: comment.authorId } });
       comment.dataValues.authorName = author.name;
       comment.dataValues.avatar = author.avatar;
+
       const commentsLikes = await CommentLike.findAndCountAll({
         where: { commentId: comment.id },
       });

@@ -1,14 +1,14 @@
 import {
   Box,
+  Link as MaterialLink,
   Popover,
   Typography,
-  Link as MaterialLink,
   useTheme,
 } from "@mui/material";
 import React, { FC, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { CustomIcon } from "../../CustomIcons/CustomIcons";
-import styles from "./LikeStyle";
+import styles from "../commonButtonStyle";
 
 const Like: FC<LikePropsType> = ({
   imageId,

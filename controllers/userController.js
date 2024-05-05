@@ -125,7 +125,7 @@ class userController {
   follow = async (req, res, next) => {
     try {
       const { id: followerId, followingId } = req.body;
-      if (!followerId) next(ApiError.badRequest("No following id"));
+      if (!followerId) next(ApiError.badRequest("No follower id"));
       if (!followingId)
         throw new Error("You didn't provide the user you want to follow");
       await follow(followerId, followingId);

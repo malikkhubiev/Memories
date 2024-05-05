@@ -4,7 +4,8 @@ import { onArrowBackClickCallbackType } from "../../../../types/callbacks";
 import { CustomIcon } from "../../../ui/CustomIcons/CustomIcons";
 import { CustomStack } from "../../../ui/customStyledComponents";
 import { Plug } from "../../Plug/Plug";
-import styles from "./PageHeader.module.less";
+import styles from "./PageHeaderStyle";
+import { Box } from "@mui/material";
 
 export const PageHeader: FC<PageHeaderType> = ({
   children,
@@ -39,33 +40,25 @@ export const PageHeader: FC<PageHeaderType> = ({
     else navigate(-1);
   };
 
+  let pageHeaderStyles = styles.pageHeader;
+  if (isFixedHeader)
+    pageHeaderStyles = { ...pageHeaderStyles, ...styles.fixedPageHeader };
+  if (isVisibleHeader)
+    pageHeaderStyles = { ...pageHeaderStyles, ...styles.visibleHeader };
+
   return (
-    <div
-      className={`
-        ${styles.pageHeader}
-        ${isFixedHeader ? styles.fixedPageHeader : ""}
-        ${isVisibleHeader ? styles.visibleHeader : ""}
-        `}
-    >
-      <CustomStack
-        sx={{
-          width: "100%",
-          padding: {
-            md: "25px 45px",
-            xs: "25px",
-          },
-        }}
-      >
+    <Box sx={pageHeaderStyles}>
+      <CustomStack sx={styles.stack}>
         {location.pathname === "/" ? (
           <Plug />
         ) : (
-          <div className={styles.back} onClick={arrowBackClickHandler}>
+          <Box sx={styles.back} onClick={arrowBackClickHandler}>
             <CustomIcon type="arrow_back" />
-          </div>
+          </Box>
         )}
         {children}
       </CustomStack>
-    </div>
+    </Box>
   );
 };
 

@@ -2,7 +2,7 @@ const styles = {
   rel: {
     position: "relative",
   },
-  container: (isSmallSize: any): any => ({
+  container: (theme: any, isSmallSize: any): any => ({
     top: "100%",
     width: "100%",
     overflow: "scroll",
@@ -12,6 +12,7 @@ const styles = {
     alignItems: "flex-start",
     flexDirection: "column",
     padding: () => (isSmallSize ? "50px 15px" : "50px"),
+    backgroundColor: theme.palette.primary.mainBg
   }),
   link: {
     width: "100%",

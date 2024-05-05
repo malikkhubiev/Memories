@@ -1,15 +1,13 @@
 import {
   Box,
   Button,
-  Input,
-  TextareaAutosize,
   TextField,
-  Typography,
+  Typography
 } from "@mui/material";
-import React, { ChangeEventHandler, FC, useState } from "react";
+import React, { FC, useState } from "react";
 import { changeInputCallbackType } from "../../../../types/callbacks";
 import { CustomIcon } from "../../CustomIcons/CustomIcons";
-import styles from "./ChangeInput.module.less";
+import styles from "./ChangeInputStyle";
 
 export const ChangeInput: FC<ChangeInputPropsType> = ({
   text,
@@ -37,7 +35,7 @@ export const ChangeInput: FC<ChangeInputPropsType> = ({
   return (
     <Box sx={sx || null}>
       {isChangingMode ? (
-        <div className={styles.group}>
+        <Box sx={styles.group}>
           <TextField
             multiline={isMultiline}
             maxRows={isMultiline ? 10 : null}
@@ -51,25 +49,22 @@ export const ChangeInput: FC<ChangeInputPropsType> = ({
               }
             }}
           />
-          <Button onClick={saveHandler} variant="contained">
-            Save
+          <Button sx={styles.button} onClick={saveHandler} variant="contained">
+            &#10003;
           </Button>
-        </div>
+        </Box>
       ) : (
-        <div className={styles.group}>
+        <Box sx={styles.group}>
           <Typography
             variant="body2"
-            sx={{
-              width: "100%",
-              wordBreak: "break-all",
-            }}
+            sx={styles.text}
           >
             {text || placeholder}
           </Typography>
           <div onClick={openChangingMode}>
-            <CustomIcon type="edit" />
+            <CustomIcon extra={styles.edit} type="edit" />
           </div>
-        </div>
+        </Box>
       )}
     </Box>
   );

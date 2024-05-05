@@ -1,6 +1,12 @@
-import { Button, InputLabel, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  InputLabel,
+  TextField,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import React, { FC } from "react";
-import styles from "./AuthFields.module.less";
+import styles from "./AuthFieldsStyle";
 
 export const CustomNameField: FC<any> = ({ formik, sx }) => {
   return (
@@ -10,7 +16,7 @@ export const CustomNameField: FC<any> = ({ formik, sx }) => {
       id="name"
       name="name"
       label="Name"
-      variant="outlined"
+      variant="standard"
       value={formik.values.name}
       onChange={formik.handleChange}
       error={formik.touched.name && Boolean(formik.errors.name)}
@@ -23,12 +29,11 @@ export const CustomEmailField: FC<any> = ({ formik, sx, label }) => {
   return (
     <TextField
       sx={sx || {}}
-      className={styles.verticalMargin}
       fullWidth
       id="email"
       name="email"
       label={label}
-      variant="outlined"
+      variant="standard"
       value={formik.values.email}
       onChange={formik.handleChange}
       error={formik.touched.email && Boolean(formik.errors.email)}
@@ -46,7 +51,7 @@ export const CustomPasswordField: FC<any> = ({ formik, name, label, sx }) => {
       name={name}
       label={label}
       type="password"
-      variant="outlined"
+      variant="standard"
       value={formik.values[name]}
       onChange={formik.handleChange}
       error={formik.touched[name] && Boolean(formik.errors[name])}
@@ -56,31 +61,36 @@ export const CustomPasswordField: FC<any> = ({ formik, name, label, sx }) => {
 };
 
 export const CustomCheckboxField: FC<any> = ({ formik, name, label }) => {
+  const theme = useTheme();
+  // @ts-ignore
+  const color = theme.palette.primary.violet;
+  const css = `
+    #signInCheckbox:checked {
+      background-color: ${color};
+    } 
+  `;
   return (
-    <InputLabel
-      sx={{
-        display: "flex",
-        justifyContent: "start",
-        alignItems: "center",
-        width: "100%",
-      }}
-    >
-      <input
-        className={styles.checkbox}
-        onChange={formik.handleChange}
-        checked={formik.values.rememberMe}
-        type="checkbox"
-        name={name}
-      />
-      <Typography
-        sx={{
-          marginLeft: "10px",
-        }}
-        variant="body2"
-      >
-        {label}
-      </Typography>
-    </InputLabel>
+    <>
+      <style>{css}</style>
+      <InputLabel sx={styles.inputLabel}>
+        <input
+          style={styles.checkbox}
+          onChange={formik.handleChange}
+          checked={formik.values.rememberMe}
+          type="checkbox"
+          name={name}
+          id="signInCheckbox"
+        />
+        <Typography
+          sx={{
+            marginLeft: "10px",
+          }}
+          variant="body2"
+        >
+          {label}
+        </Typography>
+      </InputLabel>
+    </>
   );
 };
 

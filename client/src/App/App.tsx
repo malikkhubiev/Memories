@@ -109,7 +109,7 @@ export const App: FC<{}> = () => {
           {/* error message */}
           <Snackbar
             sx={{
-              zIndex: "9999",
+              zIndex: "9998",
               textAlign: "center",
             }}
             anchorOrigin={{

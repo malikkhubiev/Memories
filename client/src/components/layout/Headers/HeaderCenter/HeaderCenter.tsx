@@ -1,8 +1,8 @@
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React, { FC } from "react";
 import { sortByToggleCallbackType } from "../../../../types/callbacks";
-import { Sort } from "../../../ui/Buttons/Sort";
-import styles from "./HeaderCenter.module.less";
+import { Sort } from "../../../ui/Buttons/Sort/Sort";
+import styles from "./HeaderCenterStyle";
 
 export const HeaderCenter: FC<HeaderCenterPropsType> = ({
   numberOf,
@@ -11,14 +11,14 @@ export const HeaderCenter: FC<HeaderCenterPropsType> = ({
   children,
 }) => {
   return (
-    <div className={styles.headerCenter}>
+    <Box sx={styles.headerCenter}>
       {children}
       <Typography variant="body2">{numberOf}</Typography>
       <Sort
         isSortingByPopularity={isSortingByPopularity}
         sortByToggleCallback={sortByToggleCallback}
       />
-    </div>
+    </Box>
   );
 };
 

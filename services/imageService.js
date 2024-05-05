@@ -80,7 +80,6 @@ class imageService {
     return image;
   };
   get = async (userId, imageId) => {
-    // нужно несколько проверок
     const image = await Image.findOne({ where: { id: imageId } });
     const processedImages = await imagesProcessing([image], userId);
     return processedImages.rows[0];

@@ -1,4 +1,4 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, useTheme } from "@mui/material";
 import React, { FC, useState } from "react";
 import Cropper, { Area } from "react-easy-crop";
 import { useNavigate } from "react-router-dom";
@@ -6,12 +6,14 @@ import { imageProcessedCallbackType } from "../../../types/callbacks";
 import getCroppedImg from "../../../utils/imageProcessing/cropImage";
 import { dataURLtoFile } from "../../../utils/imageProcessing/dataUrlToFile";
 import { CustomIcon } from "../../ui/CustomIcons/CustomIcons";
-import styles from "./ImageProcessing.module.less";
+import styles from "./ImageProcessingStyle";
 
 export const ImageProcessing: FC<ImageProcessingType> = ({
   uploadedImage,
   imageProcessedCallback,
 }) => {
+  const theme = useTheme();
+
   const [cropedArea, setCropedArea] = useState<Area | null>(null);
   const [crop, setCrop] = useState<cropType>({ x: 0, y: 0 });
   const [zoom, setZoom] = useState<number>(1);
@@ -31,8 +33,8 @@ export const ImageProcessing: FC<ImageProcessingType> = ({
   const arrowBackClickHandler = () => navigate(-1);
 
   return (
-    <div className={styles.App}>
-      <div className={styles.cropContainer}>
+    <Box sx={styles.app(theme)}>
+      <Box sx={styles.cropContainer}>
         <Cropper
           image={uploadedImage}
           crop={crop}
@@ -42,15 +44,17 @@ export const ImageProcessing: FC<ImageProcessingType> = ({
           onCropComplete={onCropComplete}
           onZoomChange={setZoom}
         />
-      </div>
-      <div className={styles.controls}>
+      </Box>
+      <Box sx={styles.controls(theme)}>
         <Box
           sx={{
             cursor: "pointer",
           }}
           onClick={arrowBackClickHandler}
         >
-          <CustomIcon type="arrow_back" />
+          <Button variant="contained">
+            Cancel
+          </Button>
         </Box>
         <input
           type="range"
@@ -62,13 +66,12 @@ export const ImageProcessing: FC<ImageProcessingType> = ({
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             setZoom(+event.target.value);
           }}
-          className={styles.zoomRange}
         />
         <Button onClick={uploadHandler} variant="contained">
           Upload
         </Button>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 
