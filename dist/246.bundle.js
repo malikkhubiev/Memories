@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkclient=self.webpackChunkclient||[]).push([[246],{9246:e=>{e.exports=JSON.parse('{"emailValheader":"Email validation","emailLabel":"Email","sendButtonText":"Send","verificationCode":"Verification code"}')}}]);

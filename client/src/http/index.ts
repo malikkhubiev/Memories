@@ -1,7 +1,7 @@
-import axios, { AxiosRequestConfig, InternalAxiosRequestConfig } from "axios";
+import axios, { InternalAxiosRequestConfig } from "axios";
 
-// const baseURL = "http://localhost:5000" + "/api"
-const baseURL = window.location.origin + "/api"
+// const baseURL = process.env.REACT_APP_API_URL + "api"; 
+const baseURL = window.location.origin + "/api";
 
 const $host = axios.create({baseURL});
 const $authHost = axios.create({baseURL});
@@ -15,4 +15,5 @@ const authInterceptor = (
 
 $authHost.interceptors.request.use(authInterceptor);
 
-export { $host, $authHost };
+export { $authHost, $host };
+

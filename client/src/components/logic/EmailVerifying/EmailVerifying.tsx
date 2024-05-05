@@ -27,7 +27,6 @@ export const EmailVerifying: FC<EmailVerifyingPropsType> = ({
   removeBackArrow,
   t,
 }) => {
-  console.log(t("emailValheader"));
   let [hasEmailBeenSent, setHasEmailBeenSent] = useState<boolean>(false);
   let [email, setEmail] = useState<string>("");
   const process =
