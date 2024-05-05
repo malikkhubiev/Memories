@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkclient=self.webpackChunkclient||[]).push([[686],{4686:e=>{e.exports=JSON.parse('{"header":"Вход","email":"Электронная почта","passwordFieldLabel":"Пароль","rememberMe":"запомнить меня","submit":"Вход","forgotPassword":"Забыли пароль?","haveAccount":"Ещё не зарегистрированы?","signUp":"Регистрация"}')}}]);

@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkclient=self.webpackChunkclient||[]).push([[4],{5004:s=>{s.exports=JSON.parse('{"forgotPasHeader":"Forgot password","newPasswordLabel":"New password","confirmPasswordLabel":"Confirm Password","button":"Change password"}')}}]);
