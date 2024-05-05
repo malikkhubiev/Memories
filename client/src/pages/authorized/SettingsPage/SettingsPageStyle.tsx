@@ -7,6 +7,11 @@ const styles = {
     alignItems: "center",
     flexDirection: "column"
   },
+  header: (theme: any) => ({
+    [theme.breakpoints.down('sm')]: {
+      fontSize: "45px"
+    },
+  }),
   account: {
     display: "flex",
     justifyContent: "left",

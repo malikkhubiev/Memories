@@ -100,7 +100,7 @@ const SettingsPage: FC<{}> = () => {
       {user && (
         <>
           <PageHeader isShowing={false}>
-            <Header text={t("settings_title")} />
+            <Header sx={styles.header(theme)} text={t("settings_title")} />
             <Plug />
           </PageHeader>
           <Box sx={styles.container}>
@@ -127,15 +127,14 @@ const SettingsPage: FC<{}> = () => {
                   changeInputCallback={usernameCallback}
                 />
                 <Box sx={styles.account}>
-                  has{"\u00A0"}
-                  <div
-                    style={styles.account_type(theme)}
+                  <Box
+                    sx={styles.account_type(theme)}
                     onClick={isAccauntOpenedCallback}
                   >
                     {isAccountOpened ? t("settings_acc2") : t("settings_acc3")}
-                  </div>
+                  </Box>
                   {"\u00A0"}
-                  account
+                  {t("settings_acc4")}
                 </Box>
                 <Button
                   onClick={applyChanges}

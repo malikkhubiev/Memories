@@ -59,7 +59,7 @@ export const ChangeInput: FC<ChangeInputPropsType> = ({
             variant="body2"
             sx={styles.text}
           >
-            {text || placeholder}
+            {text || value || placeholder}
           </Typography>
           <div onClick={openChangingMode}>
             <CustomIcon extra={styles.edit} type="edit" />

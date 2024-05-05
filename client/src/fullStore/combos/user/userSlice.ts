@@ -107,8 +107,6 @@ export const userSlice = createSlice({
     builder.addCase(
       signInThunk.rejected,
       (state: any, action: PayloadAction<any>) => {
-        console.log("login error is here:");
-        console.log(action.payload);
         state["errorMessage"] = action.payload;
       },
     );
@@ -134,7 +132,6 @@ export const userSlice = createSlice({
     builder.addCase(
       getIsAuthThunk.rejected,
       (state: any, action: PayloadAction<any>) => {
-        console.log(2222);
         console.log(action.payload);
         //state["errorMessage"] = action.payload;
       },
