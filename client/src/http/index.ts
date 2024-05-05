@@ -1,7 +1,6 @@
 import axios, { InternalAxiosRequestConfig } from "axios";
 
-// const baseURL = process.env.REACT_APP_API_URL + "api"; 
-const baseURL = window.location.origin + "/api";
+const baseURL = process.env.REACT_APP_API_URL + "api";
 
 const $host = axios.create({baseURL});
 const $authHost = axios.create({baseURL});
