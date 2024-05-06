@@ -23,6 +23,9 @@ app.use(express.static(__dirname));
 app.ws("/", (ws, req) => {
   ws.on("message", (message) => messagesHandler(message, ws, aWss));
 });
+app.get('/ping', (req, res) => {
+  res.send('pong');
+});
 app.use("/api", router);
 app.use(errorHandler);
 
