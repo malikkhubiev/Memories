@@ -217,6 +217,7 @@ const PostPage: FC<{}> = () => {
               buttonText={t("post_buttonText")}
               placeholder={t("post_placeholder")}
               icon="send"
+              iconExtra={styles.iconExtra(theme)}
             />
           </>
         ) : (

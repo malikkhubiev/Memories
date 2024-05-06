@@ -1,7 +1,7 @@
 import { CSSProperties } from "react";
 
 const styles: any = {
-  container: {
+  container: (theme: any) => ({
     width: {
       xl: "67%",
       lg: "100%",
@@ -14,7 +14,8 @@ const styles: any = {
     justifyContent: "space-between",
     alignItems: "center",
     flexDirection: "column",
-  },
+    backgroundColor: theme.palette.primary.mainBg4,
+  }),
   messagesWindow: {
     width: '67%',
     height: '100%',
@@ -46,7 +47,6 @@ const styles: any = {
     justifyContent: 'space-between',
     alignItems: 'center',
     flexDirection: 'column',
-    backgroundColor: theme.palette.primary.mainBg4,
   }),
   messages: {
     width: '100%',
@@ -66,7 +66,10 @@ const styles: any = {
   withEllipsis: {
     marginLeft: "20px",
     maxWidth: "70%",
-  }
+  },
+  iconExtra: (theme: any) => ({
+    fill: "#fff",
+  })
 };
 
 export default styles;

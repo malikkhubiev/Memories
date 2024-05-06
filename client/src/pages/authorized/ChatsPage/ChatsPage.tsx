@@ -157,7 +157,6 @@ const ChatsPage: FC<{}> = () => {
               (chat.secondChatterId === userId && chat.firstChatterId === ownId)
             ) {
               flag = true;
-              console.log(123);
               setCurrentChat((prev) => (prev = chat));
               setIsNewChatMakingDone((prev) => (prev = true));
             }

@@ -42,7 +42,6 @@ export const App: FC<{}> = () => {
   let errorMessage = useAppSelector((state: RootState) =>
     selectErrorMessage(state),
   );
-  console.log(errorMessage);
   let profilesErrorMessage = useAppSelector((state: RootState) =>
     selectProfilesErrorMessage(state),
   );

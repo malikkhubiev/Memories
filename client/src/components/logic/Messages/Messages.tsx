@@ -163,7 +163,7 @@ export const Messages: FC<MessagesPropsTypes> = ({
 
   return (
     <Box
-      sx={styles.container}
+      sx={styles.container(theme)}
     >
       <Box sx={styles.header(theme)}>
         {isSmallSize ? (
@@ -219,6 +219,7 @@ export const Messages: FC<MessagesPropsTypes> = ({
           buttonText="Send"
           placeholder={t("chats_placeholder")}
           icon="send"
+          iconExtra={styles.iconExtra(theme)}
         />
       </Box>
     </Box>

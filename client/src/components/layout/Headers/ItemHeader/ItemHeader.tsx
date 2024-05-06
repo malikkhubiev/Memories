@@ -27,7 +27,6 @@ export const ItemHeader: FC<ItemHeaderPropsType> = ({
   imgSrc,
 }) => {
   const theme = useTheme();
-  console.log(component + " " + isOwn)
 
   return (
     <CustomStack>

@@ -11,6 +11,9 @@ const styles = {
   }),
   column_wrap: {
     paddingBottom: "80px"
-  }
+  },
+  iconExtra: (theme: any) => ({
+    fill: "#fff"
+  })
 };
 export default styles;

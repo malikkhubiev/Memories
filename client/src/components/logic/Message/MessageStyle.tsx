@@ -23,7 +23,7 @@ const styles = {
     maxWidth: '375px',
     display: 'inline-block',
     padding: "35px",
-    backgroundColor: () => isOwn ? theme.palette.primary.violet : theme.palette.primary.main,
+    backgroundColor: () => isOwn ? theme.palette.primary.violet : theme.palette.primary.mainBg,
     borderRadius: () => isOwn ? "50px 0 50px 50px" : "0 50px 50px 50px"
   }),
   text: (isOwn: boolean) => ( {

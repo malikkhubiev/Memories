@@ -416,6 +416,7 @@ class userService {
       });
       result.push(user.dataValues);
     }
+    console.log(result)
     return result;
   };
   follow = async (followerId, followingId) => {

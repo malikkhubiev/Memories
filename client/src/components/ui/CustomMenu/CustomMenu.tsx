@@ -68,7 +68,7 @@ export const CustomMenu: FC<CustomMenPropsType> = ({
         onClose={handleClose}
         PaperProps={{
           style: {
-            width: "300px",
+            width: "375px",
           },
         }}
       >
