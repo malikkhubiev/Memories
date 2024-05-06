@@ -1,42 +1,18 @@
 import React, { FC, useEffect } from "react";
 import {
-  LinkedinIcon,
-  LinkedinShareButton,
-  MailruIcon,
-  MailruShareButton,
-  OKIcon,
-  OKShareButton,
   TelegramIcon,
   TelegramShareButton,
-  ViberIcon,
-  ViberShareButton,
-  VKIcon,
-  VKShareButton,
   WhatsappIcon,
-  WhatsappShareButton,
+  WhatsappShareButton
 } from "react-share";
-import { CustomMenu } from "../../CustomMenu/CustomMenu";
-import { ButtonComponent } from "../../CustomMenu/CustomComponents/CustomMenuComponents";
-import styles from "./Share.module.less";
-import { ColumnWrap } from "../../../layout/ColumnWrap/ColumnWrap";
 import { optionActionCallbackType } from "../../../../types/callbacks";
+import { ColumnWrap } from "../../../layout/ColumnWrap/ColumnWrap";
+import { ButtonComponent } from "../../CustomMenu/CustomComponents/CustomMenuComponents";
+import { CustomMenu } from "../../CustomMenu/CustomMenu";
 
 let socialMedia: any = [
   {
-    id: 1,
-    props: { button: MailruShareButton, icon: MailruIcon, name: "Mail.ru" },
-  },
-  {
-    id: 2,
-    props: {
-      button: LinkedinShareButton,
-      icon: LinkedinIcon,
-      name: "LinkedIn",
-    },
-  },
-  { id: 3, props: { button: OKShareButton, icon: OKIcon, name: "OK" } },
-  {
-    id: 4,
+    id: 0,
     props: {
       button: TelegramShareButton,
       icon: TelegramIcon,
@@ -44,12 +20,7 @@ let socialMedia: any = [
     },
   },
   {
-    id: 5,
-    props: { button: ViberShareButton, icon: ViberIcon, name: "Viber" },
-  },
-  { id: 6, props: { button: VKShareButton, icon: VKIcon, name: "VK" } },
-  {
-    id: 7,
+    id: 1,
     props: {
       button: WhatsappShareButton,
       icon: WhatsappIcon,

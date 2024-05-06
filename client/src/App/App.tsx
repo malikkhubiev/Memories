@@ -42,6 +42,7 @@ export const App: FC<{}> = () => {
   let errorMessage = useAppSelector((state: RootState) =>
     selectErrorMessage(state),
   );
+  console.log(errorMessage);
   let profilesErrorMessage = useAppSelector((state: RootState) =>
     selectProfilesErrorMessage(state),
   );
@@ -53,7 +54,7 @@ export const App: FC<{}> = () => {
   let isAuth = useAppSelector((state: RootState) => selectIsAuth(state));
   const id = useAppSelector((state: RootState) => selectId(state));
 
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(true);
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
 
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
@@ -107,19 +108,7 @@ export const App: FC<{}> = () => {
           )}
 
           {/* error message */}
-          <Snackbar
-            sx={{
-              zIndex: "9998",
-              textAlign: "center",
-            }}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "center",
-            }}
-            open={Boolean(errorMessage)}
-          >
-            <CustomAlert message={errorMessage} />
-          </Snackbar>
+          {errorMessage && <CustomAlert message={errorMessage} />}
           <I18nextProvider i18n={i18n}>
             <Routes>
               {isAuth ? (

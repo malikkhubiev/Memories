@@ -115,7 +115,7 @@ export const Image: FC<ImagePropsType> = ({
     useState<string>(numberOfLikes);
   let [currentIsLiked, setCurrentIsLiked] = useState<boolean>(isLiked);
 
-  const url = `http://localhost:8080/#/post/:${id}/:false`;
+  const url = `${process.env.REACT_APP_API_URL}#/post/:${id}/:false`;
 
   const [likeImage] = useLikeImage();
   const [unLikeImage] = useUnLikeImage();

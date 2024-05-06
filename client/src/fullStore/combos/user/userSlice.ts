@@ -133,7 +133,6 @@ export const userSlice = createSlice({
       getIsAuthThunk.rejected,
       (state: any, action: PayloadAction<any>) => {
         console.log(action.payload);
-        //state["errorMessage"] = action.payload;
       },
     );
     // @ts-ignore
