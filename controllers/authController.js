@@ -1,6 +1,8 @@
 const ApiError = require("../error/ApiError");
 const jwt = require("jsonwebtoken");
 const { validationResult } = require("express-validator");
+const { v4 } = require("uuid")
+
 const {
   signup,
   deleteAccount,
@@ -39,15 +41,27 @@ class authController {
   };
   signin = async (req, res, next) => {
     try {
-      const { email, password } = req.body;
+      const { email, name: inputName, password } = req.body;
       if (!email) throw new Error("You didn't provide an email");
+      if (!inputName) throw new Error("You didn't provide a name");
       if (!password) throw new Error("You didn't provide a password");
       const { id, name, avatar, isAccountOpened, payload } = await signin(
         email,
+        inputName,
         password,
       );
       const token = generateJwt(payload);
       res.json({ id, name, avatar, isAccountOpened, token });
+    } catch (e) {
+      next(ApiError.badRequest(e.message || "Something went wrong"));
+    }
+  };
+  speedSignUp = async (req, res, next) => {
+    try {
+      const { cos } = req.body;
+      const encryptedEmail = encryptEmail("1@mail.ru");
+      const name = "-user-"+v4()
+      res.json({ encryptedEmail, name });
     } catch (e) {
       next(ApiError.badRequest(e.message || "Something went wrong"));
     }

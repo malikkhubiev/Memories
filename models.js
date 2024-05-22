@@ -9,7 +9,7 @@ const id = {
 };
 const popularity = { type: DataTypes.INTEGER, defaultValue: 0 };
 const boolean = { type: Sequelize.BOOLEAN, defaultValue: false };
-const email = { type: DataTypes.STRING, unique: true, allowNull: false };
+const email = { type: DataTypes.STRING, allowNull: false };
 
 const User = sequelize.define("user", {
   id,

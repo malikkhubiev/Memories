@@ -18,7 +18,7 @@ const styles = {
     padding: "0 15px",
   },
   password: {
-    margin: "50px 0",
+    marginBottom: "50px",
     borderBottomColor: "#fff"
   },
   button: { marginTop: "50px" },

@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { ColumnWrap } from "../../../components/layout/ColumnWrap/ColumnWrap";
@@ -22,6 +22,7 @@ import { EmailVerifying } from "../../../components/logic/EmailVerifying/EmailVe
 import { forgotPasswordValidationSchema } from "./forgotPasswordValidationSchema";
 import { useTranslation } from "react-i18next";
 import { addDynamicResources } from "../../../i18n/i18n";
+import { LangPropsContext } from "../../../components/layout/Navigation/Navigation";
 
 const initialValues: initialValuesType = {
   password: "",
@@ -69,19 +70,13 @@ const ForgotPasswordPage: FC<{}> = () => {
     onSubmit: submitHandler,
   });
 
-  const [dynamicResourcesLoaded, setDynamicResourcesLoaded] = useState(false);
+  const { language } = useContext(LangPropsContext);
 
   useEffect(() => {
-    addDynamicResources("signUp").then(() => {
-      setDynamicResourcesLoaded(true);
-    });
-  }, []);
-
-  useEffect(() => {
-    if (dynamicResourcesLoaded) {
+    addDynamicResources("signIn").then(() => {
       formik.resetForm();
-    }
-  }, [dynamicResourcesLoaded]);
+    });
+  }, [language]);
 
   return (
     <>
@@ -92,10 +87,7 @@ const ForgotPasswordPage: FC<{}> = () => {
         />
       ) : (
         <ColumnWrap>
-          <PageHeader isShowing={false}>
-            <Header text={t("forgotPasHeader")} />
-            <Plug />
-          </PageHeader>
+          <Header text={t("forgotPasHeader")} />
           <form
             data-testid="forgot-password-form"
             onSubmit={formik.handleSubmit}

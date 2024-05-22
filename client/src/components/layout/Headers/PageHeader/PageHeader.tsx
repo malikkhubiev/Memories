@@ -49,9 +49,7 @@ export const PageHeader: FC<PageHeaderType> = ({
   return (
     <Box sx={pageHeaderStyles}>
       <CustomStack sx={styles.stack}>
-        {location.pathname === "/" ? (
-          <Plug />
-        ) : (
+        {location.pathname !== "/" && (
           <Box sx={styles.back} onClick={arrowBackClickHandler}>
             <CustomIcon type="arrow_back" />
           </Box>

@@ -14,6 +14,7 @@ const authValidationArray = [
 
 authRouter.get("/getIsAuth", checkIsAuthMiddleware, authController.getIsAuth);
 authRouter.post("/signin", authController.signin);
+authRouter.post("/speedSignUp", authController.speedSignUp);
 authRouter.post(
   "/signup",
   emailEncryptingMiddleware,

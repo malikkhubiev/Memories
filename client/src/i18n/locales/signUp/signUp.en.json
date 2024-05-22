@@ -1,5 +1,6 @@
 {
   "signUpHeader": "Sign up",
+  "name": "Name",
   "password": "Password",
   "confirmPassword": "Confirm Password",
   "next": "Next",
@@ -8,5 +9,7 @@
   "terms3": "and",
   "terms4": "Privacy Policy",
   "alreadyAccount": "Already have an account?",
-  "signIn": "Sign in"
+  "signIn": "Sign in",
+  "testAccountAnnounce": "Or you can create",
+  "testAccountButton": "test account"
 }

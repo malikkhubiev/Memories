@@ -1,5 +1,6 @@
 {
   "signUpHeader": "Регистрация",
+  "name": "Имя",
   "password": "Пароль",
   "confirmPassword": "Подтверждение пароля",
   "next": "Далее",
@@ -8,5 +9,7 @@
   "terms3": "и",
   "terms4": "Политикой конфиденциальности",
   "alreadyAccount": "Уже есть аккаунт?",
-  "signIn": "Войти"
+  "signIn": "Войти",
+  "testAccountAnnounce": "Или вы можете создать",
+  "testAccountButton": "тестовый аккаунт"
 }

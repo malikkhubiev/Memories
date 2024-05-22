@@ -7,6 +7,7 @@ import {
   deleteAccountThunk,
   getIsAuthThunk,
   signInThunk,
+  speedSignUpThunk,
 } from "./userQueries";
 
 export interface UserState {
@@ -16,6 +17,7 @@ export interface UserState {
   avatar: string | null;
   isAccountOpened: boolean | NonNullChain;
   encryptedEmail: string | null;
+  speedName: string | null;
   isLoading: boolean;
   errorMessage: string;
 }
@@ -27,6 +29,7 @@ const initialState: UserState = {
   avatar: null,
   isAccountOpened: null,
   encryptedEmail: null,
+  speedName: null,
   isLoading: false,
   errorMessage: "",
 };
@@ -81,6 +84,19 @@ export const userSlice = createSlice({
     );
     builder.addCase(
       compareCodeThunk.rejected,
+      (state: any, action: PayloadAction<any>) => {
+        state["errorMessage"] = action.payload;
+      },
+    );
+    builder.addCase(
+      speedSignUpThunk.fulfilled,
+      (state: UserState, action: PayloadAction<{ encryptedEmail: string, name: string }>) => {
+        state.encryptedEmail = action.payload.encryptedEmail;
+        state.speedName = action.payload.name;
+      },
+    );
+    builder.addCase(
+      speedSignUpThunk.rejected,
       (state: any, action: PayloadAction<any>) => {
         state["errorMessage"] = action.payload;
       },
@@ -195,6 +211,8 @@ export const {
 // selectors
 export const selectEncryptedEmail = (state: RootState): string =>
   state.user.encryptedEmail;
+export const selectSpeedName = (state: RootState): string =>
+  state.user.speedName;
 export const selectId = (state: RootState): number => +state.user.id;
 export const selectAvatar = (state: RootState): string => state.user.avatar;
 export const selectIsLoading = (state: RootState): boolean =>

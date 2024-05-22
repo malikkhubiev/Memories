@@ -6,7 +6,6 @@ const styles = {
   }),
   iconExtra: (width: number) => ({
     width: width + 10 + "px",
-    transform: "translateY(5px)"
   }),
 }
 

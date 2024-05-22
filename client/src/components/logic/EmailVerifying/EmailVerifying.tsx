@@ -66,16 +66,13 @@ export const EmailVerifying: FC<EmailVerifyingPropsType> = ({
           <Header sx={styles.center} text={t("emailValheader")} />
         </Box>
       ) : (
-        <PageHeader isShowing={false}>
-          <Header sx={styles.center} text={t("emailValheader")} />
-          <Plug />
-        </PageHeader>
+        <Header sx={styles.center} text={t("emailValheader")} />
       )}
       <SmallGoldenRatioBox sx={styles.center}>
         <CustomStack sx={styles.stack}>
           <AddInput
             text=""
-            buttonText={t("sendButtonText")}
+            icon="send"
             label={t("emailLabel")}
             addInputCallback={sendButtonHandler}
             inputTestId="email-input"
@@ -85,7 +82,7 @@ export const EmailVerifying: FC<EmailVerifyingPropsType> = ({
             <AddInput
               sx={styles.verifyInput}
               text=""
-              buttonText={t("addInput_verify")}
+              icon="send"
               label={t("verificationCode")}
               addInputCallback={verifyButtonHandler}
               inputTestId="verification-code-input"

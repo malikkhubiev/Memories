@@ -76,14 +76,33 @@ export const compareCodeThunk = createAsyncThunk(
   },
 );
 
+export const speedSignUpThunk = createAsyncThunk(
+  "user/speedSignUp",
+  async (
+    {},
+    { rejectWithValue },
+  ) => {
+    try {
+      const response = await $host.post<{ encryptedEmail: string, name: string }>(
+        "/auth/speedSignUp",
+        { kos: "til" },
+      );
+      return response.data;
+    } catch (e) {
+      return rejectWithValue(e.response.data.message);
+    }
+  },
+);
+
 export const signInThunk = createAsyncThunk(
   "user/signIn",
   async (
     {
       email,
+      name,
       password,
       rememberMe,
-    }: { email: string; password: string; rememberMe: boolean },
+    }: { email: string; name: string; password: string; rememberMe: boolean },
     { rejectWithValue },
   ) => {
     try {
@@ -93,7 +112,7 @@ export const signInThunk = createAsyncThunk(
         avatar: string;
         isAccountOpened: boolean;
         token?: string;
-      }>("/auth/signin", { email, password, rememberMe });
+      }>("/auth/signin", { email, name, password, rememberMe });
       if (response.data.token) {
         localStorage.setItem("token", response.data.token);
       }

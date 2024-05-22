@@ -13,15 +13,15 @@ const base = {
   typography: {
     fontFamily: "Century Gothic",
     h1: {
-      fontSize: 60,
+      fontSize: 50,
       padding: "20px 0",
       fontWeight: "bold",
     },
     body1: {
-      fontSize: 30,
+      fontSize: 25,
     },
     body2: {
-      fontSize: 30,
+      fontSize: 25,
     },
   },
   components: {

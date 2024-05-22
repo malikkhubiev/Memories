@@ -8,14 +8,14 @@ import {
 import React, { FC } from "react";
 import styles from "./AuthFieldsStyle";
 
-export const CustomNameField: FC<any> = ({ formik, sx }) => {
+export const CustomNameField: FC<any> = ({ formik, label, sx }) => {
   return (
     <TextField
       sx={sx || {}}
       fullWidth
       id="name"
       name="name"
-      label="Name"
+      label={label}
       variant="standard"
       value={formik.values.name}
       onChange={formik.handleChange}

@@ -31,6 +31,9 @@ const styles = {
     },
   }),
   link: (theme: any) => ({
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     cursor: "pointer",
     [theme.breakpoints.down('sm')]: {
       margin: "0 12px",
@@ -48,6 +51,13 @@ const styles = {
       },
     }
   }),
+  box: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    userSelect: "none",
+    cursor: "pointer",
+  },
 };
 
 export default styles;

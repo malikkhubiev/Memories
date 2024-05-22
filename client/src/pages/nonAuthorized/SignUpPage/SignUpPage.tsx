@@ -4,9 +4,10 @@ import {
   useMediaQuery,
   useTheme,
   Box,
+  Button,
 } from "@mui/material";
 import { useFormik } from "formik";
-import React, { FC, memo, useCallback, useEffect, useState } from "react";
+import React, { FC, memo, useCallback, useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { ColumnWrap } from "../../../components/layout/ColumnWrap/ColumnWrap";
@@ -18,9 +19,10 @@ import {
   CustomNameField,
   CustomPasswordField,
 } from "../../../components/ui/AuthFields/AuthFields";
-import { useSignUpMutationQuery } from "../../../fullStore/combos/user/userQueries";
+import { speedSignUpThunk, useSignUpMutationQuery } from "../../../fullStore/combos/user/userQueries";
 import {
   selectEncryptedEmail,
+  selectSpeedName,
   setErrorMessage,
   setIsLoading,
 } from "../../../fullStore/combos/user/userSlice";
@@ -35,6 +37,8 @@ import {
 import { useTranslation } from "react-i18next";
 import { addDynamicResources } from "../../../i18n/i18n";
 import styles from "./SignUpPageStyle";
+import useCustomDispatch from "../../../hooks/useCustomDispatch";
+import { LangPropsContext } from "../../../components/layout/Navigation/Navigation";
 
 const initialValues: initialValuesType = {
   name: "",
@@ -43,33 +47,40 @@ const initialValues: initialValuesType = {
 };
 
 export const SignUpPage: FC<{}> = () => {
-  const [isEmailVerified, setIsEmailVerified] = useState(false); // Костыль
+  const [isEmailVerified, setIsEmailVerified] = useState(false);
+  const [isSpeedSignUp, setIsSpeedSignUp] = useState(false);
   const [signUp] = useSignUpMutationQuery();
   let encryptedEmail = useSelector(selectEncryptedEmail);
+  let speedName = useSelector(selectSpeedName);
   const navigate = useNavigate();
 
   const { t } = useTranslation("signUp");
-  const [dynamicResourcesLoaded, setDynamicResourcesLoaded] = useState(false);
+
+  const { language } = useContext(LangPropsContext);
 
   useEffect(() => {
     addDynamicResources("signUp").then(() => {
-      setDynamicResourcesLoaded(true);
+      formik.resetForm();
     });
-  }, []);
+  }, [language]);
 
   const usualDispatch = useAppDispatch();
+  const thunkDispatch = useCustomDispatch();
 
   const submitHandler = useCallback(
     (values: initialValuesType) => {
       usualDispatch(setIsLoading(true));
       signUp({
         encryptedEmail,
-        name: values.name,
+        name: isSpeedSignUp ? values.name+speedName : values.name,
         password: values.password,
       })
         .unwrap()
         .then((fulfilled: { message: string }) => {
           alert(fulfilled.message);
+          if (isSpeedSignUp) {
+            alert("Your email is 1@mail.ru")
+          };
           navigate("/");
         })
         .catch((e: any) => usualDispatch(setErrorMessage(e.data.message)));
@@ -91,22 +102,20 @@ export const SignUpPage: FC<{}> = () => {
   });
 
   const theme = useTheme();
-  const linkStyle = styles.link(theme)
+  const linkStyle = styles.link(theme);
   const isSmallSize = useMediaQuery(theme.breakpoints.down("sm"));
 
-  useEffect(() => {
-    if (dynamicResourcesLoaded) {
-      formik.resetForm();
-    }
-  }, [dynamicResourcesLoaded]);
+  const speedSignUp = () => {
+    setIsSpeedSignUp(prev => prev = true);
+    thunkDispatch(
+      speedSignUpThunk(),
+      () => setIsEmailVerified((prev) => (prev = true))
+    )
+  };
 
   return (
     <Box sx={styles.container}>
-      <PageHeader isShowing={false}>
-        <Header text={t("signUpHeader")} />
-        <Plug />
-      </PageHeader>
-
+      <Header text={t("signUpHeader")} />
       <SmallGoldenRatioBox sx={styles.goldenRatBox}>
         {!isEmailVerified ? (
           <EmailVerifying
@@ -117,7 +126,10 @@ export const SignUpPage: FC<{}> = () => {
         ) : (
           <CustomStack sx={styles.stack}>
             <form onSubmit={formik.handleSubmit}>
-              <CustomNameField formik={formik} />
+              <CustomNameField
+                formik={formik}
+                label={t("name")}
+              />
               <CustomPasswordField
                 formik={formik}
                 name="password"
@@ -158,11 +170,23 @@ export const SignUpPage: FC<{}> = () => {
         )}
         <Box sx={styles.redirect(isSmallSize)}>
           <Typography variant="body2">{t("alreadyAccount")}</Typography>
-          <MaterialLink sx={linkStyle} variant="body2" component={RouterLink} to="/signIn">
+          <MaterialLink
+            sx={linkStyle}
+            variant="body2"
+            component={RouterLink}
+            to="/signIn"
+          >
             {"\u00A0"}
             {t("signIn")}
           </MaterialLink>
         </Box>
+        {
+          !isSpeedSignUp &&
+          <Box sx={styles.testAccount}>
+            <Typography variant="body2">{t("testAccountAnnounce")}</Typography>
+            <Button onClick={speedSignUp}>{t("testAccountButton")}</Button>
+          </Box>
+        }
       </SmallGoldenRatioBox>
     </Box>
   );

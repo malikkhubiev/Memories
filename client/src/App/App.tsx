@@ -8,7 +8,7 @@ import {
 import React, { FC, useEffect, useState } from "react";
 import { I18nextProvider, useTranslation } from "react-i18next";
 import { Route, Routes } from "react-router-dom";
-import { Navigation } from "../components/layout/Navigation/Navigation";
+import { Navigation, UnAuthourizedNavigation } from "../components/layout/Navigation/Navigation";
 import { CustomAlert } from "../components/ui/CustomAlert/CustomAlert";
 import { selectOwnImagesErrorMessage } from "../fullStore/combos/images/imagesSlice";
 import { addProfileThunk } from "../fullStore/combos/profile/profileQueries";
@@ -33,6 +33,7 @@ import { lightTheme, darkTheme } from "../theme/theme";
 
 export const App: FC<{}> = () => {
   const { t } = useTranslation("authorized");
+  let [backPath, setBackPath] = useState<string>("/");
   useEffect(() => {
     addDynamicResources("authorized");
   }, []);
@@ -113,19 +114,17 @@ export const App: FC<{}> = () => {
               {isAuth ? (
                 <Route
                   path="/"
-                  element={
-                    <Navigation
-                      isDarkMode={isDarkMode}
-                      toggleDarkMode={toggleDarkMode}
-                    />
-                  }
+                  element={<Navigation toggleDarkMode={toggleDarkMode} />}
                 >
                   {authorizedRoutes.map((route: any) =>
                     customRoutes(route, styles),
                   )}
                 </Route>
               ) : (
-                <Route path="/">
+                <Route
+                  path="/"
+                  element={<UnAuthourizedNavigation toggleDarkMode={toggleDarkMode} />}
+                >
                   {nonAuthorizedRoutes.map((route) =>
                     customRoutes(route, styles),
                   )}

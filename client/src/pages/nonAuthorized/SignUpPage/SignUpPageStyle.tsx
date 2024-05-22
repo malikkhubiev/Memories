@@ -28,5 +28,12 @@ const styles = {
     alignItems: "center",
     flexDirection: () => (isSmallSize ? "column" : "row"),
   }),
+  testAccount: {
+    textAlign: "center",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+  }
 };
 export default styles;

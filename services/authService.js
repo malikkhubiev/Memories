@@ -31,8 +31,24 @@ class authService {
       payload: returnTokenPayload(user),
     };
   };
-  signin = async (email, password) => {
-    const user = await User.findOne({ where: { email } });
+  signin = async (email, name, password) => {
+    const user = await User.findOne({ where: {
+      email,
+      [Sequelize.Op.and]: [
+        {
+          name: {
+            [Sequelize.Op.like]: `${name}%`
+          }
+        },
+        {
+          name: {
+            [Sequelize.Op.and]: [
+              Sequelize.where(Sequelize.fn('length', Sequelize.col('name')), name.length + 42)
+            ]
+          }
+        }
+      ]
+    } });
     if (!user) throw new Error("Wrong username or password");
     const isPassword = bcrypt.compareSync(password, user.password);
     if (!isPassword) throw new Error("Wrong username or password");
@@ -45,8 +61,28 @@ class authService {
     };
   };
   signup = async (email, password, name) => {
+    let clearedName = name.slice(0, -42);
+    const mayBeExistingUser = await User.findOne({where: {
+      email: "1@mail.ru",
+      [Sequelize.Op.and]: [
+        {
+          name: {
+            [Sequelize.Op.like]: `${clearedName}%`
+          }
+        },
+        {
+          name: {
+            [Sequelize.Op.and]: [
+              Sequelize.where(Sequelize.fn('length', Sequelize.col('name')), clearedName.length + 42)
+            ]
+          }
+        }
+      ]
+    }})
+    if (mayBeExistingUser) throw new Error("User with the same name is existing");
     if (filter.isProfane(name)) throw new Error("Your name is profane");
     const hashedPassword = bcrypt.hashSync(password, 3);
+    
     await User.create({ email, password: hashedPassword, name });
   };
   checkingEmail = async (email, process) => {
@@ -77,12 +113,19 @@ class authService {
   changeNameAvatarIsOpened = async (id, name, avatar, isOpened) => {
     const response = {};
     if (avatar) {
+      const user = await User.findOne({where: {id}})
+      if (user.name.includes("-user-") && user.name.length > 42) {
+        throw new Error("You're not allowed to change avatar or name");
+      }
       const fileName = uuid.v4() + ".jpg";
       avatar.mv(path.resolve(__dirname, "..", "static", fileName));
       await User.update({ avatar: fileName }, { where: { id } });
       response.avatar = fileName;
     }
-    if (name) {
+    if (name) { 
+      if (name.includes("-user-") && name.length > 42) {
+        throw new Error("You're not allowed to change avatar or name");
+      }
       await User.update({ name }, { where: { id } });
       response.name = name;
     }

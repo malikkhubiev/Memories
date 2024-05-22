@@ -11,7 +11,6 @@ const styles:any = {
       xs: "70%",
       md: "80%",
     },
-    height: "76px",
   },
   button: {
     width: {

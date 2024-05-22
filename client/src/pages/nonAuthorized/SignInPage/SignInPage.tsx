@@ -6,7 +6,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { useFormik } from "formik";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { PageHeader } from "../../../components/layout/Headers/PageHeader/PageHeader";
 import { Plug } from "../../../components/layout/Plug/Plug";
@@ -14,6 +14,7 @@ import {
   CustomButton,
   CustomCheckboxField,
   CustomEmailField,
+  CustomNameField,
   CustomPasswordField,
 } from "../../../components/ui/AuthFields/AuthFields";
 import {
@@ -30,9 +31,11 @@ import { signInvalidationSchema } from "./signInValidation";
 import { useTranslation } from "react-i18next";
 import { addDynamicResources } from "../../../i18n/i18n";
 import styles from "./SignInPageStyle";
+import { LangPropsContext } from "../../../components/layout/Navigation/Navigation";
 
 const initialValues: initialValuesType = {
   email: "",
+  name: "",
   password: "",
   rememberMe: false,
 };
@@ -40,7 +43,6 @@ const initialValues: initialValuesType = {
 const SignInPage = () => {
   const { t } = useTranslation("signIn");
   const thunkDispatch = useCustomDispatch();
-  const [dynamicResourcesLoaded, setDynamicResourcesLoaded] = useState(false);
 
   // @ts-ignore
   const submitHandler = (values) => {
@@ -55,32 +57,31 @@ const SignInPage = () => {
 
   useEffect(() => {
     thunkDispatch(getIsAuthThunk());
-    addDynamicResources("signIn").then(() => {
-      setDynamicResourcesLoaded(true);
-    });
   }, []);
+
+  const { language } = useContext(LangPropsContext);
+
+  useEffect(() => {
+    addDynamicResources("signIn").then(() => {
+      formik.resetForm();
+    });
+  }, [language]);
 
   const theme = useTheme();
   const linkStyle = styles.link(theme)
   const isSmallSize = useMediaQuery(theme.breakpoints.down("sm"));
 
-  useEffect(() => {
-    if (dynamicResourcesLoaded) {
-      formik.resetForm();
-    }
-  }, [dynamicResourcesLoaded]);
-
   return (
     <Box sx={styles.container}>
-      <PageHeader isShowing={false}>
-        <Plug />
-        <Plug />
-      </PageHeader>
       <SmallGoldenRatioBox sx={styles.goldenRatBox}>
         <CustomStack sx={styles.column}>
           <Typography variant="h1">{t("header")}</Typography>
           <form style={styles.form} onSubmit={formik.handleSubmit}>
             <CustomEmailField formik={formik} label={t("email")} />
+            <CustomNameField
+              formik={formik}
+              label={t("name")}
+            />
             <CustomPasswordField
               sx={styles.password}
               formik={formik}
@@ -118,6 +119,7 @@ const SignInPage = () => {
 
 type initialValuesType = {
   email: string;
+  name: string;
   password: string;
   rememberMe: boolean;
 };

@@ -16,6 +16,7 @@ export const AddInput: FC<AddInputPropsType> = ({
   lines,
   inputTestId,
   buttonTestId,
+  buttonText,
   icon,
   iconExtra,
 }) => {
@@ -68,7 +69,8 @@ export const AddInput: FC<AddInputPropsType> = ({
         {icon ? (
           <CustomIcon extra={iconExtra && iconExtra} type={icon} />
         ) : (
-          t("addInput_send")
+          // @ts-ignore
+          {buttonText}
         )}
       </Button>
     </Box>
@@ -82,7 +84,7 @@ type AddInputPropsType = {
   sx?: any;
   inputTestId?: string;
   buttonTestId?: string;
-  buttonText: string;
+  buttonText?: string;
   addInputCallback: addInputCallbackType;
   isMultiline?: true;
   lines?: number;
