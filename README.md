@@ -12,7 +12,7 @@
 ![i18n](https://img.shields.io/badge/i18n-Enabled-green)
 ![JWT](https://img.shields.io/badge/JWT-Auth-orange)
 
-[Демо](https://memories-3-ov6w.onrender.com/) • [Установка](#-установка-и-запуск) • [Документация](#-техническая-реализация) • [Лицензия](#-лицензия)
+[Демо](https://memories-hwwy.onrender.com) • [Установка](#-установка-и-запуск) • [Документация](#-техническая-реализация) • [Лицензия](#-лицензия)
 
 </div>
 
